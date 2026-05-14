@@ -689,15 +689,6 @@ function PagarsArtLab() {
             size="icon"
             variant="ghost"
             className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
-            onClick={undo}
-            title="Undo"
-          >
-            <Undo2 className="h-4 w-4" />
-          </Button>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
             onClick={clearCanvas}
             title="Clear"
           >
@@ -752,14 +743,6 @@ function PagarsArtLab() {
             <Button
               size="sm"
               variant="ghost"
-              onClick={undo}
-              className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
-            >
-              <Undo2 className="h-3.5 w-3.5" /> Undo
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
               onClick={clearCanvas}
               className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
             >
@@ -783,6 +766,15 @@ function PagarsArtLab() {
             className="absolute inset-0 h-full w-full touch-none"
             style={{ cursor: "crosshair" }}
           />
+          {/* Floating Undo FAB — top-right of canvas */}
+          <button
+            onClick={undo}
+            title="Undo last stroke"
+            className="absolute right-3 top-3 z-10 flex h-12 items-center gap-2 rounded-full border border-white/20 bg-black/70 px-4 text-sm font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/85 active:scale-95"
+          >
+            <Undo2 className="h-5 w-5" />
+            <span className="hidden sm:inline">Undo</span>
+          </button>
         </div>
 
         {/* ───────── Mobile bottom panel ───────── */}
