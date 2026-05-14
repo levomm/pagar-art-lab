@@ -3,44 +3,48 @@ import { z } from "zod";
 
 const inputSchema = z.object({
   imageDataUrl: z.string().min(20),
-  fidelity: z.number().min(0.2).max(0.6),
+  fidelity: z.number().min(0.2).max(1.0),
   influence: z.number().min(5).max(10),
 });
 
-const NEGATIVE = "3D, bubble letters, shadows, colorful, messy, blurry, low resolution, bevel, emboss, cartoon, glow, gradients, soft edges, watercolor";
+const NEGATIVE =
+  "3D, bubble letters, shadows, colorful, messy, blurry, low resolution, bevel, emboss, cartoon, glow, gradients, soft edges, watercolor, jagged edges, shaky lines, child drawing, amateur, pencil sketch, rough pixels, anti-aliasing artifacts";
 
 function buildPrompt(fidelity: number, influence: number) {
-  // Translate slider knobs into prompt strength words
+  // Higher fidelity = more aggressive restyling/smoothing.
   const fidelityHint =
-    fidelity < 0.35
-      ? "Preserve every stroke and letter shape exactly as drawn — only refine and clean the existing line."
-      : fidelity < 0.45
-      ? "Keep the original letter shapes and composition intact while enhancing flow and pressure."
-      : "Honor the original letter shapes but boldly transform line quality with bomber-style energy.";
+    fidelity < 0.4
+      ? "Preserve exact letter shapes and composition. Refine the lines: smooth out wobble, unify stroke transitions, add subtle flow."
+      : fidelity < 0.7
+      ? "Keep letter identity and reading order, but completely RESTYLE every stroke as a confident professional handstyle. Replace every shaky pixel with smooth, flowing calligraphic ink."
+      : "Aggressively restyle with master-level bomber energy. Keep only the letter recognition and overall composition — redraw every line as if a veteran writer hit it in one fluid motion.";
 
   const influenceHint =
     influence >= 8.5
-      ? "Strictly follow the bomber handstyle aesthetic, no deviations."
+      ? "Strictly follow the bomber handstyle aesthetic — no deviations, no ornamentation."
       : "Follow the bomber handstyle aesthetic with minor interpretive freedom.";
 
-  return `Transform this hand-drawn graffiti tag into a professional street art handstyle "bomber" tag.
+  return `You are a master graffiti writer cleaning up and restyling a fellow writer's hand-drawn tag.
 
 ${fidelityHint}
 ${influenceHint}
 
-Style requirements:
-- Authentic urban bomber aesthetic, raw street calligraphy
-- High-velocity fluid strokes with perfect flow and rhythm
-- Sharp, clean ink marker lines with dynamic pressure: thick downstrokes, thin connectors, tapered ends
-- Natural gravity-defying ink drips at the bottom of vertical strokes
-- Aggressive rhythmic composition, high contrast
-- Solid black ink on pure white background
-- Minimalist, bold, no decoration
-- Pure 2D silhouette — no 3D, no shadows, no glow, no color, no bubble letters, no bevel
+Treat the input as a CONCEPT SKETCH, not a final drawing. The output must look like it was hit in ONE confident motion by a 20-year veteran with a fat marker — never like the sketch was simply traced.
 
-Avoid: ${NEGATIVE}
+ESSENTIAL STYLE:
+- Buttery-smooth, perfectly fluid ink lines — zero wobble, zero jaggedness, zero pixelation
+- High-velocity calligraphic flow: every curve feels like a single fast wrist movement
+- Aggressive dynamic pressure: bold thick downstrokes, hairline thin connectors, sharp tapered tips and tails
+- Confident hooks, whips, and ligatures connecting letters where the original implies them
+- Long dramatic gravity-defying ink drips hanging from the bottom of vertical strokes
+- Compact, leaning, rhythmic composition with attitude — NYC subway / Parisian metro bomber energy
+- Solid jet-black ink on pure flat white — no grey, no texture, no halftones
+- Pure 2D silhouette — no 3D, no shadow, no glow, no color, no bubble letters, no outline, no bevel
+- Vector-clean edges at maximum resolution
 
-Output: a clean high-resolution image of the enhanced tag on a solid white background.`;
+NEVER do: ${NEGATIVE}
+
+Output: a single clean high-resolution image of the restyled tag on a solid white background with comfortable margin.`;
 }
 
 export const enhanceTag = createServerFn({ method: "POST" })
