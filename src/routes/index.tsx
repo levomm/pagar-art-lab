@@ -21,8 +21,12 @@ import {
   X,
   Upload,
   Download,
+  Brush as BrushIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import sceneBusstop from "@/assets/scene-busstop.jpg";
+import sceneMetro from "@/assets/scene-metro.jpg";
+import sceneBrickwall from "@/assets/scene-brickwall.jpg";
 
 export const Route = createFileRoute("/")({
   component: PagarsArtLab,
