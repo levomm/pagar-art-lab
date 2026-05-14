@@ -1,6 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Bungee+Shade&family=Big+Shoulders+Display:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+
+@theme inline {
+  --font-tag: "Permanent Marker", system-ui, sans-serif;
+  --font-shout: "Bungee Shade", system-ui, sans-serif;
+  --font-display: "Big Shoulders Display", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
 
 @custom-variant dark (&:is(.dark *));
 
