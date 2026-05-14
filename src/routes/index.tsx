@@ -481,8 +481,13 @@ function PagarsArtLab() {
             )}
           >
             <span
-              className="h-4 w-4 rounded-sm border border-black/30"
-              style={{ background: b.color }}
+              className="h-4 w-4 rounded-sm border border-black/30 bg-cover bg-center"
+              style={{
+                background:
+                  b.type === "color"
+                    ? b.color
+                    : `url(${b.src}) center/cover`,
+              }}
             />
             {b.label}
           </button>
@@ -736,7 +741,7 @@ function PagarsArtLab() {
         <div
           ref={wrapRef}
           className="relative flex-1"
-          style={{ background: bgColor }}
+          style={{ background: bgFill }}
         >
           <canvas
             ref={canvasRef}
