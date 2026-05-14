@@ -131,6 +131,7 @@ function PagarsArtLab() {
   const [influence, setInfluence] = useState(8);
   const [busy, setBusy] = useState(false);
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const bg = BACKGROUNDS[bgIdx];
   const bgFill = bg.type === "color" ? bg.color : bg.fallback;
