@@ -239,6 +239,56 @@ function PagarsArtLab() {
     fillBackground(BACKGROUNDS[i].color);
   };
 
+  const exportPng = () => {
+    const c = canvasRef.current;
+    if (!c) return;
+    try {
+      const url = c.toDataURL("image/png");
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `pagars-art-lab-${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      toast.success("PNG exported");
+    } catch (e) {
+      console.error(e);
+      toast.error("Export failed");
+    }
+  };
+
+  const onUploadFile = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast.error("Pick an image file");
+      return;
+    }
+    const c = canvasRef.current;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+    const img = new Image();
+    const objUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      snapshot();
+      const margin = 0.08;
+      const maxW = c.width * (1 - margin * 2);
+      const maxH = c.height * (1 - margin * 2);
+      const r = Math.min(maxW / img.width, maxH / img.height);
+      const w = img.width * r;
+      const h = img.height * r;
+      ctx.drawImage(img, (c.width - w) / 2, (c.height - h) / 2, w, h);
+      URL.revokeObjectURL(objUrl);
+      toast.success("Tag pasted");
+    };
+    img.onerror = () => {
+      toast.error("Could not load image");
+      URL.revokeObjectURL(objUrl);
+    };
+    img.src = objUrl;
+  };
+
+  const triggerUpload = () => fileInputRef.current?.click();
+
   const handleEnhance = async () => {
     const c = canvasRef.current!;
     const dataUrl = c.toDataURL("image/png");
