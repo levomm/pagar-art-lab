@@ -215,7 +215,7 @@ function MetroBomber() {
               value={[fidelity]}
               onValueChange={(v) => setFidelity(v[0])}
               min={0.3}
-              max={0.5}
+              max={0.95}
               step={0.01}
             />
           </div>
