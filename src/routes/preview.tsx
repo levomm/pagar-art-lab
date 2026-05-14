@@ -11,7 +11,7 @@ export const Route = createFileRoute("/preview")({
   component: PreviewPage,
   head: () => ({
     meta: [
-      { title: "Metro Bomber — Preview" },
+      { title: "Pagar's Art Lab — Preview" },
       { name: "description", content: "Your AI-bombed tag preview." },
     ],
   }),
