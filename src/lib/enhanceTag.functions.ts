@@ -1,50 +1,73 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
+const STYLES = [
+  "bomber",
+  "throwup",
+  "wildstyle",
+  "blockbuster",
+  "handstyle",
+  "brush",
+] as const;
+type Style = (typeof STYLES)[number];
+
 const inputSchema = z.object({
   imageDataUrl: z.string().min(20),
   fidelity: z.number().min(0.2).max(1.0),
   influence: z.number().min(5).max(10),
+  style: z.enum(STYLES).default("bomber"),
 });
 
 const NEGATIVE =
-  "3D, bubble letters, shadows, colorful, messy, blurry, low resolution, bevel, emboss, cartoon, glow, gradients, soft edges, watercolor, jagged edges, shaky lines, child drawing, amateur, pencil sketch, rough pixels, anti-aliasing artifacts";
+  "amateur, child drawing, pencil sketch, wobbly lines, jagged edges, anti-aliasing artifacts, blurry, low resolution, watermark, text caption, frame, border";
 
-function buildPrompt(fidelity: number, influence: number) {
-  // Higher fidelity = more aggressive restyling/smoothing.
+const STYLE_BRIEFS: Record<Style, string> = {
+  bomber:
+    "NYC subway / Parisian metro BOMBER handstyle. Solid black fat-marker ink. Aggressive lean, dramatic whips and tails, hanging gravity drips, compact rhythmic flow. Pure 2D silhouette on flat white background.",
+  throwup:
+    "Classic THROW-UP / bubble piece. Bold rounded outline with a flat fill color and a 2-tone outline accent. Quick subway-style execution, slight lean, simple but punchy. Keep colors from the input if present, otherwise default to black outline + silver fill.",
+  wildstyle:
+    "WILDSTYLE piece. Interlocking arrows, bars and tags. Sharp angular construction, complex letter connections, layered outlines (inline + outline + 3D shadow). High craft, NYC king-level execution.",
+  blockbuster:
+    "BLOCKBUSTER style. Massive bold geometric block letters, perfectly straight edges, flat solid fill with a single contrasting outline. Wide stance, monumental presence, freight-train energy.",
+  handstyle:
+    "Pure HANDSTYLE / signature tag. One-shot fluid calligraphic gesture with a fat marker. Dramatic ligatures, long tails, hanging drips. Confident veteran writer flow.",
+  brush:
+    "BRUSH calligraphy / Eastern-influenced graffiti. Heavy ink-loaded brush strokes, dramatic pressure variation, sharp tapered tips, expressive wabi-sabi energy on a clean background.",
+};
+
+function buildPrompt(style: Style, fidelity: number, influence: number) {
   const fidelityHint =
     fidelity < 0.4
-      ? "Keep letter identity and reading order, but completely RESTYLE every stroke as a confident professional handstyle. Replace every shaky pixel with smooth, flowing calligraphic ink."
+      ? "Keep letter identity and reading order, but RESTYLE every stroke as professional graffiti. Replace shaky pixels with smooth confident lines."
       : fidelity < 0.7
-      ? "AGGRESSIVELY restyle with master-level bomber energy. Keep only the letter recognition — redraw every line as one fluid motion by a veteran writer. Add bold whips, hooks, ligatures, and dramatic drips."
-      : "MAXIMUM bomber transformation. Use the input ONLY as a letter-recognition reference — completely re-imagine the tag as if a world-famous NYC subway king redrew it. Add aggressive lean, dramatic whips and tails, hanging drips, and explosive bomber flow. The result must look NOTHING like a sketch — it must look like a finished masterpiece.";
+      ? "AGGRESSIVELY restyle. Keep letter recognition only — redraw every line with master-level confidence and flow."
+      : "MAXIMUM transformation. Use the input ONLY as a letter-recognition reference — re-imagine the tag as a finished masterpiece by a world-famous writer.";
 
   const influenceHint =
     influence >= 8.5
-      ? "Strictly follow the bomber handstyle aesthetic — no deviations, no ornamentation."
-      : "Follow the bomber handstyle aesthetic with minor interpretive freedom.";
+      ? "Strictly follow the chosen style — no deviations."
+      : "Follow the chosen style with minor interpretive freedom.";
 
   return `You are a master graffiti writer cleaning up and restyling a fellow writer's hand-drawn tag.
+
+STYLE: ${STYLE_BRIEFS[style]}
 
 ${fidelityHint}
 ${influenceHint}
 
-Treat the input as a CONCEPT SKETCH, not a final drawing. The output must look like it was hit in ONE confident motion by a 20-year veteran with a fat marker — never like the sketch was simply traced.
+Treat the input as a CONCEPT SKETCH. The output must look like a finished piece by a 20-year veteran — never like a traced sketch.
 
-ESSENTIAL STYLE:
-- Buttery-smooth, perfectly fluid ink lines — zero wobble, zero jaggedness, zero pixelation
-- High-velocity calligraphic flow: every curve feels like a single fast wrist movement
-- Aggressive dynamic pressure: bold thick downstrokes, hairline thin connectors, sharp tapered tips and tails
-- Confident hooks, whips, and ligatures connecting letters where the original implies them
-- Long dramatic gravity-defying ink drips hanging from the bottom of vertical strokes
-- Compact, leaning, rhythmic composition with attitude — NYC subway / Parisian metro bomber energy
-- Solid jet-black ink on pure flat white — no grey, no texture, no halftones
-- Pure 2D silhouette — no 3D, no shadow, no glow, no color, no bubble letters, no outline, no bevel
+ESSENTIAL QUALITY:
+- Buttery-smooth professional lines, zero wobble, zero pixelation
+- High-velocity confident execution
+- Aggressive dynamic pressure and weight where appropriate to the style
 - Vector-clean edges at maximum resolution
+- Output should be a single high-resolution image with comfortable margin
 
-NEVER do: ${NEGATIVE}
+If the input uses colors, RESPECT and RESTYLE them. If the input is monochrome, keep it monochrome.
 
-Output: a single clean high-resolution image of the restyled tag on a solid white background with comfortable margin.`;
+NEVER do: ${NEGATIVE}`;
 }
 
 export const enhanceTag = createServerFn({ method: "POST" })
@@ -55,13 +78,10 @@ export const enhanceTag = createServerFn({ method: "POST" })
       return { image: null as string | null, error: "GEMINI_API_KEY is not configured." };
     }
 
-    const prompt = buildPrompt(data.fidelity, data.influence);
+    const prompt = buildPrompt(data.style, data.fidelity, data.influence);
 
-    // Strip data URL prefix → raw base64 + mime
     const match = data.imageDataUrl.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
-    if (!match) {
-      return { image: null, error: "Invalid image data." };
-    }
+    if (!match) return { image: null, error: "Invalid image data." };
     const mimeType = match[1];
     const b64 = match[2];
 

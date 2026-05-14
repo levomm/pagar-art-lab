@@ -1,6 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Bungee+Shade&family=Big+Shoulders+Display:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+
+@theme inline {
+  --font-tag: "Permanent Marker", system-ui, sans-serif;
+  --font-shout: "Bungee Shade", system-ui, sans-serif;
+  --font-display: "Big Shoulders Display", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -140,5 +148,38 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+  }
+}
+
+@layer utilities {
+  .font-tag { font-family: var(--font-tag); }
+  .font-shout { font-family: var(--font-shout); }
+  .font-display { font-family: var(--font-display); }
+
+  /* Tag-style logo */
+  .logo-tag {
+    font-family: var(--font-tag);
+    letter-spacing: 0.01em;
+    text-shadow:
+      0 0 1px rgba(255,255,255,0.05),
+      2px 3px 0 rgba(0,0,0,0.6);
+    transform: skewX(-8deg) rotate(-2deg);
+    display: inline-block;
+  }
+
+  /* Subtle scrollbar hide for horizontal swatch rows */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+
+  /* Drip underline accent under logo */
+  .drip-underline {
+    background-image: radial-gradient(circle at 20% 0, currentColor 1.5px, transparent 2px),
+                      radial-gradient(circle at 50% 0, currentColor 2px, transparent 2.5px),
+                      radial-gradient(circle at 80% 0, currentColor 1.5px, transparent 2px);
+    background-size: 100% 6px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    padding-bottom: 6px;
   }
 }
