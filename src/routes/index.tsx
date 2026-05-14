@@ -1062,7 +1062,7 @@ function TutorialContent() {
               Mida valmis tag'iga peale hakata
             </h3>
             <p className="mt-1 text-xs leading-relaxed text-white/60">
-              Iga „Bomb it" tulemuse saab alla laadida PNG-failina (läbipaistva
+              Iga "Bomb it" tulemuse saab alla laadida PNG-failina (läbipaistva
               või valge taustaga, sõltuvalt valitud taustast) ja kasutada
               kõikjal kus pilte vaja.
             </p>
@@ -1078,7 +1078,7 @@ function TutorialContent() {
           />
           <UseCase
             title="Foto peale (Photoshop / Canva / CapCut)"
-            body="Ava oma foto (sein, vagun, peatus) Photoshopis või Canvas → lisa tag PNG kihina peale → sea blend mode „Multiply" (valgel taustal) või lihtsalt „Normal" (läbipaistval). Saad fotorealistliku graffiti."
+            body="Ava oma foto (sein, vagun, peatus) Photoshopis või Canvas → lisa tag PNG kihina peale → sea blend mode "Multiply" (valgel taustal) või lihtsalt "Normal" (läbipaistval). Saad fotorealistliku graffiti."
           />
           <UseCase
             title="Video & montaaž"
@@ -1096,7 +1096,7 @@ function TutorialContent() {
             <p className="text-xs leading-relaxed text-white/70">
               Kui tahad tag'i foto peale panna ilma valge ristkülikuta:
               vali joonistades must taust („Subway") — siis on AI tulemus juba
-              valmis kontrastse pildina, mille saab Photoshopis „Screen" blend
+              valmis kontrastse pildina, mille saab Photoshopis "Screen" blend
               mode'iga otse seina peale lisada.
             </p>
           </div>
