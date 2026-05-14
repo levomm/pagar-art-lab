@@ -56,13 +56,29 @@ const MARKERS = [
 ] as const;
 
 // ─── Background variants ──────────────────────────────────────────────────────
-const BACKGROUNDS = [
-  { name: "Paper", color: "#ffffff", label: "WHT" },
-  { name: "Cream", color: "#f3ead4", label: "CRM" },
-  { name: "Concrete", color: "#a4a8ad", label: "CON" },
-  { name: "Brick", color: "#7a3a2a", label: "BRK" },
-  { name: "Subway", color: "#1a1a1a", label: "SUB" },
-] as const;
+type Bg =
+  | { name: string; label: string; type: "color"; color: string }
+  | { name: string; label: string; type: "image"; src: string; fallback: string };
+
+const BACKGROUNDS: Bg[] = [
+  { name: "Paper", label: "WHT", type: "color", color: "#ffffff" },
+  { name: "Cream", label: "CRM", type: "color", color: "#f3ead4" },
+  { name: "Concrete", label: "CON", type: "color", color: "#a4a8ad" },
+  { name: "Subway", label: "SUB", type: "color", color: "#1a1a1a" },
+  { name: "Bus Stop", label: "BUS", type: "image", src: sceneBusstop, fallback: "#2a2e36" },
+  { name: "Metro Cab", label: "MET", type: "image", src: sceneMetro, fallback: "#cfc7b6" },
+  { name: "Brick Wall", label: "BRK", type: "image", src: sceneBrickwall, fallback: "#7a3a2a" },
+];
+
+// ─── Brush variants ───────────────────────────────────────────────────────────
+type BrushId = "marker" | "fineliner" | "spray" | "drip" | "chalk";
+const BRUSHES: { id: BrushId; name: string; tag: string }[] = [
+  { id: "marker", name: "Fat Marker", tag: "MKR" },
+  { id: "fineliner", name: "Fineliner", tag: "FNE" },
+  { id: "spray", name: "Spray Can", tag: "SPR" },
+  { id: "drip", name: "Drip Marker", tag: "DRP" },
+  { id: "chalk", name: "Chalk", tag: "CHK" },
+];
 
 // ─── Style catalog ────────────────────────────────────────────────────────────
 type StyleId =
@@ -71,45 +87,29 @@ type StyleId =
   | "wildstyle"
   | "blockbuster"
   | "handstyle"
-  | "brush";
+  | "brush"
+  | "chrome"
+  | "sticker"
+  | "neon"
+  | "threed"
+  | "oldschool"
+  | "stencil"
+  | "anime";
 
 const STYLES: { id: StyleId; name: string; tag: string; desc: string }[] = [
-  {
-    id: "bomber",
-    name: "Bomber",
-    tag: "NYC",
-    desc: "Fat-marker handstyle with dramatic drips and whips. The classic.",
-  },
-  {
-    id: "throwup",
-    name: "Throw-Up",
-    tag: "2-TONE",
-    desc: "Quick bubble piece — bold outline, flat fill, subway speed.",
-  },
-  {
-    id: "wildstyle",
-    name: "Wildstyle",
-    tag: "PRO",
-    desc: "Interlocking arrows, layered outlines, king-level construction.",
-  },
-  {
-    id: "blockbuster",
-    name: "Blockbuster",
-    tag: "BIG",
-    desc: "Massive geometric block letters. Freight-train monumentality.",
-  },
-  {
-    id: "handstyle",
-    name: "Handstyle",
-    tag: "TAG",
-    desc: "Pure one-shot signature gesture. Veteran writer flow.",
-  },
-  {
-    id: "brush",
-    name: "Brush",
-    tag: "INK",
-    desc: "Heavy ink-loaded brush calligraphy. Wabi-sabi expressive.",
-  },
+  { id: "bomber", name: "Bomber", tag: "NYC", desc: "Fat-marker handstyle with dramatic drips and whips." },
+  { id: "throwup", name: "Throw-Up", tag: "2T", desc: "Quick bubble piece — bold outline, flat fill." },
+  { id: "wildstyle", name: "Wildstyle", tag: "PRO", desc: "Interlocking arrows, layered outlines, king-level." },
+  { id: "blockbuster", name: "Blockbuster", tag: "BIG", desc: "Massive geometric block letters, freight-train scale." },
+  { id: "handstyle", name: "Handstyle", tag: "TAG", desc: "Pure one-shot signature gesture." },
+  { id: "brush", name: "Brush", tag: "INK", desc: "Heavy ink-loaded brush calligraphy." },
+  { id: "chrome", name: "Chrome", tag: "SLV", desc: "Polished silver fill, black outline & shadow." },
+  { id: "sticker", name: "Sticker", tag: "SLP", desc: "Marker on white slap label, skater culture." },
+  { id: "neon", name: "Neon", tag: "GLW", desc: "Glowing neon tubes on dark, halo bloom." },
+  { id: "threed", name: "3D Pop", tag: "3D", desc: "Extruded blocks, deep perspective shadow." },
+  { id: "oldschool", name: "Old School", tag: "80s", desc: "Soft-serve letters, cloud drips, two-tone fade." },
+  { id: "stencil", name: "Stencil", tag: "BNK", desc: "Sharp cut edges, Banksy-era street art." },
+  { id: "anime", name: "Anime", tag: "JPN", desc: "Cel-shaded, speedlines, Shonen-logo energy." },
 ];
 
 function PagarsArtLab() {
