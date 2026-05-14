@@ -21,7 +21,8 @@ import {
   X,
   Upload,
   Download,
-  
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import sceneBusstop from "@/assets/scene-busstop.jpg";
