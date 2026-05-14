@@ -569,6 +569,22 @@ function PagarsArtLab() {
             <Button
               size="sm"
               variant="ghost"
+              onClick={triggerUpload}
+              className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+            >
+              <Upload className="h-3.5 w-3.5" /> Upload
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={exportPng}
+              className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+            >
+              <Download className="h-3.5 w-3.5" /> PNG
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
               onClick={undo}
               className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
             >
