@@ -39,12 +39,13 @@ function PreviewPage() {
 
     const fidelity = Number(sessionStorage.getItem("mb:fidelity") ?? "0.4");
     const influence = Number(sessionStorage.getItem("mb:influence") ?? "8");
+    const style = (sessionStorage.getItem("mb:style") ?? "bomber") as any;
 
     (async () => {
       setBusy(true);
       setError(null);
       try {
-        const res = await enhance({ data: { imageDataUrl: dataUrl, fidelity, influence } });
+        const res = await enhance({ data: { imageDataUrl: dataUrl, fidelity, influence, style } });
         if (res.error || !res.image) {
           setError(res.error ?? "Something went wrong");
           toast.error(res.error ?? "Something went wrong");
@@ -69,8 +70,9 @@ function PreviewPage() {
     setResult(null);
     const fidelity = Number(sessionStorage.getItem("mb:fidelity") ?? "0.4");
     const influence = Number(sessionStorage.getItem("mb:influence") ?? "8");
+    const style = (sessionStorage.getItem("mb:style") ?? "bomber") as any;
     try {
-      const res = await enhance({ data: { imageDataUrl: input, fidelity, influence } });
+      const res = await enhance({ data: { imageDataUrl: input, fidelity, influence, style } });
       if (res.error || !res.image) {
         setError(res.error ?? "Something went wrong");
         toast.error(res.error ?? "Something went wrong");
