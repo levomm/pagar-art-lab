@@ -8,6 +8,13 @@ const STYLES = [
   "blockbuster",
   "handstyle",
   "brush",
+  "chrome",
+  "sticker",
+  "neon",
+  "threed",
+  "oldschool",
+  "stencil",
+  "anime",
 ] as const;
 type Style = (typeof STYLES)[number];
 
@@ -34,6 +41,20 @@ const STYLE_BRIEFS: Record<Style, string> = {
     "Pure HANDSTYLE / signature tag. One-shot fluid calligraphic gesture with a fat marker. Dramatic ligatures, long tails, hanging drips. Confident veteran writer flow.",
   brush:
     "BRUSH calligraphy / Eastern-influenced graffiti. Heavy ink-loaded brush strokes, dramatic pressure variation, sharp tapered tips, expressive wabi-sabi energy on a clean background.",
+  chrome:
+    "CHROME / SILVER piece. Polished metallic silver fill with sharp black outline and bold black drop-shadow. Crisp highlights and reflections that read as brushed steel. Classic NYC subway chrome panel energy.",
+  sticker:
+    "STICKER / SLAP style tag. Bold marker drawing on a white slap label with a die-cut border. Loose handstyle with a small character or arrow. Skater / writer slap-tag culture, photo-real label texture.",
+  neon:
+    "NEON SIGN tag. Letters rendered as glowing glass neon tubes — saturated electric color, soft outer halo bloom, dark background, visible tube terminations. Cinematic late-night street feel.",
+  threed:
+    "3D POP / dimensional piece. Heavy block letters extruded into deep 3D with strong perspective, dramatic side-shadow, hard inline highlight, bold outline. Looks carved out of the wall.",
+  oldschool:
+    "OLD SCHOOL 80s subway piece. Rounded soft-serve letters, cloud-fill drips, bubble outline, two-tone fade, classic old-school NYC train color combos. Style Wars era authenticity.",
+  stencil:
+    "STENCIL street-art tag. Sharp clean edges as if cut from cardboard, slight overspray haze around letters, single flat color on aged surface, Banksy-era urban stencil energy.",
+  anime:
+    "ANIME / MANGA style graffiti tag. Bold cel-shaded letters with crisp ink outlines, flat vibrant cel colors and a single sharp highlight. Dynamic speedlines or sparkle accents, screentone/halftone fills, slight glow. Reads as a Shonen action-title logo painted as a graffiti piece.",
 };
 
 function buildPrompt(style: Style, fidelity: number, influence: number) {
