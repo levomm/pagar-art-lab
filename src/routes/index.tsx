@@ -28,7 +28,7 @@ function MetroBomber() {
   const history = useRef<ImageData[]>([]);
 
   const [brush, setBrush] = useState(10);
-  const [fidelity, setFidelity] = useState(0.4);
+  const [fidelity, setFidelity] = useState(0.7);
   const [influence, setInfluence] = useState(8);
   const [busy, setBusy] = useState(false);
 
