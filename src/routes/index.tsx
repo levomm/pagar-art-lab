@@ -958,6 +958,22 @@ function TutorialContent() {
       </SheetHeader>
 
       <div className="mt-6 space-y-5 px-4 pb-8">
+        {/* ── Mis see äpp on ── */}
+        <div className="rounded-lg border border-[oklch(0.85_0.19_75)]/30 bg-[oklch(0.85_0.19_75)]/5 p-4">
+          <div className="mb-1 text-[10px] font-mono uppercase tracking-[0.25em] text-[oklch(0.85_0.19_75)]">
+            Mis see on
+          </div>
+          <h3 className="font-display text-lg font-bold tracking-tight">
+            Pagar's Art Lab — AI graffiti tag generaator
+          </h3>
+          <p className="mt-2 text-[12px] leading-relaxed text-white/70">
+            Joonista oma tag käsitsi (või laadi üles foto seinast / paberist),
+            vali stiil ja taust ning AI muudab su visandi puhtaks
+            professionaalse writeri tag'iks. Lae tulemus alla PNG-na ja kasuta
+            edasi kus iganes.
+          </p>
+        </div>
+
         <Step
           n={1}
           title="Pick your weapon"
