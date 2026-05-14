@@ -640,10 +640,26 @@ function PagarsArtLab() {
       />
 
       {/* ───────── Sidebar (md+) ───────── */}
-      <aside className="hidden md:flex md:h-full md:w-[300px] md:shrink-0 md:flex-col md:border-r md:border-white/10">
+      <aside
+        className={cn(
+          "hidden md:flex md:h-full md:shrink-0 md:flex-col md:border-r md:border-white/10 md:transition-all md:duration-200",
+          sidebarOpen ? "md:w-[300px]" : "md:w-0 md:overflow-hidden md:border-r-0",
+        )}
+      >
         <div className="flex items-center justify-between px-4 py-4">
           <Logo />
-          {TutorialButton}
+          <div className="flex items-center gap-1">
+            {TutorialButton}
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8 text-white/60 hover:bg-white/5 hover:text-white"
+              onClick={() => setSidebarOpen(false)}
+              title="Hide toolbar"
+            >
+              <PanelLeftClose className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
         <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-4">
@@ -665,6 +681,18 @@ function PagarsArtLab() {
           </Button>
         </div>
       </aside>
+
+      {/* Floating reopen button — desktop only, when sidebar hidden */}
+      {!sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          title="Show toolbar"
+          className="absolute left-3 top-3 z-20 hidden h-10 items-center gap-2 rounded-full border border-white/20 bg-black/70 px-3 text-xs font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/85 md:flex"
+        >
+          <PanelLeftOpen className="h-4 w-4" />
+          Tools
+        </button>
+      )}
 
       {/* ───────── Mobile header ───────── */}
       <header className="flex shrink-0 items-center justify-between border-b border-white/10 px-3 py-2.5 md:hidden">
