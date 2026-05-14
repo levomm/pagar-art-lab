@@ -124,14 +124,42 @@ function PagarsArtLab() {
   const [markerIdx, setMarkerIdx] = useState(0);
   const [bgIdx, setBgIdx] = useState(0);
   const [styleId, setStyleId] = useState<StyleId>("bomber");
+  const [brushType, setBrushType] = useState<BrushId>("marker");
   const [brush, setBrush] = useState(12);
   const [fidelity, setFidelity] = useState(0.7);
   const [influence, setInfluence] = useState(8);
   const [busy, setBusy] = useState(false);
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
 
-  const bgColor = BACKGROUNDS[bgIdx].color;
+  const bg = BACKGROUNDS[bgIdx];
+  const bgFill = bg.type === "color" ? bg.color : bg.fallback;
   const markerColor = MARKERS[markerIdx].color;
+
+  // Paint background (color or scene image) into the canvas
+  const paintBackground = useCallback((b: Bg) => {
+    const c = canvasRef.current;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+    if (b.type === "color") {
+      ctx.fillStyle = b.color;
+      ctx.fillRect(0, 0, c.width, c.height);
+      return;
+    }
+    // Image scene — fill fallback first, then cover-fit the photo
+    ctx.fillStyle = b.fallback;
+    ctx.fillRect(0, 0, c.width, c.height);
+    const img = new Image();
+    img.onload = () => {
+      const cw = c.width;
+      const ch = c.height;
+      const r = Math.max(cw / img.width, ch / img.height);
+      const w = img.width * r;
+      const h = img.height * r;
+      ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+    };
+    img.src = b.src;
+  }, []);
 
   // Init / resize canvas
   useEffect(() => {
@@ -150,7 +178,7 @@ function PagarsArtLab() {
       if (w === c.width && h === c.height) return;
       c.width = w;
       c.height = h;
-      ctx.fillStyle = bgColor;
+      ctx.fillStyle = bgFill;
       ctx.fillRect(0, 0, w, h);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
@@ -160,6 +188,9 @@ function PagarsArtLab() {
         tmp.height = prev.height;
         tmp.getContext("2d")!.putImageData(prev, 0, 0);
         ctx.drawImage(tmp, 0, 0, w, h);
+      } else {
+        // First mount — paint initial background scene if any
+        paintBackground(BACKGROUNDS[bgIdx]);
       }
     };
 
@@ -188,11 +219,119 @@ function PagarsArtLab() {
     };
   };
 
+  // Per-brush stroke between two points
+  const strokeSegment = (
+    ctx: CanvasRenderingContext2D,
+    a: { x: number; y: number },
+    b: { x: number; y: number },
+    sizePx: number,
+  ) => {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    if (brushType === "marker") {
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = sizePx;
+      ctx.strokeStyle = markerColor;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      return;
+    }
+    if (brushType === "fineliner") {
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = Math.max(1, sizePx * 0.35);
+      ctx.strokeStyle = markerColor;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      return;
+    }
+    if (brushType === "drip") {
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = sizePx;
+      ctx.strokeStyle = markerColor;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      // Occasional drip
+      if (Math.random() < 0.04) {
+        const dripLen = sizePx * (3 + Math.random() * 6);
+        ctx.lineWidth = sizePx * 0.55;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x + (Math.random() - 0.5) * sizePx, b.y + dripLen);
+        ctx.stroke();
+      }
+      return;
+    }
+    if (brushType === "spray") {
+      // Soft semi-transparent core + scattered dots
+      ctx.globalAlpha = 0.35;
+      ctx.lineWidth = sizePx;
+      ctx.strokeStyle = markerColor;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      ctx.globalAlpha = 0.5;
+      ctx.fillStyle = markerColor;
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const dist = Math.max(1, Math.hypot(dx, dy));
+      const steps = Math.ceil(dist / 2);
+      for (let i = 0; i < steps; i++) {
+        const t = i / steps;
+        const cx = a.x + dx * t;
+        const cy = a.y + dy * t;
+        for (let s = 0; s < 6; s++) {
+          const r = sizePx * (0.4 + Math.random() * 1.2);
+          const ang = Math.random() * Math.PI * 2;
+          const rad = Math.random() * sizePx * 0.6;
+          ctx.beginPath();
+          ctx.arc(cx + Math.cos(ang) * r, cy + Math.sin(ang) * r, Math.random() * 1.2 + 0.3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      return;
+    }
+    if (brushType === "chalk") {
+      ctx.globalAlpha = 0.55;
+      ctx.lineWidth = sizePx * 0.9;
+      ctx.strokeStyle = markerColor;
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const dist = Math.max(1, Math.hypot(dx, dy));
+      const steps = Math.ceil(dist / 2);
+      for (let i = 0; i < steps; i++) {
+        const t = i / steps;
+        const cx = a.x + dx * t + (Math.random() - 0.5) * sizePx * 0.4;
+        const cy = a.y + dy * t + (Math.random() - 0.5) * sizePx * 0.4;
+        ctx.beginPath();
+        ctx.arc(cx, cy, sizePx * 0.45 * Math.random(), 0, Math.PI * 2);
+        ctx.fillStyle = markerColor;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      return;
+    }
+  };
+
   const onDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
     snapshot();
     drawing.current = true;
     lastPt.current = getPos(e);
+    // Make a tiny dot on tap
+    const ctx = canvasRef.current!.getContext("2d")!;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const p = lastPt.current;
+    strokeSegment(ctx, p, p, brush * dpr);
   };
 
   const onMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -201,12 +340,7 @@ function PagarsArtLab() {
     const p = getPos(e);
     const last = lastPt.current!;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    ctx.lineWidth = brush * dpr;
-    ctx.strokeStyle = markerColor;
-    ctx.beginPath();
-    ctx.moveTo(last.x, last.y);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
+    strokeSegment(ctx, last, p, brush * dpr);
     lastPt.current = p;
   };
 
@@ -215,16 +349,9 @@ function PagarsArtLab() {
     lastPt.current = null;
   };
 
-  const fillBackground = (color: string) => {
-    const c = canvasRef.current!;
-    const ctx = c.getContext("2d")!;
-    snapshot();
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, c.width, c.height);
-  };
-
   const clearCanvas = () => {
-    fillBackground(bgColor);
+    snapshot();
+    paintBackground(BACKGROUNDS[bgIdx]);
     toast("Canvas cleared", { duration: 1200 });
   };
 
@@ -240,7 +367,8 @@ function PagarsArtLab() {
 
   const onBgChange = (i: number) => {
     setBgIdx(i);
-    fillBackground(BACKGROUNDS[i].color);
+    snapshot();
+    paintBackground(BACKGROUNDS[i]);
   };
 
   const exportPng = () => {
