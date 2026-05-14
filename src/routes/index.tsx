@@ -21,7 +21,7 @@ import {
   X,
   Upload,
   Download,
-  Brush as BrushIcon,
+  
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import sceneBusstop from "@/assets/scene-busstop.jpg";
