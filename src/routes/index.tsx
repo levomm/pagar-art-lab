@@ -625,7 +625,7 @@ function PagarsArtLab() {
 
   // ─── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="flex h-screen flex-col bg-background text-foreground md:flex-row">
+    <div className="relative flex h-screen flex-col bg-background text-foreground md:flex-row">
       <Toaster theme="dark" position="top-center" />
       <input
         ref={fileInputRef}
