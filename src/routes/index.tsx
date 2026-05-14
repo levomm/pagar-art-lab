@@ -21,7 +21,8 @@ import {
   X,
   Upload,
   Download,
-  
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import sceneBusstop from "@/assets/scene-busstop.jpg";
@@ -131,6 +132,7 @@ function PagarsArtLab() {
   const [influence, setInfluence] = useState(8);
   const [busy, setBusy] = useState(false);
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const bg = BACKGROUNDS[bgIdx];
   const bgFill = bg.type === "color" ? bg.color : bg.fallback;
@@ -623,7 +625,7 @@ function PagarsArtLab() {
 
   // ─── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="flex h-screen flex-col bg-background text-foreground md:flex-row">
+    <div className="relative flex h-screen flex-col bg-background text-foreground md:flex-row">
       <Toaster theme="dark" position="top-center" />
       <input
         ref={fileInputRef}
@@ -638,10 +640,26 @@ function PagarsArtLab() {
       />
 
       {/* ───────── Sidebar (md+) ───────── */}
-      <aside className="hidden md:flex md:h-full md:w-[300px] md:shrink-0 md:flex-col md:border-r md:border-white/10">
+      <aside
+        className={cn(
+          "hidden md:flex md:h-full md:shrink-0 md:flex-col md:border-r md:border-white/10 md:transition-all md:duration-200",
+          sidebarOpen ? "md:w-[300px]" : "md:w-0 md:overflow-hidden md:border-r-0",
+        )}
+      >
         <div className="flex items-center justify-between px-4 py-4">
           <Logo />
-          {TutorialButton}
+          <div className="flex items-center gap-1">
+            {TutorialButton}
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8 text-white/60 hover:bg-white/5 hover:text-white"
+              onClick={() => setSidebarOpen(false)}
+              title="Hide toolbar"
+            >
+              <PanelLeftClose className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
         <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-4">
@@ -663,6 +681,18 @@ function PagarsArtLab() {
           </Button>
         </div>
       </aside>
+
+      {/* Floating reopen button — desktop only, when sidebar hidden */}
+      {!sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          title="Show toolbar"
+          className="absolute left-3 top-3 z-20 hidden h-10 items-center gap-2 rounded-full border border-white/20 bg-black/70 px-3 text-xs font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/85 md:flex"
+        >
+          <PanelLeftOpen className="h-4 w-4" />
+          Tools
+        </button>
+      )}
 
       {/* ───────── Mobile header ───────── */}
       <header className="flex shrink-0 items-center justify-between border-b border-white/10 px-3 py-2.5 md:hidden">
@@ -963,8 +993,79 @@ function TutorialContent() {
             let the AI fully reinterpret your sketch as a master writer would.
           </p>
         </div>
+
+        {/* ── Install as app ── */}
+        <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
+          <div>
+            <div className="mb-1 text-[10px] font-mono uppercase tracking-[0.25em] text-[oklch(0.85_0.19_75)]">
+              Install as app
+            </div>
+            <h3 className="font-display text-xl font-bold tracking-tight">
+              Lisa avalehele nagu päris äpp
+            </h3>
+            <p className="mt-1 text-xs leading-relaxed text-white/60">
+              Lovable veebileht töötab ka offline-ikoonina sinu telefonis — täisekraan, ilma brauseri ribata.
+            </p>
+          </div>
+
+          <InstallStep
+            badge="iOS"
+            title="iPhone / iPad — Safari"
+            steps={[
+              "Ava see leht Safaris (mitte Chrome'is — Apple lubab installida ainult Safarist).",
+              "Vajuta all keskel Share-nuppu (ruut, millest nool üles).",
+              "Keri alla ja vali „Add to Home Screen“ / „Lisa avakuvale“.",
+              "Kinnita „Add“ — ikoon ilmub avakuvale ja avaneb täisekraanil.",
+            ]}
+          />
+
+          <InstallStep
+            badge="Android"
+            title="Android — Chrome"
+            steps={[
+              "Ava leht Chrome'is.",
+              "Vajuta paremal üleval kolme täpiga menüüd.",
+              "Vali „Install app“ / „Add to Home screen“ / „Lisa avakuvale“.",
+              "Kinnita „Install“ — ikoon ilmub avakuvale ja töötab nagu eraldi äpp.",
+            ]}
+          />
+
+          <p className="text-[11px] leading-relaxed text-white/40">
+            Märkus: AI-tagi tegemiseks on alati vaja internetti — see pole päris offline-äpp,
+            küll aga kiirem ja puhtam kui brauseri vahekaart.
+          </p>
+        </div>
       </div>
     </SheetContent>
+  );
+}
+
+function InstallStep({
+  badge,
+  title,
+  steps,
+}: {
+  badge: string;
+  title: string;
+  steps: string[];
+}) {
+  return (
+    <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+      <div className="mb-3 flex items-center gap-2">
+        <span className="rounded border border-white/20 bg-white/5 px-1.5 py-0.5 text-[9px] font-mono uppercase tracking-[0.2em] text-white/80">
+          {badge}
+        </span>
+        <h4 className="font-display text-sm font-bold tracking-tight">{title}</h4>
+      </div>
+      <ol className="space-y-1.5">
+        {steps.map((s, i) => (
+          <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-white/70">
+            <span className="font-mono text-[oklch(0.85_0.19_75)]">{i + 1}.</span>
+            <span>{s}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }
 
