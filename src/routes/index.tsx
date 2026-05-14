@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils";
 import sceneBusstop from "@/assets/scene-busstop.jpg";
 import sceneMetro from "@/assets/scene-metro.jpg";
 import sceneBrickwall from "@/assets/scene-brickwall.jpg";
+import logoPagars from "@/assets/logo-pagars.png";
 
 export const Route = createFileRoute("/")({
   component: PagarsArtLab,
@@ -846,18 +847,20 @@ function PagarsArtLab() {
 // ─── Sub-components ───────────────────────────────────────────────────────────
 function Logo({ compact = false }: { compact?: boolean }) {
   return (
-    <div className="leading-none select-none">
-      <div
+    <div className="flex items-center gap-2 select-none">
+      <img
+        src={logoPagars}
+        alt="Pagar's Art Lab"
+        draggable={false}
         className={cn(
-          "logo-tag text-white",
-          compact ? "text-[26px]" : "text-[30px]",
+          "object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]",
+          compact ? "h-12 w-auto" : "h-16 w-auto",
         )}
-      >
-        Pagar's
-        <span className="ml-1 text-[oklch(0.85_0.19_75)]">Art Lab</span>
-      </div>
-      <div className="mt-1 text-[9px] font-mono uppercase tracking-[0.25em] text-white/40">
-        EST · 2026 · BOMB SQUAD
+      />
+      <div className="hidden text-[9px] font-mono uppercase tracking-[0.25em] text-white/40 sm:block">
+        EST · 2026
+        <br />
+        BOMB SQUAD
       </div>
     </div>
   );
