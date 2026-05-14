@@ -458,6 +458,17 @@ function PagarsArtLab() {
   return (
     <div className="flex h-screen flex-col bg-background text-foreground md:flex-row">
       <Toaster theme="dark" position="top-center" />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) onUploadFile(f);
+          e.target.value = "";
+        }}
+      />
 
       {/* ───────── Sidebar (md+) ───────── */}
       <aside className="hidden md:flex md:h-full md:w-[300px] md:shrink-0 md:flex-col md:border-r md:border-white/10">
