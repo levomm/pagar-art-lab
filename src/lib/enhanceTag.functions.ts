@@ -50,57 +50,68 @@ Output: a single clean high-resolution image of the restyled tag on a solid whit
 export const enhanceTag = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }) => {
-    const apiKey = process.env.LOVABLE_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return { image: null as string | null, error: "LOVABLE_API_KEY is not configured." };
+      return { image: null as string | null, error: "GEMINI_API_KEY is not configured." };
     }
 
     const prompt = buildPrompt(data.fidelity, data.influence);
 
+    // Strip data URL prefix → raw base64 + mime
+    const match = data.imageDataUrl.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
+    if (!match) {
+      return { image: null, error: "Invalid image data." };
+    }
+    const mimeType = match[1];
+    const b64 = match[2];
+
     try {
-      const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "google/gemini-2.5-flash-image",
-          messages: [
-            {
-              role: "user",
-              content: [
-                { type: "text", text: prompt },
-                { type: "image_url", image_url: { url: data.imageDataUrl } },
-              ],
-            },
-          ],
-          modalities: ["image", "text"],
-        }),
-      });
+      const response = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent",
+        {
+          method: "POST",
+          headers: {
+            "x-goog-api-key": apiKey,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                role: "user",
+                parts: [
+                  { text: prompt },
+                  { inline_data: { mime_type: mimeType, data: b64 } },
+                ],
+              },
+            ],
+          }),
+        }
+      );
 
       if (!response.ok) {
-        if (response.status === 429) {
-          return { image: null, error: "Rate limit reached. Please wait a moment and try again." };
-        }
-        if (response.status === 402) {
-          return { image: null, error: "AI credits exhausted. Add funds in Settings → Workspace → Usage." };
-        }
         const text = await response.text();
-        console.error("AI gateway error", response.status, text);
-        return { image: null, error: `AI gateway error (${response.status}).` };
+        console.error("Gemini API error", response.status, text);
+        if (response.status === 429) {
+          return { image: null, error: "Rate limit reached. Wait a moment and try again." };
+        }
+        if (response.status === 401 || response.status === 403) {
+          return { image: null, error: "Invalid Gemini API key." };
+        }
+        return { image: null, error: `Gemini API error (${response.status}).` };
       }
 
       const json = await response.json();
-      const image: string | undefined =
-        json?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+      const parts = json?.candidates?.[0]?.content?.parts ?? [];
+      const imgPart = parts.find((p: any) => p?.inline_data?.data || p?.inlineData?.data);
+      const inline = imgPart?.inline_data ?? imgPart?.inlineData;
 
-      if (!image) {
-        console.error("No image in response", JSON.stringify(json).slice(0, 500));
+      if (!inline?.data) {
+        console.error("No image in Gemini response", JSON.stringify(json).slice(0, 500));
         return { image: null, error: "AI did not return an image. Try again." };
       }
 
-      return { image, error: null as string | null };
+      const outMime = inline.mime_type ?? inline.mimeType ?? "image/png";
+      return { image: `data:${outMime};base64,${inline.data}`, error: null as string | null };
     } catch (err) {
       console.error("enhanceTag failed", err);
       return { image: null, error: "Request failed. Check your connection and try again." };
