@@ -543,10 +543,39 @@ function PagarsArtLab() {
     </div>
   );
 
+  const BrushTypeRow = (
+    <div>
+      <PanelLabel>Brush</PanelLabel>
+      <div className="grid grid-cols-5 gap-1.5">
+        {BRUSHES.map((b) => {
+          const active = brushType === b.id;
+          return (
+            <button
+              key={b.id}
+              onClick={() => setBrushType(b.id)}
+              title={b.name}
+              className={cn(
+                "flex flex-col items-center gap-0.5 rounded-md border px-1 py-1.5 transition-colors",
+                active
+                  ? "border-[oklch(0.78_0.19_75)] bg-[oklch(0.78_0.19_75)]/10 text-white"
+                  : "border-white/10 text-white/60 hover:border-white/30 hover:text-white/90",
+              )}
+            >
+              <span className="font-mono text-[9px] tracking-wider">{b.tag}</span>
+            </button>
+          );
+        })}
+      </div>
+      <div className="mt-1 text-[10px] uppercase tracking-wider text-white/50">
+        {BRUSHES.find((b) => b.id === brushType)!.name}
+      </div>
+    </div>
+  );
+
   const SlidersBlock = (
     <div className="space-y-3">
       <ControlSlider
-        label="Brush"
+        label="Size"
         value={`${brush}px`}
         v={brush}
         min={2}
