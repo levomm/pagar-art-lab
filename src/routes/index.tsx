@@ -19,6 +19,8 @@ import {
   Undo2,
   Settings2,
   X,
+  Upload,
+  Download,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
