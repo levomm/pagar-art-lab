@@ -993,8 +993,79 @@ function TutorialContent() {
             let the AI fully reinterpret your sketch as a master writer would.
           </p>
         </div>
+
+        {/* ── Install as app ── */}
+        <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
+          <div>
+            <div className="mb-1 text-[10px] font-mono uppercase tracking-[0.25em] text-[oklch(0.85_0.19_75)]">
+              Install as app
+            </div>
+            <h3 className="font-display text-xl font-bold tracking-tight">
+              Lisa avalehele nagu päris äpp
+            </h3>
+            <p className="mt-1 text-xs leading-relaxed text-white/60">
+              Lovable veebileht töötab ka offline-ikoonina sinu telefonis — täisekraan, ilma brauseri ribata.
+            </p>
+          </div>
+
+          <InstallStep
+            badge="iOS"
+            title="iPhone / iPad — Safari"
+            steps={[
+              "Ava see leht Safaris (mitte Chrome'is — Apple lubab installida ainult Safarist).",
+              "Vajuta all keskel Share-nuppu (ruut, millest nool üles).",
+              "Keri alla ja vali „Add to Home Screen“ / „Lisa avakuvale“.",
+              "Kinnita „Add“ — ikoon ilmub avakuvale ja avaneb täisekraanil.",
+            ]}
+          />
+
+          <InstallStep
+            badge="Android"
+            title="Android — Chrome"
+            steps={[
+              "Ava leht Chrome'is.",
+              "Vajuta paremal üleval kolme täpiga menüüd.",
+              "Vali „Install app“ / „Add to Home screen“ / „Lisa avakuvale“.",
+              "Kinnita „Install“ — ikoon ilmub avakuvale ja töötab nagu eraldi äpp.",
+            ]}
+          />
+
+          <p className="text-[11px] leading-relaxed text-white/40">
+            Märkus: AI-tagi tegemiseks on alati vaja internetti — see pole päris offline-äpp,
+            küll aga kiirem ja puhtam kui brauseri vahekaart.
+          </p>
+        </div>
       </div>
     </SheetContent>
+  );
+}
+
+function InstallStep({
+  badge,
+  title,
+  steps,
+}: {
+  badge: string;
+  title: string;
+  steps: string[];
+}) {
+  return (
+    <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
+      <div className="mb-3 flex items-center gap-2">
+        <span className="rounded border border-white/20 bg-white/5 px-1.5 py-0.5 text-[9px] font-mono uppercase tracking-[0.2em] text-white/80">
+          {badge}
+        </span>
+        <h4 className="font-display text-sm font-bold tracking-tight">{title}</h4>
+      </div>
+      <ol className="space-y-1.5">
+        {steps.map((s, i) => (
+          <li key={i} className="flex gap-2 text-[12px] leading-relaxed text-white/70">
+            <span className="font-mono text-[oklch(0.85_0.19_75)]">{i + 1}.</span>
+            <span>{s}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }
 
