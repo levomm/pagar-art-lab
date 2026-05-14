@@ -21,8 +21,12 @@ import {
   X,
   Upload,
   Download,
+  
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import sceneBusstop from "@/assets/scene-busstop.jpg";
+import sceneMetro from "@/assets/scene-metro.jpg";
+import sceneBrickwall from "@/assets/scene-brickwall.jpg";
 
 export const Route = createFileRoute("/")({
   component: PagarsArtLab,
@@ -52,13 +56,29 @@ const MARKERS = [
 ] as const;
 
 // ─── Background variants ──────────────────────────────────────────────────────
-const BACKGROUNDS = [
-  { name: "Paper", color: "#ffffff", label: "WHT" },
-  { name: "Cream", color: "#f3ead4", label: "CRM" },
-  { name: "Concrete", color: "#a4a8ad", label: "CON" },
-  { name: "Brick", color: "#7a3a2a", label: "BRK" },
-  { name: "Subway", color: "#1a1a1a", label: "SUB" },
-] as const;
+type Bg =
+  | { name: string; label: string; type: "color"; color: string }
+  | { name: string; label: string; type: "image"; src: string; fallback: string };
+
+const BACKGROUNDS: Bg[] = [
+  { name: "Paper", label: "WHT", type: "color", color: "#ffffff" },
+  { name: "Cream", label: "CRM", type: "color", color: "#f3ead4" },
+  { name: "Concrete", label: "CON", type: "color", color: "#a4a8ad" },
+  { name: "Subway", label: "SUB", type: "color", color: "#1a1a1a" },
+  { name: "Bus Stop", label: "BUS", type: "image", src: sceneBusstop, fallback: "#2a2e36" },
+  { name: "Metro Cab", label: "MET", type: "image", src: sceneMetro, fallback: "#cfc7b6" },
+  { name: "Brick Wall", label: "BRK", type: "image", src: sceneBrickwall, fallback: "#7a3a2a" },
+];
+
+// ─── Brush variants ───────────────────────────────────────────────────────────
+type BrushId = "marker" | "fineliner" | "spray" | "drip" | "chalk";
+const BRUSHES: { id: BrushId; name: string; tag: string }[] = [
+  { id: "marker", name: "Fat Marker", tag: "MKR" },
+  { id: "fineliner", name: "Fineliner", tag: "FNE" },
+  { id: "spray", name: "Spray Can", tag: "SPR" },
+  { id: "drip", name: "Drip Marker", tag: "DRP" },
+  { id: "chalk", name: "Chalk", tag: "CHK" },
+];
 
 // ─── Style catalog ────────────────────────────────────────────────────────────
 type StyleId =
@@ -67,45 +87,29 @@ type StyleId =
   | "wildstyle"
   | "blockbuster"
   | "handstyle"
-  | "brush";
+  | "brush"
+  | "chrome"
+  | "sticker"
+  | "neon"
+  | "threed"
+  | "oldschool"
+  | "stencil"
+  | "anime";
 
 const STYLES: { id: StyleId; name: string; tag: string; desc: string }[] = [
-  {
-    id: "bomber",
-    name: "Bomber",
-    tag: "NYC",
-    desc: "Fat-marker handstyle with dramatic drips and whips. The classic.",
-  },
-  {
-    id: "throwup",
-    name: "Throw-Up",
-    tag: "2-TONE",
-    desc: "Quick bubble piece — bold outline, flat fill, subway speed.",
-  },
-  {
-    id: "wildstyle",
-    name: "Wildstyle",
-    tag: "PRO",
-    desc: "Interlocking arrows, layered outlines, king-level construction.",
-  },
-  {
-    id: "blockbuster",
-    name: "Blockbuster",
-    tag: "BIG",
-    desc: "Massive geometric block letters. Freight-train monumentality.",
-  },
-  {
-    id: "handstyle",
-    name: "Handstyle",
-    tag: "TAG",
-    desc: "Pure one-shot signature gesture. Veteran writer flow.",
-  },
-  {
-    id: "brush",
-    name: "Brush",
-    tag: "INK",
-    desc: "Heavy ink-loaded brush calligraphy. Wabi-sabi expressive.",
-  },
+  { id: "bomber", name: "Bomber", tag: "NYC", desc: "Fat-marker handstyle with dramatic drips and whips." },
+  { id: "throwup", name: "Throw-Up", tag: "2T", desc: "Quick bubble piece — bold outline, flat fill." },
+  { id: "wildstyle", name: "Wildstyle", tag: "PRO", desc: "Interlocking arrows, layered outlines, king-level." },
+  { id: "blockbuster", name: "Blockbuster", tag: "BIG", desc: "Massive geometric block letters, freight-train scale." },
+  { id: "handstyle", name: "Handstyle", tag: "TAG", desc: "Pure one-shot signature gesture." },
+  { id: "brush", name: "Brush", tag: "INK", desc: "Heavy ink-loaded brush calligraphy." },
+  { id: "chrome", name: "Chrome", tag: "SLV", desc: "Polished silver fill, black outline & shadow." },
+  { id: "sticker", name: "Sticker", tag: "SLP", desc: "Marker on white slap label, skater culture." },
+  { id: "neon", name: "Neon", tag: "GLW", desc: "Glowing neon tubes on dark, halo bloom." },
+  { id: "threed", name: "3D Pop", tag: "3D", desc: "Extruded blocks, deep perspective shadow." },
+  { id: "oldschool", name: "Old School", tag: "80s", desc: "Soft-serve letters, cloud drips, two-tone fade." },
+  { id: "stencil", name: "Stencil", tag: "BNK", desc: "Sharp cut edges, Banksy-era street art." },
+  { id: "anime", name: "Anime", tag: "JPN", desc: "Cel-shaded, speedlines, Shonen-logo energy." },
 ];
 
 function PagarsArtLab() {
@@ -120,14 +124,42 @@ function PagarsArtLab() {
   const [markerIdx, setMarkerIdx] = useState(0);
   const [bgIdx, setBgIdx] = useState(0);
   const [styleId, setStyleId] = useState<StyleId>("bomber");
+  const [brushType, setBrushType] = useState<BrushId>("marker");
   const [brush, setBrush] = useState(12);
   const [fidelity, setFidelity] = useState(0.7);
   const [influence, setInfluence] = useState(8);
   const [busy, setBusy] = useState(false);
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
 
-  const bgColor = BACKGROUNDS[bgIdx].color;
+  const bg = BACKGROUNDS[bgIdx];
+  const bgFill = bg.type === "color" ? bg.color : bg.fallback;
   const markerColor = MARKERS[markerIdx].color;
+
+  // Paint background (color or scene image) into the canvas
+  const paintBackground = useCallback((b: Bg) => {
+    const c = canvasRef.current;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+    if (b.type === "color") {
+      ctx.fillStyle = b.color;
+      ctx.fillRect(0, 0, c.width, c.height);
+      return;
+    }
+    // Image scene — fill fallback first, then cover-fit the photo
+    ctx.fillStyle = b.fallback;
+    ctx.fillRect(0, 0, c.width, c.height);
+    const img = new Image();
+    img.onload = () => {
+      const cw = c.width;
+      const ch = c.height;
+      const r = Math.max(cw / img.width, ch / img.height);
+      const w = img.width * r;
+      const h = img.height * r;
+      ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+    };
+    img.src = b.src;
+  }, []);
 
   // Init / resize canvas
   useEffect(() => {
@@ -146,7 +178,7 @@ function PagarsArtLab() {
       if (w === c.width && h === c.height) return;
       c.width = w;
       c.height = h;
-      ctx.fillStyle = bgColor;
+      ctx.fillStyle = bgFill;
       ctx.fillRect(0, 0, w, h);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
@@ -156,6 +188,9 @@ function PagarsArtLab() {
         tmp.height = prev.height;
         tmp.getContext("2d")!.putImageData(prev, 0, 0);
         ctx.drawImage(tmp, 0, 0, w, h);
+      } else {
+        // First mount — paint initial background scene if any
+        paintBackground(BACKGROUNDS[bgIdx]);
       }
     };
 
@@ -184,11 +219,119 @@ function PagarsArtLab() {
     };
   };
 
+  // Per-brush stroke between two points
+  const strokeSegment = (
+    ctx: CanvasRenderingContext2D,
+    a: { x: number; y: number },
+    b: { x: number; y: number },
+    sizePx: number,
+  ) => {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    if (brushType === "marker") {
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = sizePx;
+      ctx.strokeStyle = markerColor;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      return;
+    }
+    if (brushType === "fineliner") {
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = Math.max(1, sizePx * 0.35);
+      ctx.strokeStyle = markerColor;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      return;
+    }
+    if (brushType === "drip") {
+      ctx.globalAlpha = 1;
+      ctx.lineWidth = sizePx;
+      ctx.strokeStyle = markerColor;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      // Occasional drip
+      if (Math.random() < 0.04) {
+        const dripLen = sizePx * (3 + Math.random() * 6);
+        ctx.lineWidth = sizePx * 0.55;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(b.x + (Math.random() - 0.5) * sizePx, b.y + dripLen);
+        ctx.stroke();
+      }
+      return;
+    }
+    if (brushType === "spray") {
+      // Soft semi-transparent core + scattered dots
+      ctx.globalAlpha = 0.35;
+      ctx.lineWidth = sizePx;
+      ctx.strokeStyle = markerColor;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+      ctx.globalAlpha = 0.5;
+      ctx.fillStyle = markerColor;
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const dist = Math.max(1, Math.hypot(dx, dy));
+      const steps = Math.ceil(dist / 2);
+      for (let i = 0; i < steps; i++) {
+        const t = i / steps;
+        const cx = a.x + dx * t;
+        const cy = a.y + dy * t;
+        for (let s = 0; s < 6; s++) {
+          const r = sizePx * (0.4 + Math.random() * 1.2);
+          const ang = Math.random() * Math.PI * 2;
+          const rad = Math.random() * sizePx * 0.6;
+          ctx.beginPath();
+          ctx.arc(cx + Math.cos(ang) * r, cy + Math.sin(ang) * r, Math.random() * 1.2 + 0.3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      return;
+    }
+    if (brushType === "chalk") {
+      ctx.globalAlpha = 0.55;
+      ctx.lineWidth = sizePx * 0.9;
+      ctx.strokeStyle = markerColor;
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const dist = Math.max(1, Math.hypot(dx, dy));
+      const steps = Math.ceil(dist / 2);
+      for (let i = 0; i < steps; i++) {
+        const t = i / steps;
+        const cx = a.x + dx * t + (Math.random() - 0.5) * sizePx * 0.4;
+        const cy = a.y + dy * t + (Math.random() - 0.5) * sizePx * 0.4;
+        ctx.beginPath();
+        ctx.arc(cx, cy, sizePx * 0.45 * Math.random(), 0, Math.PI * 2);
+        ctx.fillStyle = markerColor;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      return;
+    }
+  };
+
   const onDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     e.currentTarget.setPointerCapture(e.pointerId);
     snapshot();
     drawing.current = true;
     lastPt.current = getPos(e);
+    // Make a tiny dot on tap
+    const ctx = canvasRef.current!.getContext("2d")!;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const p = lastPt.current;
+    strokeSegment(ctx, p, p, brush * dpr);
   };
 
   const onMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -197,12 +340,7 @@ function PagarsArtLab() {
     const p = getPos(e);
     const last = lastPt.current!;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    ctx.lineWidth = brush * dpr;
-    ctx.strokeStyle = markerColor;
-    ctx.beginPath();
-    ctx.moveTo(last.x, last.y);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
+    strokeSegment(ctx, last, p, brush * dpr);
     lastPt.current = p;
   };
 
@@ -211,16 +349,9 @@ function PagarsArtLab() {
     lastPt.current = null;
   };
 
-  const fillBackground = (color: string) => {
-    const c = canvasRef.current!;
-    const ctx = c.getContext("2d")!;
-    snapshot();
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, c.width, c.height);
-  };
-
   const clearCanvas = () => {
-    fillBackground(bgColor);
+    snapshot();
+    paintBackground(BACKGROUNDS[bgIdx]);
     toast("Canvas cleared", { duration: 1200 });
   };
 
@@ -236,7 +367,8 @@ function PagarsArtLab() {
 
   const onBgChange = (i: number) => {
     setBgIdx(i);
-    fillBackground(BACKGROUNDS[i].color);
+    snapshot();
+    paintBackground(BACKGROUNDS[i]);
   };
 
   const exportPng = () => {
@@ -349,8 +481,13 @@ function PagarsArtLab() {
             )}
           >
             <span
-              className="h-4 w-4 rounded-sm border border-black/30"
-              style={{ background: b.color }}
+              className="h-4 w-4 rounded-sm border border-black/30 bg-cover bg-center"
+              style={{
+                background:
+                  b.type === "color"
+                    ? b.color
+                    : `url(${b.src}) center/cover`,
+              }}
             />
             {b.label}
           </button>
@@ -406,10 +543,39 @@ function PagarsArtLab() {
     </div>
   );
 
+  const BrushTypeRow = (
+    <div>
+      <PanelLabel>Brush</PanelLabel>
+      <div className="grid grid-cols-5 gap-1.5">
+        {BRUSHES.map((b) => {
+          const active = brushType === b.id;
+          return (
+            <button
+              key={b.id}
+              onClick={() => setBrushType(b.id)}
+              title={b.name}
+              className={cn(
+                "flex flex-col items-center gap-0.5 rounded-md border px-1 py-1.5 transition-colors",
+                active
+                  ? "border-[oklch(0.78_0.19_75)] bg-[oklch(0.78_0.19_75)]/10 text-white"
+                  : "border-white/10 text-white/60 hover:border-white/30 hover:text-white/90",
+              )}
+            >
+              <span className="font-mono text-[9px] tracking-wider">{b.tag}</span>
+            </button>
+          );
+        })}
+      </div>
+      <div className="mt-1 text-[10px] uppercase tracking-wider text-white/50">
+        {BRUSHES.find((b) => b.id === brushType)!.name}
+      </div>
+    </div>
+  );
+
   const SlidersBlock = (
     <div className="space-y-3">
       <ControlSlider
-        label="Brush"
+        label="Size"
         value={`${brush}px`}
         v={brush}
         min={2}
@@ -479,6 +645,7 @@ function PagarsArtLab() {
 
         <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-4">
           {MarkerRow}
+          {BrushTypeRow}
           {BgRow}
           {StyleRow}
           {SlidersBlock}
@@ -517,15 +684,6 @@ function PagarsArtLab() {
             title="Export PNG"
           >
             <Download className="h-4 w-4" />
-          </Button>
-          <Button
-            size="icon"
-            variant="ghost"
-            className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
-            onClick={undo}
-            title="Undo"
-          >
-            <Undo2 className="h-4 w-4" />
           </Button>
           <Button
             size="icon"
@@ -585,14 +743,6 @@ function PagarsArtLab() {
             <Button
               size="sm"
               variant="ghost"
-              onClick={undo}
-              className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
-            >
-              <Undo2 className="h-3.5 w-3.5" /> Undo
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
               onClick={clearCanvas}
               className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
             >
@@ -604,7 +754,7 @@ function PagarsArtLab() {
         <div
           ref={wrapRef}
           className="relative flex-1"
-          style={{ background: bgColor }}
+          style={{ background: bgFill }}
         >
           <canvas
             ref={canvasRef}
@@ -616,6 +766,15 @@ function PagarsArtLab() {
             className="absolute inset-0 h-full w-full touch-none"
             style={{ cursor: "crosshair" }}
           />
+          {/* Floating Undo FAB — top-right of canvas */}
+          <button
+            onClick={undo}
+            title="Undo last stroke"
+            className="absolute right-3 top-3 z-10 flex h-12 items-center gap-2 rounded-full border border-white/20 bg-black/70 px-4 text-sm font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/85 active:scale-95"
+          >
+            <Undo2 className="h-5 w-5" />
+            <span className="hidden sm:inline">Undo</span>
+          </button>
         </div>
 
         {/* ───────── Mobile bottom panel ───────── */}
@@ -660,6 +819,7 @@ function PagarsArtLab() {
           {mobilePanelOpen && (
             <div className="max-h-[58vh] space-y-4 overflow-y-auto border-t border-white/10 px-3 py-3">
               {MarkerRow}
+              {BrushTypeRow}
               {BgRow}
               {StyleRow}
               {SlidersBlock}
