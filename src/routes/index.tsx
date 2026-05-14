@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils";
 import sceneBusstop from "@/assets/scene-busstop.jpg";
 import sceneMetro from "@/assets/scene-metro.jpg";
 import sceneBrickwall from "@/assets/scene-brickwall.jpg";
+import logoPagars from "@/assets/logo-pagars.png";
 
 export const Route = createFileRoute("/")({
   component: PagarsArtLab,
