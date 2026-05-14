@@ -645,6 +645,7 @@ function PagarsArtLab() {
 
         <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-4">
           {MarkerRow}
+          {BrushTypeRow}
           {BgRow}
           {StyleRow}
           {SlidersBlock}
@@ -826,6 +827,7 @@ function PagarsArtLab() {
           {mobilePanelOpen && (
             <div className="max-h-[58vh] space-y-4 overflow-y-auto border-t border-white/10 px-3 py-3">
               {MarkerRow}
+              {BrushTypeRow}
               {BgRow}
               {StyleRow}
               {SlidersBlock}
