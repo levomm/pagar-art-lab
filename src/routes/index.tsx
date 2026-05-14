@@ -504,6 +504,24 @@ function PagarsArtLab() {
             size="icon"
             variant="ghost"
             className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
+            onClick={triggerUpload}
+            title="Upload tag"
+          >
+            <Upload className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
+            onClick={exportPng}
+            title="Export PNG"
+          >
+            <Download className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
             onClick={undo}
             title="Undo"
           >
