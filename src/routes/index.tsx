@@ -19,6 +19,8 @@ import {
   Undo2,
   Settings2,
   X,
+  Upload,
+  Download,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -110,6 +112,7 @@ function PagarsArtLab() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const drawing = useRef(false);
   const lastPt = useRef<{ x: number; y: number } | null>(null);
   const history = useRef<ImageData[]>([]);
@@ -235,6 +238,56 @@ function PagarsArtLab() {
     setBgIdx(i);
     fillBackground(BACKGROUNDS[i].color);
   };
+
+  const exportPng = () => {
+    const c = canvasRef.current;
+    if (!c) return;
+    try {
+      const url = c.toDataURL("image/png");
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `pagars-art-lab-${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      toast.success("PNG exported");
+    } catch (e) {
+      console.error(e);
+      toast.error("Export failed");
+    }
+  };
+
+  const onUploadFile = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      toast.error("Pick an image file");
+      return;
+    }
+    const c = canvasRef.current;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+    const img = new Image();
+    const objUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      snapshot();
+      const margin = 0.08;
+      const maxW = c.width * (1 - margin * 2);
+      const maxH = c.height * (1 - margin * 2);
+      const r = Math.min(maxW / img.width, maxH / img.height);
+      const w = img.width * r;
+      const h = img.height * r;
+      ctx.drawImage(img, (c.width - w) / 2, (c.height - h) / 2, w, h);
+      URL.revokeObjectURL(objUrl);
+      toast.success("Tag pasted");
+    };
+    img.onerror = () => {
+      toast.error("Could not load image");
+      URL.revokeObjectURL(objUrl);
+    };
+    img.src = objUrl;
+  };
+
+  const triggerUpload = () => fileInputRef.current?.click();
 
   const handleEnhance = async () => {
     const c = canvasRef.current!;
@@ -405,6 +458,17 @@ function PagarsArtLab() {
   return (
     <div className="flex h-screen flex-col bg-background text-foreground md:flex-row">
       <Toaster theme="dark" position="top-center" />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => {
+          const f = e.target.files?.[0];
+          if (f) onUploadFile(f);
+          e.target.value = "";
+        }}
+      />
 
       {/* ───────── Sidebar (md+) ───────── */}
       <aside className="hidden md:flex md:h-full md:w-[300px] md:shrink-0 md:flex-col md:border-r md:border-white/10">
@@ -436,6 +500,24 @@ function PagarsArtLab() {
       <header className="flex shrink-0 items-center justify-between border-b border-white/10 px-3 py-2.5 md:hidden">
         <Logo compact />
         <div className="flex items-center gap-1">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
+            onClick={triggerUpload}
+            title="Upload tag"
+          >
+            <Upload className="h-4 w-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
+            onClick={exportPng}
+            title="Export PNG"
+          >
+            <Download className="h-4 w-4" />
+          </Button>
           <Button
             size="icon"
             variant="ghost"
@@ -484,6 +566,22 @@ function PagarsArtLab() {
             {STYLES.find((s) => s.id === styleId)!.name}
           </div>
           <div className="flex items-center gap-1">
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={triggerUpload}
+              className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+            >
+              <Upload className="h-3.5 w-3.5" /> Upload
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={exportPng}
+              className="h-7 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+            >
+              <Download className="h-3.5 w-3.5" /> PNG
+            </Button>
             <Button
               size="sm"
               variant="ghost"
