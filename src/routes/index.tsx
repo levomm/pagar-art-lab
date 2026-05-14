@@ -151,14 +151,14 @@ function MetroBomber() {
       {/* Top bar */}
       <header className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-2.5">
         <div className="flex items-center gap-2">
-          <span className="inline-block h-2 w-2 rounded-full bg-[oklch(0.72_0.18_280)]" />
+          <span className="inline-block h-2 w-2 rounded-full bg-[oklch(0.85_0.19_75)]" />
           <h1 className="text-sm font-medium tracking-tight">Metro Bomber</h1>
         </div>
         <div className="flex items-center gap-1">
           <Button
             size="sm"
             variant="ghost"
-            className="h-8 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+            className="h-8 gap-1 text-xs text-white hover:bg-white/5 hover:text-white"
             onClick={undo}
           >
             <Undo2 className="h-3.5 w-3.5" />
@@ -167,7 +167,7 @@ function MetroBomber() {
           <Button
             size="sm"
             variant="ghost"
-            className="h-8 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+            className="h-8 gap-1 text-xs text-white hover:bg-white/5 hover:text-white"
             onClick={clearCanvas}
           >
             <Eraser className="h-3.5 w-3.5" />
@@ -195,8 +195,8 @@ function MetroBomber() {
         <div className="grid grid-cols-3 gap-3 text-xs">
           <div>
             <div className="mb-1 flex items-center justify-between">
-              <span className="text-white/50">Brush</span>
-              <span className="font-mono text-white/70">{brush}px</span>
+              <span className="text-white/80">Brush</span>
+              <span className="font-mono text-white">{brush}px</span>
             </div>
             <Slider
               value={[brush]}
@@ -208,8 +208,8 @@ function MetroBomber() {
           </div>
           <div>
             <div className="mb-1 flex items-center justify-between">
-              <span className="text-white/50">Fidelity</span>
-              <span className="font-mono text-white/70">{fidelity.toFixed(2)}</span>
+              <span className="text-white/80">Fidelity</span>
+              <span className="font-mono text-white">{fidelity.toFixed(2)}</span>
             </div>
             <Slider
               value={[fidelity]}
@@ -221,8 +221,8 @@ function MetroBomber() {
           </div>
           <div>
             <div className="mb-1 flex items-center justify-between">
-              <span className="text-white/50">Influence</span>
-              <span className="font-mono text-white/70">{influence.toFixed(1)}</span>
+              <span className="text-white/80">Influence</span>
+              <span className="font-mono text-white">{influence.toFixed(1)}</span>
             </div>
             <Slider
               value={[influence]}
@@ -236,7 +236,7 @@ function MetroBomber() {
         <Button
           onClick={handleEnhance}
           disabled={busy}
-          className="mt-3 h-11 w-full gap-2 bg-[oklch(0.66_0.18_280)] text-white hover:bg-[oklch(0.72_0.18_280)]"
+          className="mt-3 h-11 w-full gap-2 bg-[oklch(0.78_0.19_75)] text-white hover:bg-[oklch(0.85_0.19_75)]"
         >
           <Sparkles className="h-4 w-4" />
           Enhance Tag
