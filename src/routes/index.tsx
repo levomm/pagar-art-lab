@@ -958,6 +958,22 @@ function TutorialContent() {
       </SheetHeader>
 
       <div className="mt-6 space-y-5 px-4 pb-8">
+        {/* ── Mis see äpp on ── */}
+        <div className="rounded-lg border border-[oklch(0.85_0.19_75)]/30 bg-[oklch(0.85_0.19_75)]/5 p-4">
+          <div className="mb-1 text-[10px] font-mono uppercase tracking-[0.25em] text-[oklch(0.85_0.19_75)]">
+            Mis see on
+          </div>
+          <h3 className="font-display text-lg font-bold tracking-tight">
+            Pagar's Art Lab — AI graffiti tag generaator
+          </h3>
+          <p className="mt-2 text-[12px] leading-relaxed text-white/70">
+            Joonista oma tag käsitsi (või laadi üles foto seinast / paberist),
+            vali stiil ja taust ning AI muudab su visandi puhtaks
+            professionaalse writeri tag'iks. Lae tulemus alla PNG-na ja kasuta
+            edasi kus iganes.
+          </p>
+        </div>
+
         <Step
           n={1}
           title="Pick your weapon"
@@ -1035,9 +1051,74 @@ function TutorialContent() {
             küll aga kiirem ja puhtam kui brauseri vahekaart.
           </p>
         </div>
+
+        {/* ── Kasuta tag'i mujal ── */}
+        <div className="mt-8 space-y-4 border-t border-white/10 pt-6">
+          <div>
+            <div className="mb-1 text-[10px] font-mono uppercase tracking-[0.25em] text-[oklch(0.85_0.19_75)]">
+              Kasuta mujal
+            </div>
+            <h3 className="font-display text-xl font-bold tracking-tight">
+              Mida valmis tag'iga peale hakata
+            </h3>
+            <p className="mt-1 text-xs leading-relaxed text-white/60">
+              Iga "Bomb it" tulemuse saab alla laadida PNG-failina (läbipaistva
+              või valge taustaga, sõltuvalt valitud taustast) ja kasutada
+              kõikjal kus pilte vaja.
+            </p>
+          </div>
+
+          <UseCase
+            title="Sotsiaalmeedia & profiilipilt"
+            body="Lae PNG alla → kasuta Instagrami / TikToki / Discordi avatarina, story stickeritena või postituse pildina. Valge taust sobib feedi, must taust profiilipildiks."
+          />
+          <UseCase
+            title="Prindi: särk, kleeps, plakat"
+            body="Saada PNG printerisse või üles DTF / vinüül-kleepsude tegijale (nt Printful, Redbubble, kohalik trükikoda). Resolutsioon on piisav A4 / särgiprindi jaoks."
+          />
+          <UseCase
+            title="Foto peale (Photoshop / Canva / CapCut)"
+            body="Ava oma foto (sein, vagun, peatus) Photoshopis või Canvas → lisa tag PNG kihina peale → sea blend mode "Multiply" (valgel taustal) või lihtsalt "Normal" (läbipaistval). Saad fotorealistliku graffiti."
+          />
+          <UseCase
+            title="Video & montaaž"
+            body="CapCut, Premiere või DaVinci — lisa PNG overlay'na klipi peale, animeeri sisse-välja. Sobib hästi music video / vlog intro jaoks."
+          />
+          <UseCase
+            title="Logo, märgid, mängud"
+            body="Kasuta tag'i bändi logona, Twitchi overlay'na, Minecrafti / Robloxi tekstuurina või oma veebilehe pealkirjana. PNG töötab kõikjal kus pilte toetatakse."
+          />
+
+          <div className="rounded-lg border border-white/10 bg-white/[0.02] p-3">
+            <div className="mb-1 text-[10px] font-mono uppercase tracking-[0.2em] text-[oklch(0.85_0.19_75)]">
+              Pro tip
+            </div>
+            <p className="text-xs leading-relaxed text-white/70">
+              Kui tahad tag'i foto peale panna ilma valge ristkülikuta:
+              vali joonistades must taust („Subway") — siis on AI tulemus juba
+              valmis kontrastse pildina, mille saab Photoshopis "Screen" blend
+              mode'iga otse seina peale lisada.
+            </p>
+          </div>
+        </div>
       </div>
     </SheetContent>
   );
+}
+
+function UseCase({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-lg border border-white/10 bg-white/[0.02] p-3">
+      <h4 className="font-display text-sm font-bold tracking-tight text-white/90">
+        {title}
+      </h4>
+      <p className="mt-1 text-[12px] leading-relaxed text-white/65">{body}</p>
+    </div>
+  );
+}
+
+function _CloseTutorialContent() {
+  return null;
 }
 
 function InstallStep({
