@@ -14,10 +14,10 @@ function buildPrompt(fidelity: number, influence: number) {
   // Higher fidelity = more aggressive restyling/smoothing.
   const fidelityHint =
     fidelity < 0.4
-      ? "Preserve exact letter shapes and composition. Refine the lines: smooth out wobble, unify stroke transitions, add subtle flow."
-      : fidelity < 0.7
       ? "Keep letter identity and reading order, but completely RESTYLE every stroke as a confident professional handstyle. Replace every shaky pixel with smooth, flowing calligraphic ink."
-      : "Aggressively restyle with master-level bomber energy. Keep only the letter recognition and overall composition — redraw every line as if a veteran writer hit it in one fluid motion.";
+      : fidelity < 0.7
+      ? "AGGRESSIVELY restyle with master-level bomber energy. Keep only the letter recognition — redraw every line as one fluid motion by a veteran writer. Add bold whips, hooks, ligatures, and dramatic drips."
+      : "MAXIMUM bomber transformation. Use the input ONLY as a letter-recognition reference — completely re-imagine the tag as if a world-famous NYC subway king redrew it. Add aggressive lean, dramatic whips and tails, hanging drips, and explosive bomber flow. The result must look NOTHING like a sketch — it must look like a finished masterpiece.";
 
   const influenceHint =
     influence >= 8.5

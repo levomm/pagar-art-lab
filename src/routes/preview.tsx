@@ -101,20 +101,20 @@ function PreviewPage() {
         <Button
           size="sm"
           variant="ghost"
-          className="h-8 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+          className="h-8 gap-1 text-xs text-white hover:bg-white/5 hover:text-white"
           onClick={() => navigate({ to: "/" })}
         >
           <ArrowLeft className="h-3.5 w-3.5" /> Back
         </Button>
         <div className="flex items-center gap-2">
-          <span className="inline-block h-2 w-2 rounded-full bg-[oklch(0.72_0.18_280)]" />
+          <span className="inline-block h-2 w-2 rounded-full bg-[oklch(0.85_0.19_75)]" />
           <h1 className="text-sm font-medium tracking-tight">Preview</h1>
         </div>
         <Button
           size="sm"
           variant="ghost"
           disabled={!result}
-          className="h-8 gap-1 text-xs text-white/70 hover:bg-white/5 hover:text-white disabled:opacity-30"
+          className="h-8 gap-1 text-xs text-white hover:bg-white/5 hover:text-white disabled:opacity-30"
           onClick={download}
         >
           <Download className="h-3.5 w-3.5" /> PNG
@@ -156,7 +156,7 @@ function PreviewPage() {
           </Button>
           <Button
             disabled={busy}
-            className="h-11 flex-1 gap-2 bg-[oklch(0.66_0.18_280)] text-white hover:bg-[oklch(0.72_0.18_280)]"
+            className="h-11 flex-1 gap-2 bg-[oklch(0.78_0.19_75)] text-white hover:bg-[oklch(0.85_0.19_75)]"
             onClick={retry}
           >
             {busy ? (
