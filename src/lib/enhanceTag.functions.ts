@@ -15,6 +15,11 @@ const STYLES = [
   "oldschool",
   "stencil",
   "anime",
+  "calligraphy",
+  "bubble",
+  "tribal",
+  "halftone",
+  "script",
 ] as const;
 type Style = (typeof STYLES)[number];
 
@@ -55,6 +60,16 @@ const STYLE_BRIEFS: Record<Style, string> = {
     "STENCIL street-art tag. Sharp clean edges as if cut from cardboard, slight overspray haze around letters, single flat color on aged surface, Banksy-era urban stencil energy.",
   anime:
     "ANIME / MANGA style graffiti tag. Bold cel-shaded letters with crisp ink outlines, flat vibrant cel colors and a single sharp highlight. Dynamic speedlines or sparkle accents, screentone/halftone fills, slight glow. Reads as a Shonen action-title logo painted as a graffiti piece.",
+  calligraphy:
+    "CALLIGRAPHY graffiti tag. Sharp gothic blackletter strokes with dramatic pressure variation, hairline-to-thick contrast, ornate flourishes and serifs. Inked feel, deep black on warm parchment-tone background.",
+  bubble:
+    "BUBBLE letter tag. Soft round inflated letterforms with thick clean outline and a glossy candy-color fill plus a single highlight. Playful 70s-80s NYC throw-up energy, cheerful and bouncy.",
+  tribal:
+    "TRIBAL graffiti tag. Sharp angular blade-like letterforms with interlocking pointed flourishes, jagged flame tips, high-contrast black silhouette with thin red accent lines. Polynesian / tribal-tattoo aesthetic fused with handstyle.",
+  halftone:
+    "HALFTONE COMIC POP tag. Bold display letters filled with classic CMYK Ben-Day halftone dots, thick black outline, comic-book Lichtenstein pop-art energy on a flat color background.",
+  script:
+    "SCRIPT cursive tag. Flowing connected cursive handwriting, elegant loops and tails, fluid pen-pressure variation, signature-style elegance. Reads like a tattoo-shop hand-lettering piece.",
 };
 
 function buildPrompt(style: Style, fidelity: number, influence: number) {
