@@ -174,6 +174,8 @@ function PagarsArtLab() {
   const drawing = useRef(false);
   const lastPt = useRef<{ x: number; y: number } | null>(null);
   const history = useRef<ImageData[]>([]);
+  const activePointers = useRef<Set<number>>(new Set());
+  const drawingPointerId = useRef<number | null>(null);
 
   const [markerIdx, setMarkerIdx] = useState(0);
   const [bgIdx, setBgIdx] = useState(0);
@@ -185,6 +187,7 @@ function PagarsArtLab() {
   const [busy, setBusy] = useState(false);
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [zoom, setZoom] = useState(1);
 
   const bg = BACKGROUNDS[bgIdx];
   const bgFill = bg.type === "color" ? bg.color : bg.fallback;
