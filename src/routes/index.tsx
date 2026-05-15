@@ -125,7 +125,7 @@ const STYLES: { id: StyleId; name: string; tag: string; desc: string; sample: st
 ];
 
 function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
-  const base = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md overflow-hidden text-[13px] leading-none";
+  const base = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md overflow-hidden text-[13px] leading-none font-bold";
   switch (id) {
     case "bomber":
       return <div className={cn(base, "bg-white text-black font-tag -skew-x-6")}>{sample}</div>;
@@ -138,9 +138,9 @@ function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
     case "handstyle":
       return <div className={cn(base, "bg-stone-100 text-black font-tag italic")}>{sample}</div>;
     case "brush":
-      return <div className={cn(base, "bg-stone-50 text-black")} style={{ fontFamily: "serif", fontWeight: 900 }}>{sample}</div>;
+      return <div className={cn(base, "bg-stone-50 text-black")} style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 900, fontStyle: "italic" }}>{sample}</div>;
     case "chrome":
-      return <div className={cn(base, "font-display font-black tracking-tight bg-zinc-800")} style={{ background: "linear-gradient(180deg,#e5e7eb,#6b7280 50%,#1f2937)", color: "transparent", WebkitBackgroundClip: "text" }}>{sample}</div>;
+      return <div className={cn(base, "font-display font-black tracking-tight bg-zinc-800")} style={{ background: "linear-gradient(180deg,#e5e7eb,#6b7280 50%,#1f2937)", color: "transparent", WebkitBackgroundClip: "text", backgroundClip: "text" }}>{sample}</div>;
     case "sticker":
       return <div className={cn(base, "bg-white text-black font-tag border-2 border-dashed border-black/40")}>{sample}</div>;
     case "neon":
@@ -154,15 +154,73 @@ function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
     case "anime":
       return <div className={cn(base, "bg-rose-100 text-rose-700 font-display font-black text-[11px]")} style={{ WebkitTextStroke: "0.8px black" }}>{sample}</div>;
     case "calligraphy":
-      return <div className={cn(base, "bg-stone-900 text-amber-100")} style={{ fontFamily: "serif", fontWeight: 900, fontStyle: "italic" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-stone-900")}
+          style={{
+            color: "#fde68a",
+            fontFamily: "Georgia, 'Times New Roman', serif",
+            fontWeight: 900,
+            fontStyle: "italic",
+            textShadow: "0 1px 0 rgba(0,0,0,0.6)",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "bubble":
-      return <div className={cn(base, "bg-pink-100 text-pink-600 font-tag")} style={{ WebkitTextStroke: "1px #be185d" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-pink-100 font-display font-black text-[15px]")}
+          style={{
+            color: "#ec4899",
+            WebkitTextStroke: "1.5px #831843",
+            textShadow: "1px 2px 0 rgba(255,255,255,0.9)",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "tribal":
-      return <div className={cn(base, "bg-black text-white font-shout text-[9px]")}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-black text-white font-display font-black italic text-[11px]")}
+          style={{
+            background: "linear-gradient(135deg,#000 0%,#000 45%,#dc2626 45%,#dc2626 55%,#000 55%)",
+            letterSpacing: "-0.05em",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "halftone":
-      return <div className={cn(base, "text-black font-display font-black")} style={{ backgroundImage: "radial-gradient(#000 1px, transparent 1.4px)", backgroundSize: "4px 4px", backgroundColor: "#fef08a" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "font-display font-black")}
+          style={{
+            color: "#dc2626",
+            backgroundColor: "#fef08a",
+            backgroundImage: "radial-gradient(#000 1px, transparent 1.4px)",
+            backgroundSize: "4px 4px",
+            WebkitTextStroke: "0.8px #000",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "script":
-      return <div className={cn(base, "bg-zinc-100 text-black italic")} style={{ fontFamily: "cursive", fontWeight: 700 }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-zinc-100 text-black text-[16px]")}
+          style={{
+            fontFamily: "'Brush Script MT', 'Lucida Handwriting', cursive",
+            fontWeight: 700,
+            fontStyle: "italic",
+          }}
+        >
+          {sample}
+        </div>
+      );
   }
 }
 
@@ -718,10 +776,7 @@ function PagarsArtLab() {
           sidebarOpen ? "md:w-[320px]" : "md:w-0 md:overflow-hidden md:border-r-0",
         )}
       >
-        {/* Taped corners */}
-        <div className="tape pointer-events-none absolute -top-2 left-4 z-10 h-5 w-16 rotate-[-6deg] rounded-[1px]" />
-        <div className="tape pointer-events-none absolute -bottom-2 right-4 z-10 h-5 w-20 rotate-[8deg] rounded-[1px]" />
-
+        {/* (decorative tape strips removed) */}
         <div className="flex items-center justify-between px-4 py-4">
           <Logo />
           {TutorialButton}
@@ -755,17 +810,7 @@ function PagarsArtLab() {
         </div>
       </aside>
 
-      {/* Floating reopen button — desktop only, when sidebar hidden */}
-      {!sidebarOpen && (
-        <button
-          onClick={() => setSidebarOpen(true)}
-          title="Show toolbar"
-          className="absolute left-3 top-3 z-30 hidden h-12 items-center gap-2 rounded-full border-2 border-[oklch(0.85_0.19_75)] bg-black/85 px-4 text-sm font-mono font-bold uppercase tracking-wider text-[oklch(0.92_0.15_75)] shadow-[0_4px_18px_rgba(0,0,0,0.6)] backdrop-blur-md transition-all hover:scale-105 hover:bg-black md:flex animate-tag-glow"
-        >
-          <PanelLeftOpen className="h-5 w-5" />
-          Show tools
-        </button>
-      )}
+      {/* (sidebar reopen handled inside top action bar) */}
 
       {/* ───────── Mobile header ───────── */}
       <header className="relative z-10 flex shrink-0 items-center justify-between border-b border-white/15 bg-wall-light px-3 py-2.5 md:hidden">
@@ -817,8 +862,18 @@ function PagarsArtLab() {
       {/* ───────── Canvas ───────── */}
       <div className="relative flex flex-1 flex-col">
         {/* Top action bar — desktop only */}
-        <div className="hidden h-11 shrink-0 items-center justify-between border-b border-white/10 px-4 md:flex">
+        <div className="hidden h-11 shrink-0 items-center justify-between border-b border-white/10 px-3 md:flex">
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-wider text-white/50">
+            {!sidebarOpen && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setSidebarOpen(true)}
+                className="h-7 gap-1.5 border-[oklch(0.85_0.19_75)]/60 bg-[oklch(0.85_0.19_75)]/15 px-2 text-[11px] font-mono uppercase tracking-wider text-[oklch(0.92_0.15_75)] hover:bg-[oklch(0.85_0.19_75)]/25 hover:text-white"
+              >
+                <PanelLeftOpen className="h-3.5 w-3.5" /> Show tools
+              </Button>
+            )}
             <span
               className="h-2 w-2 rounded-full"
               style={{ background: markerColor }}
@@ -858,17 +913,16 @@ function PagarsArtLab() {
         <div
           ref={wrapRef}
           className="relative flex-1 overflow-hidden"
+          style={{ containerType: "size" } as React.CSSProperties}
         >
           {/* Centered, fixed-aspect canvas — never stretched by sidebar toggle */}
-          <div className="absolute inset-0 flex items-center justify-center p-2">
+          <div className="absolute inset-0 flex items-center justify-center p-3">
             <div
               className="relative shadow-[0_8px_40px_rgba(0,0,0,0.55)]"
               style={{
                 aspectRatio: "1 / 1",
-                maxHeight: "100%",
-                maxWidth: "100%",
-                height: "min(100%, 100vw)",
-                width: "min(100%, 100vh)",
+                width: "min(calc(100cqh - 24px), calc(100cqw - 24px))",
+                height: "min(calc(100cqh - 24px), calc(100cqw - 24px))",
                 transform: `scale(${zoom})`,
                 transformOrigin: "center center",
                 transition: "transform 0.15s ease-out",
@@ -926,9 +980,16 @@ function PagarsArtLab() {
 
         {/* ───────── Mobile bottom panel ───────── */}
         <div className="shrink-0 border-t border-white/15 bg-wall-light md:hidden">
-          {/* Always-visible quick row */}
+          {/* Always-visible quick row with BOMB IT inline so it's reachable */}
           <div className="flex items-center gap-2 px-3 py-2">
-            {/* Active marker chip */}
+            <Button
+              onClick={handleEnhance}
+              disabled={busy}
+              className="h-10 shrink-0 gap-1.5 bg-[oklch(0.78_0.19_75)] px-3 text-black hover:bg-[oklch(0.85_0.19_75)] font-display text-sm font-bold tracking-wide"
+            >
+              <Sparkles className="h-4 w-4" />
+              BOMB IT
+            </Button>
             <button
               onClick={() => setMobilePanelOpen((v) => !v)}
               className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/15 px-2 py-1 text-[10px] uppercase tracking-wider text-white/80"
@@ -939,25 +1000,18 @@ function PagarsArtLab() {
               />
               {MARKERS[markerIdx].name}
             </button>
-            {/* Active style chip */}
-            <button
-              onClick={() => setMobilePanelOpen((v) => !v)}
-              className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[10px] uppercase tracking-wider text-white/80"
-            >
-              {STYLES.find((s) => s.id === styleId)!.name}
-            </button>
             <div className="flex-1" />
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-8 text-white/70 hover:bg-white/5 hover:text-white"
+              className="h-9 w-9 text-white/80 hover:bg-white/5 hover:text-white"
               onClick={() => setMobilePanelOpen((v) => !v)}
               title="Tools"
             >
               {mobilePanelOpen ? (
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5" />
               ) : (
-                <Settings2 className="h-4 w-4" />
+                <Settings2 className="h-5 w-5" />
               )}
             </Button>
           </div>
@@ -972,18 +1026,6 @@ function PagarsArtLab() {
               {SlidersBlock}
             </div>
           )}
-
-          {/* Enhance CTA */}
-          <div className="border-t border-white/10 p-3">
-            <Button
-              onClick={handleEnhance}
-              disabled={busy}
-              className="h-12 w-full gap-2 bg-[oklch(0.78_0.19_75)] text-black hover:bg-[oklch(0.85_0.19_75)] font-display text-base font-bold tracking-wide"
-            >
-              <Sparkles className="h-4 w-4" />
-              BOMB IT
-            </Button>
-          </div>
         </div>
       </div>
     </div>
