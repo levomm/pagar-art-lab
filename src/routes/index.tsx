@@ -96,23 +96,75 @@ type StyleId =
   | "threed"
   | "oldschool"
   | "stencil"
-  | "anime";
+  | "anime"
+  | "calligraphy"
+  | "bubble"
+  | "tribal"
+  | "halftone"
+  | "script";
 
-const STYLES: { id: StyleId; name: string; tag: string; desc: string }[] = [
-  { id: "bomber", name: "Bomber", tag: "NYC", desc: "Fat-marker handstyle with dramatic drips and whips." },
-  { id: "throwup", name: "Throw-Up", tag: "2T", desc: "Quick bubble piece — bold outline, flat fill." },
-  { id: "wildstyle", name: "Wildstyle", tag: "PRO", desc: "Interlocking arrows, layered outlines, king-level." },
-  { id: "blockbuster", name: "Blockbuster", tag: "BIG", desc: "Massive geometric block letters, freight-train scale." },
-  { id: "handstyle", name: "Handstyle", tag: "TAG", desc: "Pure one-shot signature gesture." },
-  { id: "brush", name: "Brush", tag: "INK", desc: "Heavy ink-loaded brush calligraphy." },
-  { id: "chrome", name: "Chrome", tag: "SLV", desc: "Polished silver fill, black outline & shadow." },
-  { id: "sticker", name: "Sticker", tag: "SLP", desc: "Marker on white slap label, skater culture." },
-  { id: "neon", name: "Neon", tag: "GLW", desc: "Glowing neon tubes on dark, halo bloom." },
-  { id: "threed", name: "3D Pop", tag: "3D", desc: "Extruded blocks, deep perspective shadow." },
-  { id: "oldschool", name: "Old School", tag: "80s", desc: "Soft-serve letters, cloud drips, two-tone fade." },
-  { id: "stencil", name: "Stencil", tag: "BNK", desc: "Sharp cut edges, Banksy-era street art." },
-  { id: "anime", name: "Anime", tag: "JPN", desc: "Cel-shaded, speedlines, Shonen-logo energy." },
+const STYLES: { id: StyleId; name: string; tag: string; desc: string; sample: string }[] = [
+  { id: "bomber", name: "Bomber", tag: "NYC", desc: "Fat-marker, drips, whips.", sample: "TAG" },
+  { id: "throwup", name: "Throw-Up", tag: "2T", desc: "Quick bubble piece.", sample: "TUP" },
+  { id: "wildstyle", name: "Wildstyle", tag: "PRO", desc: "Interlocking arrows.", sample: "WLD" },
+  { id: "blockbuster", name: "Blockbuster", tag: "BIG", desc: "Massive block letters.", sample: "BIG" },
+  { id: "handstyle", name: "Handstyle", tag: "TAG", desc: "One-shot signature.", sample: "Sig" },
+  { id: "brush", name: "Brush", tag: "INK", desc: "Heavy ink calligraphy.", sample: "墨" },
+  { id: "chrome", name: "Chrome", tag: "SLV", desc: "Polished silver fill.", sample: "CHR" },
+  { id: "sticker", name: "Sticker", tag: "SLP", desc: "Marker on slap label.", sample: "SLP" },
+  { id: "neon", name: "Neon", tag: "GLW", desc: "Glowing tubes, halo.", sample: "GLW" },
+  { id: "threed", name: "3D Pop", tag: "3D", desc: "Extruded blocks.", sample: "3D" },
+  { id: "oldschool", name: "Old School", tag: "80s", desc: "Soft-serve, fade.", sample: "80s" },
+  { id: "stencil", name: "Stencil", tag: "BNK", desc: "Sharp cut edges.", sample: "STN" },
+  { id: "anime", name: "Anime", tag: "JPN", desc: "Cel-shaded manga.", sample: "アニ" },
+  { id: "calligraphy", name: "Calligraphy", tag: "CAL", desc: "Sharp gothic strokes.", sample: "Cal" },
+  { id: "bubble", name: "Bubble", tag: "BBL", desc: "Soft round, candy fill.", sample: "Bub" },
+  { id: "tribal", name: "Tribal", tag: "TRB", desc: "Sharp angular flow.", sample: "TRB" },
+  { id: "halftone", name: "Halftone", tag: "DOT", desc: "Comic dots, pop print.", sample: "DOT" },
+  { id: "script", name: "Script", tag: "SCR", desc: "Flowing cursive script.", sample: "Scr" },
 ];
+
+function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
+  const base = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md overflow-hidden text-[13px] leading-none";
+  switch (id) {
+    case "bomber":
+      return <div className={cn(base, "bg-white text-black font-tag -skew-x-6")}>{sample}</div>;
+    case "throwup":
+      return <div className={cn(base, "bg-zinc-200 text-zinc-900 font-tag")} style={{ WebkitTextStroke: "1.2px black" }}>{sample}</div>;
+    case "wildstyle":
+      return <div className={cn(base, "bg-black text-white font-shout text-[10px]")}>{sample}</div>;
+    case "blockbuster":
+      return <div className={cn(base, "bg-zinc-900 text-yellow-300 font-display font-black tracking-tighter")}>{sample}</div>;
+    case "handstyle":
+      return <div className={cn(base, "bg-stone-100 text-black font-tag italic")}>{sample}</div>;
+    case "brush":
+      return <div className={cn(base, "bg-stone-50 text-black")} style={{ fontFamily: "serif", fontWeight: 900 }}>{sample}</div>;
+    case "chrome":
+      return <div className={cn(base, "font-display font-black tracking-tight bg-zinc-800")} style={{ background: "linear-gradient(180deg,#e5e7eb,#6b7280 50%,#1f2937)", color: "transparent", WebkitBackgroundClip: "text" }}>{sample}</div>;
+    case "sticker":
+      return <div className={cn(base, "bg-white text-black font-tag border-2 border-dashed border-black/40")}>{sample}</div>;
+    case "neon":
+      return <div className={cn(base, "bg-black font-tag")} style={{ color: "#ff5cf0", textShadow: "0 0 6px #ff5cf0, 0 0 12px #ff5cf0" }}>{sample}</div>;
+    case "threed":
+      return <div className={cn(base, "bg-zinc-900 text-white font-display font-black")} style={{ textShadow: "2px 2px 0 #d4271f, 3px 3px 0 #000" }}>{sample}</div>;
+    case "oldschool":
+      return <div className={cn(base, "bg-amber-50 text-fuchsia-700 font-tag")}>{sample}</div>;
+    case "stencil":
+      return <div className={cn(base, "bg-stone-300 text-black font-display font-black tracking-tighter")}>{sample}</div>;
+    case "anime":
+      return <div className={cn(base, "bg-rose-100 text-rose-700 font-display font-black text-[11px]")} style={{ WebkitTextStroke: "0.8px black" }}>{sample}</div>;
+    case "calligraphy":
+      return <div className={cn(base, "bg-stone-900 text-amber-100")} style={{ fontFamily: "serif", fontWeight: 900, fontStyle: "italic" }}>{sample}</div>;
+    case "bubble":
+      return <div className={cn(base, "bg-pink-100 text-pink-600 font-tag")} style={{ WebkitTextStroke: "1px #be185d" }}>{sample}</div>;
+    case "tribal":
+      return <div className={cn(base, "bg-black text-white font-shout text-[9px]")}>{sample}</div>;
+    case "halftone":
+      return <div className={cn(base, "text-black font-display font-black")} style={{ backgroundImage: "radial-gradient(#000 1px, transparent 1.4px)", backgroundSize: "4px 4px", backgroundColor: "#fef08a" }}>{sample}</div>;
+    case "script":
+      return <div className={cn(base, "bg-zinc-100 text-black italic")} style={{ fontFamily: "cursive", fontWeight: 700 }}>{sample}</div>;
+  }
+}
 
 function PagarsArtLab() {
   const navigate = useNavigate();
