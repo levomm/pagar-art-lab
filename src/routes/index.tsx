@@ -913,12 +913,16 @@ function PagarsArtLab() {
         <div
           ref={wrapRef}
           className="relative flex-1 overflow-hidden"
+          style={{ containerType: "size" } as React.CSSProperties}
         >
           {/* Centered, fixed-aspect canvas — never stretched by sidebar toggle */}
           <div className="absolute inset-0 flex items-center justify-center p-3">
             <div
-              className="relative aspect-square h-full max-h-full w-auto max-w-full shadow-[0_8px_40px_rgba(0,0,0,0.55)]"
+              className="relative shadow-[0_8px_40px_rgba(0,0,0,0.55)]"
               style={{
+                aspectRatio: "1 / 1",
+                width: "min(calc(100cqh - 24px), calc(100cqw - 24px))",
+                height: "min(calc(100cqh - 24px), calc(100cqw - 24px))",
                 transform: `scale(${zoom})`,
                 transformOrigin: "center center",
                 transition: "transform 0.15s ease-out",
