@@ -1088,6 +1088,7 @@ function ControlSlider({
   );
 }
 
+function TutorialContent() {
   return (
     <SheetContent
       side="right"
