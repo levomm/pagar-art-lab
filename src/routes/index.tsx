@@ -577,35 +577,40 @@ function PagarsArtLab() {
               key={s.id}
               onClick={() => setStyleId(s.id)}
               className={cn(
-                "group relative rounded-lg border p-2.5 text-left transition-all",
+                "group relative rounded-lg border p-2 text-left transition-all",
                 active
-                  ? "border-[oklch(0.78_0.19_75)] bg-[oklch(0.78_0.19_75)]/10"
-                  : "border-white/10 hover:border-white/30 hover:bg-white/[0.02]",
+                  ? "border-[oklch(0.85_0.19_75)] bg-[oklch(0.78_0.19_75)]/15 animate-tag-glow"
+                  : "border-white/10 hover:border-white/30 hover:bg-white/[0.03]",
               )}
             >
-              <div className="flex items-center justify-between">
-                <span
-                  className={cn(
-                    "font-display text-[15px] font-bold leading-none tracking-tight",
-                    active ? "text-white" : "text-white/85",
-                  )}
-                >
-                  {s.name}
-                </span>
-                <span
-                  className={cn(
-                    "rounded-sm border px-1 py-0.5 text-[8px] font-mono tracking-wider",
-                    active
-                      ? "border-[oklch(0.85_0.19_75)] text-[oklch(0.92_0.15_75)]"
-                      : "border-white/15 text-white/40",
-                  )}
-                >
-                  {s.tag}
-                </span>
+              <div className="flex items-center gap-2">
+                <StylePreview id={s.id} sample={s.sample} />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <span
+                      className={cn(
+                        "font-display text-[13px] font-bold leading-none tracking-tight truncate",
+                        active ? "text-white" : "text-white/90",
+                      )}
+                    >
+                      {s.name}
+                    </span>
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-sm border px-1 py-0.5 text-[8px] font-mono tracking-wider",
+                        active
+                          ? "border-[oklch(0.85_0.19_75)] text-[oklch(0.92_0.15_75)]"
+                          : "border-white/15 text-white/40",
+                      )}
+                    >
+                      {s.tag}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-[9.5px] leading-snug text-white/55 line-clamp-2">
+                    {s.desc}
+                  </p>
+                </div>
               </div>
-              <p className="mt-1.5 text-[10px] leading-snug text-white/50">
-                {s.desc}
-              </p>
             </button>
           );
         })}
