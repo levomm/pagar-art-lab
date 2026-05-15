@@ -166,31 +166,6 @@ function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
   }
 }
 
-function SprayCan({ className, style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg
-      viewBox="0 0 64 140"
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn("animate-spray-bob", className)}
-      style={style}
-      aria-hidden
-    >
-      <rect x="20" y="2" width="24" height="14" rx="2" fill="#1f1d1b" />
-      <rect x="20" y="2" width="24" height="3" fill="#3a3633" />
-      <rect x="28" y="16" width="8" height="4" fill="#0f0e0d" />
-      <rect x="8" y="20" width="48" height="110" rx="3" fill="#c4c0b6" />
-      <rect x="8" y="20" width="6" height="110" fill="#9a958a" />
-      <rect x="50" y="20" width="6" height="110" fill="#e3dfd4" opacity="0.7" />
-      <rect x="12" y="50" width="40" height="46" fill="#0a0a0a" />
-      <rect x="12" y="50" width="40" height="6" fill="#d4271f" />
-      <text x="32" y="80" textAnchor="middle" fill="#f5f1e6" fontFamily="Permanent Marker, cursive" fontSize="10">
-        PAGAR
-      </text>
-      <rect x="8" y="128" width="48" height="2" fill="#000" opacity="0.4" />
-    </svg>
-  );
-}
-
 function PagarsArtLab() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -724,9 +699,6 @@ function PagarsArtLab() {
   return (
     <div className="relative flex h-screen flex-col bg-wall text-foreground md:flex-row">
       <Toaster theme="dark" position="top-center" />
-      {/* Decorative spray cans — corners, desktop only */}
-      <SprayCan className="pointer-events-none absolute bottom-3 right-3 z-0 hidden h-24 w-auto opacity-50 md:block" style={{ ["--r" as any]: "14deg" }} />
-      <SprayCan className="pointer-events-none absolute top-3 right-3 z-0 hidden h-16 w-auto opacity-30 md:block" style={{ ["--r" as any]: "-22deg" }} />
       <input
         ref={fileInputRef}
         type="file"
@@ -1311,3 +1283,4 @@ function Step({ n, title, body }: { n: number; title: string; body: string }) {
     </div>
   );
 }
+
