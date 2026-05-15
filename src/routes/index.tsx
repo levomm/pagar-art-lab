@@ -1076,6 +1076,15 @@ function TutorialContent() {
       </SheetHeader>
 
       <div className="mt-6 space-y-5 px-4 pb-8">
+        {/* Decorative spray cans — corners, desktop only */}
+        <SprayCan
+          className="pointer-events-none absolute bottom-3 right-3 z-0 hidden h-24 w-auto opacity-50 md:block"
+          style={{ ["--r" as any]: "14deg" }}
+        />
+        <SprayCan
+          className="pointer-events-none absolute top-3 right-3 z-0 hidden h-16 w-auto opacity-30 md:block"
+          style={{ ["--r" as any]: "-22deg" }}
+        />
         {/* ── Mis see äpp on ── */}
         <div className="rounded-lg border border-[oklch(0.85_0.19_75)]/30 bg-[oklch(0.85_0.19_75)]/5 p-4">
           <div className="mb-1 text-[10px] font-mono uppercase tracking-[0.25em] text-[oklch(0.85_0.19_75)]">
