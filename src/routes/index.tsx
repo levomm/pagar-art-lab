@@ -776,10 +776,7 @@ function PagarsArtLab() {
           sidebarOpen ? "md:w-[320px]" : "md:w-0 md:overflow-hidden md:border-r-0",
         )}
       >
-        {/* Taped corners */}
-        <div className="tape pointer-events-none absolute -top-2 left-4 z-10 h-5 w-16 rotate-[-6deg] rounded-[1px]" />
-        <div className="tape pointer-events-none absolute -bottom-2 right-4 z-10 h-5 w-20 rotate-[8deg] rounded-[1px]" />
-
+        {/* (decorative tape strips removed) */}
         <div className="flex items-center justify-between px-4 py-4">
           <Logo />
           {TutorialButton}
