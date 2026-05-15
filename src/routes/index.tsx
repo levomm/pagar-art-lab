@@ -810,17 +810,7 @@ function PagarsArtLab() {
         </div>
       </aside>
 
-      {/* Floating reopen button — desktop only, when sidebar hidden */}
-      {!sidebarOpen && (
-        <button
-          onClick={() => setSidebarOpen(true)}
-          title="Show toolbar"
-          className="absolute left-3 top-3 z-30 hidden h-12 items-center gap-2 rounded-full border-2 border-[oklch(0.85_0.19_75)] bg-black/85 px-4 text-sm font-mono font-bold uppercase tracking-wider text-[oklch(0.92_0.15_75)] shadow-[0_4px_18px_rgba(0,0,0,0.6)] backdrop-blur-md transition-all hover:scale-105 hover:bg-black md:flex animate-tag-glow"
-        >
-          <PanelLeftOpen className="h-5 w-5" />
-          Show tools
-        </button>
-      )}
+      {/* (sidebar reopen handled inside top action bar) */}
 
       {/* ───────── Mobile header ───────── */}
       <header className="relative z-10 flex shrink-0 items-center justify-between border-b border-white/15 bg-wall-light px-3 py-2.5 md:hidden">
