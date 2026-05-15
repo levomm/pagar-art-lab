@@ -917,22 +917,13 @@ function PagarsArtLab() {
           {/* Centered, fixed-aspect canvas — never stretched by sidebar toggle */}
           <div className="absolute inset-0 flex items-center justify-center p-3">
             <div
-              className="relative shadow-[0_8px_40px_rgba(0,0,0,0.55)]"
+              className="relative aspect-square h-full max-h-full w-auto max-w-full shadow-[0_8px_40px_rgba(0,0,0,0.55)]"
               style={{
-                aspectRatio: "1 / 1",
-                height: "auto",
-                width: "auto",
-                maxHeight: "100%",
-                maxWidth: "100%",
-                // Square fits the smaller dimension of the parent (square box)
-                blockSize: "min(100%, 100cqh, 100cqw)",
-                inlineSize: "min(100%, 100cqh, 100cqw)",
-                containerType: "size",
                 transform: `scale(${zoom})`,
                 transformOrigin: "center center",
                 transition: "transform 0.15s ease-out",
                 background: bgFill,
-              } as React.CSSProperties}
+              }}
             >
               <canvas
                 ref={canvasRef}
