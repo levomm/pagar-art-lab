@@ -697,8 +697,11 @@ function PagarsArtLab() {
 
   // ─── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="relative flex h-screen flex-col bg-background text-foreground md:flex-row">
+    <div className="relative flex h-screen flex-col bg-wall text-foreground md:flex-row">
       <Toaster theme="dark" position="top-center" />
+      {/* Decorative spray cans — corners, desktop only */}
+      <SprayCan className="pointer-events-none absolute bottom-3 right-3 z-0 hidden h-24 w-auto opacity-50 md:block" style={{ ["--r" as any]: "14deg" }} />
+      <SprayCan className="pointer-events-none absolute top-3 right-3 z-0 hidden h-16 w-auto opacity-30 md:block" style={{ ["--r" as any]: "-22deg" }} />
       <input
         ref={fileInputRef}
         type="file"
@@ -714,24 +717,17 @@ function PagarsArtLab() {
       {/* ───────── Sidebar (md+) ───────── */}
       <aside
         className={cn(
-          "hidden md:flex md:h-full md:shrink-0 md:flex-col md:border-r md:border-white/10 md:transition-all md:duration-200",
-          sidebarOpen ? "md:w-[300px]" : "md:w-0 md:overflow-hidden md:border-r-0",
+          "relative hidden md:flex md:h-full md:shrink-0 md:flex-col md:border-r md:border-white/15 md:transition-all md:duration-200 bg-wall-light",
+          sidebarOpen ? "md:w-[320px]" : "md:w-0 md:overflow-hidden md:border-r-0",
         )}
       >
+        {/* Taped corners */}
+        <div className="tape pointer-events-none absolute -top-2 left-4 z-10 h-5 w-16 rotate-[-6deg] rounded-[1px]" />
+        <div className="tape pointer-events-none absolute -bottom-2 right-4 z-10 h-5 w-20 rotate-[8deg] rounded-[1px]" />
+
         <div className="flex items-center justify-between px-4 py-4">
           <Logo />
-          <div className="flex items-center gap-1">
-            {TutorialButton}
-            <Button
-              size="icon"
-              variant="ghost"
-              className="h-8 w-8 text-white/60 hover:bg-white/5 hover:text-white"
-              onClick={() => setSidebarOpen(false)}
-              title="Hide toolbar"
-            >
-              <PanelLeftClose className="h-4 w-4" />
-            </Button>
-          </div>
+          {TutorialButton}
         </div>
 
         <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-4">
@@ -742,7 +738,7 @@ function PagarsArtLab() {
           {SlidersBlock}
         </div>
 
-        <div className="border-t border-white/10 p-3">
+        <div className="space-y-2 border-t border-white/15 p-3">
           <Button
             onClick={handleEnhance}
             disabled={busy}
@@ -750,6 +746,14 @@ function PagarsArtLab() {
           >
             <Sparkles className="h-4 w-4" />
             BOMB IT
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setSidebarOpen(false)}
+            className="h-9 w-full gap-2 border-white/25 bg-white/5 font-mono text-xs uppercase tracking-wider text-white/85 hover:bg-white/10 hover:text-white"
+          >
+            <PanelLeftClose className="h-4 w-4" />
+            Hide tools
           </Button>
         </div>
       </aside>
@@ -759,10 +763,10 @@ function PagarsArtLab() {
         <button
           onClick={() => setSidebarOpen(true)}
           title="Show toolbar"
-          className="absolute left-3 top-3 z-20 hidden h-10 items-center gap-2 rounded-full border border-white/20 bg-black/70 px-3 text-xs font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/85 md:flex"
+          className="absolute left-3 top-3 z-30 hidden h-12 items-center gap-2 rounded-full border-2 border-[oklch(0.85_0.19_75)] bg-black/85 px-4 text-sm font-mono font-bold uppercase tracking-wider text-[oklch(0.92_0.15_75)] shadow-[0_4px_18px_rgba(0,0,0,0.6)] backdrop-blur-md transition-all hover:scale-105 hover:bg-black md:flex animate-tag-glow"
         >
-          <PanelLeftOpen className="h-4 w-4" />
-          Tools
+          <PanelLeftOpen className="h-5 w-5" />
+          Show tools
         </button>
       )}
 
