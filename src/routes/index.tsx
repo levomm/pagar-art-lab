@@ -862,8 +862,18 @@ function PagarsArtLab() {
       {/* ───────── Canvas ───────── */}
       <div className="relative flex flex-1 flex-col">
         {/* Top action bar — desktop only */}
-        <div className="hidden h-11 shrink-0 items-center justify-between border-b border-white/10 px-4 md:flex">
+        <div className="hidden h-11 shrink-0 items-center justify-between border-b border-white/10 px-3 md:flex">
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-wider text-white/50">
+            {!sidebarOpen && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setSidebarOpen(true)}
+                className="h-7 gap-1.5 border-[oklch(0.85_0.19_75)]/60 bg-[oklch(0.85_0.19_75)]/15 px-2 text-[11px] font-mono uppercase tracking-wider text-[oklch(0.92_0.15_75)] hover:bg-[oklch(0.85_0.19_75)]/25 hover:text-white"
+              >
+                <PanelLeftOpen className="h-3.5 w-3.5" /> Show tools
+              </Button>
+            )}
             <span
               className="h-2 w-2 rounded-full"
               style={{ background: markerColor }}
