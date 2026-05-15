@@ -96,23 +96,75 @@ type StyleId =
   | "threed"
   | "oldschool"
   | "stencil"
-  | "anime";
+  | "anime"
+  | "calligraphy"
+  | "bubble"
+  | "tribal"
+  | "halftone"
+  | "script";
 
-const STYLES: { id: StyleId; name: string; tag: string; desc: string }[] = [
-  { id: "bomber", name: "Bomber", tag: "NYC", desc: "Fat-marker handstyle with dramatic drips and whips." },
-  { id: "throwup", name: "Throw-Up", tag: "2T", desc: "Quick bubble piece — bold outline, flat fill." },
-  { id: "wildstyle", name: "Wildstyle", tag: "PRO", desc: "Interlocking arrows, layered outlines, king-level." },
-  { id: "blockbuster", name: "Blockbuster", tag: "BIG", desc: "Massive geometric block letters, freight-train scale." },
-  { id: "handstyle", name: "Handstyle", tag: "TAG", desc: "Pure one-shot signature gesture." },
-  { id: "brush", name: "Brush", tag: "INK", desc: "Heavy ink-loaded brush calligraphy." },
-  { id: "chrome", name: "Chrome", tag: "SLV", desc: "Polished silver fill, black outline & shadow." },
-  { id: "sticker", name: "Sticker", tag: "SLP", desc: "Marker on white slap label, skater culture." },
-  { id: "neon", name: "Neon", tag: "GLW", desc: "Glowing neon tubes on dark, halo bloom." },
-  { id: "threed", name: "3D Pop", tag: "3D", desc: "Extruded blocks, deep perspective shadow." },
-  { id: "oldschool", name: "Old School", tag: "80s", desc: "Soft-serve letters, cloud drips, two-tone fade." },
-  { id: "stencil", name: "Stencil", tag: "BNK", desc: "Sharp cut edges, Banksy-era street art." },
-  { id: "anime", name: "Anime", tag: "JPN", desc: "Cel-shaded, speedlines, Shonen-logo energy." },
+const STYLES: { id: StyleId; name: string; tag: string; desc: string; sample: string }[] = [
+  { id: "bomber", name: "Bomber", tag: "NYC", desc: "Fat-marker, drips, whips.", sample: "TAG" },
+  { id: "throwup", name: "Throw-Up", tag: "2T", desc: "Quick bubble piece.", sample: "TUP" },
+  { id: "wildstyle", name: "Wildstyle", tag: "PRO", desc: "Interlocking arrows.", sample: "WLD" },
+  { id: "blockbuster", name: "Blockbuster", tag: "BIG", desc: "Massive block letters.", sample: "BIG" },
+  { id: "handstyle", name: "Handstyle", tag: "TAG", desc: "One-shot signature.", sample: "Sig" },
+  { id: "brush", name: "Brush", tag: "INK", desc: "Heavy ink calligraphy.", sample: "墨" },
+  { id: "chrome", name: "Chrome", tag: "SLV", desc: "Polished silver fill.", sample: "CHR" },
+  { id: "sticker", name: "Sticker", tag: "SLP", desc: "Marker on slap label.", sample: "SLP" },
+  { id: "neon", name: "Neon", tag: "GLW", desc: "Glowing tubes, halo.", sample: "GLW" },
+  { id: "threed", name: "3D Pop", tag: "3D", desc: "Extruded blocks.", sample: "3D" },
+  { id: "oldschool", name: "Old School", tag: "80s", desc: "Soft-serve, fade.", sample: "80s" },
+  { id: "stencil", name: "Stencil", tag: "BNK", desc: "Sharp cut edges.", sample: "STN" },
+  { id: "anime", name: "Anime", tag: "JPN", desc: "Cel-shaded manga.", sample: "アニ" },
+  { id: "calligraphy", name: "Calligraphy", tag: "CAL", desc: "Sharp gothic strokes.", sample: "Cal" },
+  { id: "bubble", name: "Bubble", tag: "BBL", desc: "Soft round, candy fill.", sample: "Bub" },
+  { id: "tribal", name: "Tribal", tag: "TRB", desc: "Sharp angular flow.", sample: "TRB" },
+  { id: "halftone", name: "Halftone", tag: "DOT", desc: "Comic dots, pop print.", sample: "DOT" },
+  { id: "script", name: "Script", tag: "SCR", desc: "Flowing cursive script.", sample: "Scr" },
 ];
+
+function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
+  const base = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md overflow-hidden text-[13px] leading-none";
+  switch (id) {
+    case "bomber":
+      return <div className={cn(base, "bg-white text-black font-tag -skew-x-6")}>{sample}</div>;
+    case "throwup":
+      return <div className={cn(base, "bg-zinc-200 text-zinc-900 font-tag")} style={{ WebkitTextStroke: "1.2px black" }}>{sample}</div>;
+    case "wildstyle":
+      return <div className={cn(base, "bg-black text-white font-shout text-[10px]")}>{sample}</div>;
+    case "blockbuster":
+      return <div className={cn(base, "bg-zinc-900 text-yellow-300 font-display font-black tracking-tighter")}>{sample}</div>;
+    case "handstyle":
+      return <div className={cn(base, "bg-stone-100 text-black font-tag italic")}>{sample}</div>;
+    case "brush":
+      return <div className={cn(base, "bg-stone-50 text-black")} style={{ fontFamily: "serif", fontWeight: 900 }}>{sample}</div>;
+    case "chrome":
+      return <div className={cn(base, "font-display font-black tracking-tight bg-zinc-800")} style={{ background: "linear-gradient(180deg,#e5e7eb,#6b7280 50%,#1f2937)", color: "transparent", WebkitBackgroundClip: "text" }}>{sample}</div>;
+    case "sticker":
+      return <div className={cn(base, "bg-white text-black font-tag border-2 border-dashed border-black/40")}>{sample}</div>;
+    case "neon":
+      return <div className={cn(base, "bg-black font-tag")} style={{ color: "#ff5cf0", textShadow: "0 0 6px #ff5cf0, 0 0 12px #ff5cf0" }}>{sample}</div>;
+    case "threed":
+      return <div className={cn(base, "bg-zinc-900 text-white font-display font-black")} style={{ textShadow: "2px 2px 0 #d4271f, 3px 3px 0 #000" }}>{sample}</div>;
+    case "oldschool":
+      return <div className={cn(base, "bg-amber-50 text-fuchsia-700 font-tag")}>{sample}</div>;
+    case "stencil":
+      return <div className={cn(base, "bg-stone-300 text-black font-display font-black tracking-tighter")}>{sample}</div>;
+    case "anime":
+      return <div className={cn(base, "bg-rose-100 text-rose-700 font-display font-black text-[11px]")} style={{ WebkitTextStroke: "0.8px black" }}>{sample}</div>;
+    case "calligraphy":
+      return <div className={cn(base, "bg-stone-900 text-amber-100")} style={{ fontFamily: "serif", fontWeight: 900, fontStyle: "italic" }}>{sample}</div>;
+    case "bubble":
+      return <div className={cn(base, "bg-pink-100 text-pink-600 font-tag")} style={{ WebkitTextStroke: "1px #be185d" }}>{sample}</div>;
+    case "tribal":
+      return <div className={cn(base, "bg-black text-white font-shout text-[9px]")}>{sample}</div>;
+    case "halftone":
+      return <div className={cn(base, "text-black font-display font-black")} style={{ backgroundImage: "radial-gradient(#000 1px, transparent 1.4px)", backgroundSize: "4px 4px", backgroundColor: "#fef08a" }}>{sample}</div>;
+    case "script":
+      return <div className={cn(base, "bg-zinc-100 text-black italic")} style={{ fontFamily: "cursive", fontWeight: 700 }}>{sample}</div>;
+  }
+}
 
 function PagarsArtLab() {
   const navigate = useNavigate();
@@ -122,6 +174,8 @@ function PagarsArtLab() {
   const drawing = useRef(false);
   const lastPt = useRef<{ x: number; y: number } | null>(null);
   const history = useRef<ImageData[]>([]);
+  const activePointers = useRef<Set<number>>(new Set());
+  const drawingPointerId = useRef<number | null>(null);
 
   const [markerIdx, setMarkerIdx] = useState(0);
   const [bgIdx, setBgIdx] = useState(0);
@@ -133,6 +187,7 @@ function PagarsArtLab() {
   const [busy, setBusy] = useState(false);
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [zoom, setZoom] = useState(1);
 
   const bg = BACKGROUNDS[bgIdx];
   const bgFill = bg.type === "color" ? bg.color : bg.fallback;
@@ -164,43 +219,22 @@ function PagarsArtLab() {
     img.src = b.src;
   }, []);
 
-  // Init / resize canvas
+  // Init canvas ONCE at fixed working resolution (square) — CSS handles fit.
+  // No internal resize on layout changes → drawings never get stretched.
   useEffect(() => {
     const c = canvasRef.current;
-    const wrap = wrapRef.current;
-    if (!c || !wrap) return;
-
-    const initOrResize = () => {
-      const ctx = c.getContext("2d");
-      if (!ctx) return;
-      const prev =
-        c.width && c.height ? ctx.getImageData(0, 0, c.width, c.height) : null;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.floor(wrap.clientWidth * dpr);
-      const h = Math.floor(wrap.clientHeight * dpr);
-      if (w === c.width && h === c.height) return;
-      c.width = w;
-      c.height = h;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+    if (c.width === 0) {
+      c.width = 1280;
+      c.height = 1280;
       ctx.fillStyle = bgFill;
-      ctx.fillRect(0, 0, w, h);
+      ctx.fillRect(0, 0, c.width, c.height);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      if (prev) {
-        const tmp = document.createElement("canvas");
-        tmp.width = prev.width;
-        tmp.height = prev.height;
-        tmp.getContext("2d")!.putImageData(prev, 0, 0);
-        ctx.drawImage(tmp, 0, 0, w, h);
-      } else {
-        // First mount — paint initial background scene if any
-        paintBackground(BACKGROUNDS[bgIdx]);
-      }
-    };
-
-    initOrResize();
-    const ro = new ResizeObserver(initOrResize);
-    ro.observe(wrap);
-    return () => ro.disconnect();
+      paintBackground(BACKGROUNDS[bgIdx]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -325,32 +359,65 @@ function PagarsArtLab() {
     }
   };
 
+  const brushScale = () => {
+    const c = canvasRef.current;
+    if (!c) return 1;
+    const r = c.getBoundingClientRect();
+    return c.width / Math.max(1, r.width);
+  };
+
   const onDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    activePointers.current.add(e.pointerId);
+    // If more than one pointer is down (pinch / accidental second finger),
+    // cancel any in-progress stroke and DO NOT start a new one.
+    if (activePointers.current.size > 1) {
+      if (drawingPointerId.current !== null) {
+        // Roll back the snapshot taken when the first pointer touched down.
+        const prev = history.current.pop();
+        if (prev) {
+          const ctx = canvasRef.current!.getContext("2d")!;
+          ctx.putImageData(prev, 0, 0);
+        }
+      }
+      drawing.current = false;
+      drawingPointerId.current = null;
+      lastPt.current = null;
+      return;
+    }
     e.currentTarget.setPointerCapture(e.pointerId);
     snapshot();
     drawing.current = true;
+    drawingPointerId.current = e.pointerId;
     lastPt.current = getPos(e);
-    // Make a tiny dot on tap
     const ctx = canvasRef.current!.getContext("2d")!;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const p = lastPt.current;
-    strokeSegment(ctx, p, p, brush * dpr);
+    strokeSegment(ctx, p, p, brush * brushScale());
   };
 
   const onMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!drawing.current) return;
+    if (e.pointerId !== drawingPointerId.current) return;
+    if (activePointers.current.size > 1) return;
     const ctx = canvasRef.current!.getContext("2d")!;
     const p = getPos(e);
     const last = lastPt.current!;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    strokeSegment(ctx, last, p, brush * dpr);
+    strokeSegment(ctx, last, p, brush * brushScale());
     lastPt.current = p;
   };
 
-  const onUp = () => {
-    drawing.current = false;
-    lastPt.current = null;
+  const onUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    activePointers.current.delete(e.pointerId);
+    if (e.pointerId === drawingPointerId.current) {
+      drawing.current = false;
+      drawingPointerId.current = null;
+      lastPt.current = null;
+    }
   };
+
+  const zoomIn = () => setZoom((z) => Math.min(4, +(z + 0.25).toFixed(2)));
+  const zoomOut = () => setZoom((z) => Math.max(0.25, +(z - 0.25).toFixed(2)));
+  const zoomReset = () => setZoom(1);
+
 
   const clearCanvas = () => {
     snapshot();
@@ -510,35 +577,40 @@ function PagarsArtLab() {
               key={s.id}
               onClick={() => setStyleId(s.id)}
               className={cn(
-                "group relative rounded-lg border p-2.5 text-left transition-all",
+                "group relative rounded-lg border p-2 text-left transition-all",
                 active
-                  ? "border-[oklch(0.78_0.19_75)] bg-[oklch(0.78_0.19_75)]/10"
-                  : "border-white/10 hover:border-white/30 hover:bg-white/[0.02]",
+                  ? "border-[oklch(0.85_0.19_75)] bg-[oklch(0.78_0.19_75)]/15 animate-tag-glow"
+                  : "border-white/10 hover:border-white/30 hover:bg-white/[0.03]",
               )}
             >
-              <div className="flex items-center justify-between">
-                <span
-                  className={cn(
-                    "font-display text-[15px] font-bold leading-none tracking-tight",
-                    active ? "text-white" : "text-white/85",
-                  )}
-                >
-                  {s.name}
-                </span>
-                <span
-                  className={cn(
-                    "rounded-sm border px-1 py-0.5 text-[8px] font-mono tracking-wider",
-                    active
-                      ? "border-[oklch(0.85_0.19_75)] text-[oklch(0.92_0.15_75)]"
-                      : "border-white/15 text-white/40",
-                  )}
-                >
-                  {s.tag}
-                </span>
+              <div className="flex items-center gap-2">
+                <StylePreview id={s.id} sample={s.sample} />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <span
+                      className={cn(
+                        "font-display text-[13px] font-bold leading-none tracking-tight truncate",
+                        active ? "text-white" : "text-white/90",
+                      )}
+                    >
+                      {s.name}
+                    </span>
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-sm border px-1 py-0.5 text-[8px] font-mono tracking-wider",
+                        active
+                          ? "border-[oklch(0.85_0.19_75)] text-[oklch(0.92_0.15_75)]"
+                          : "border-white/15 text-white/40",
+                      )}
+                    >
+                      {s.tag}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-[9.5px] leading-snug text-white/55 line-clamp-2">
+                    {s.desc}
+                  </p>
+                </div>
               </div>
-              <p className="mt-1.5 text-[10px] leading-snug text-white/50">
-                {s.desc}
-              </p>
             </button>
           );
         })}
@@ -625,8 +697,11 @@ function PagarsArtLab() {
 
   // ─── Render ─────────────────────────────────────────────────────────────────
   return (
-    <div className="relative flex h-screen flex-col bg-background text-foreground md:flex-row">
+    <div className="relative flex h-screen flex-col bg-wall text-foreground md:flex-row">
       <Toaster theme="dark" position="top-center" />
+      {/* Decorative spray cans — corners, desktop only */}
+      <SprayCan className="pointer-events-none absolute bottom-3 right-3 z-0 hidden h-24 w-auto opacity-50 md:block" style={{ ["--r" as any]: "14deg" }} />
+      <SprayCan className="pointer-events-none absolute top-3 right-3 z-0 hidden h-16 w-auto opacity-30 md:block" style={{ ["--r" as any]: "-22deg" }} />
       <input
         ref={fileInputRef}
         type="file"
@@ -642,24 +717,17 @@ function PagarsArtLab() {
       {/* ───────── Sidebar (md+) ───────── */}
       <aside
         className={cn(
-          "hidden md:flex md:h-full md:shrink-0 md:flex-col md:border-r md:border-white/10 md:transition-all md:duration-200",
-          sidebarOpen ? "md:w-[300px]" : "md:w-0 md:overflow-hidden md:border-r-0",
+          "relative hidden md:flex md:h-full md:shrink-0 md:flex-col md:border-r md:border-white/15 md:transition-all md:duration-200 bg-wall-light",
+          sidebarOpen ? "md:w-[320px]" : "md:w-0 md:overflow-hidden md:border-r-0",
         )}
       >
+        {/* Taped corners */}
+        <div className="tape pointer-events-none absolute -top-2 left-4 z-10 h-5 w-16 rotate-[-6deg] rounded-[1px]" />
+        <div className="tape pointer-events-none absolute -bottom-2 right-4 z-10 h-5 w-20 rotate-[8deg] rounded-[1px]" />
+
         <div className="flex items-center justify-between px-4 py-4">
           <Logo />
-          <div className="flex items-center gap-1">
-            {TutorialButton}
-            <Button
-              size="icon"
-              variant="ghost"
-              className="h-8 w-8 text-white/60 hover:bg-white/5 hover:text-white"
-              onClick={() => setSidebarOpen(false)}
-              title="Hide toolbar"
-            >
-              <PanelLeftClose className="h-4 w-4" />
-            </Button>
-          </div>
+          {TutorialButton}
         </div>
 
         <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-4">
@@ -670,7 +738,7 @@ function PagarsArtLab() {
           {SlidersBlock}
         </div>
 
-        <div className="border-t border-white/10 p-3">
+        <div className="space-y-2 border-t border-white/15 p-3">
           <Button
             onClick={handleEnhance}
             disabled={busy}
@@ -678,6 +746,14 @@ function PagarsArtLab() {
           >
             <Sparkles className="h-4 w-4" />
             BOMB IT
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setSidebarOpen(false)}
+            className="h-9 w-full gap-2 border-white/25 bg-white/5 font-mono text-xs uppercase tracking-wider text-white/85 hover:bg-white/10 hover:text-white"
+          >
+            <PanelLeftClose className="h-4 w-4" />
+            Hide tools
           </Button>
         </div>
       </aside>
@@ -687,15 +763,15 @@ function PagarsArtLab() {
         <button
           onClick={() => setSidebarOpen(true)}
           title="Show toolbar"
-          className="absolute left-3 top-3 z-20 hidden h-10 items-center gap-2 rounded-full border border-white/20 bg-black/70 px-3 text-xs font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/85 md:flex"
+          className="absolute left-3 top-3 z-30 hidden h-12 items-center gap-2 rounded-full border-2 border-[oklch(0.85_0.19_75)] bg-black/85 px-4 text-sm font-mono font-bold uppercase tracking-wider text-[oklch(0.92_0.15_75)] shadow-[0_4px_18px_rgba(0,0,0,0.6)] backdrop-blur-md transition-all hover:scale-105 hover:bg-black md:flex animate-tag-glow"
         >
-          <PanelLeftOpen className="h-4 w-4" />
-          Tools
+          <PanelLeftOpen className="h-5 w-5" />
+          Show tools
         </button>
       )}
 
       {/* ───────── Mobile header ───────── */}
-      <header className="flex shrink-0 items-center justify-between border-b border-white/10 px-3 py-2.5 md:hidden">
+      <header className="relative z-10 flex shrink-0 items-center justify-between border-b border-white/15 bg-wall-light px-3 py-2.5 md:hidden">
         <Logo compact />
         <div className="flex items-center gap-1">
           <Button
@@ -784,32 +860,75 @@ function PagarsArtLab() {
 
         <div
           ref={wrapRef}
-          className="relative flex-1"
-          style={{ background: bgFill }}
+          className="relative flex-1 overflow-hidden"
         >
-          <canvas
-            ref={canvasRef}
-            onPointerDown={onDown}
-            onPointerMove={onMove}
-            onPointerUp={onUp}
-            onPointerCancel={onUp}
-            onPointerLeave={onUp}
-            className="absolute inset-0 h-full w-full touch-none"
-            style={{ cursor: "crosshair" }}
-          />
-          {/* Floating Undo FAB — top-right of canvas */}
-          <button
-            onClick={undo}
-            title="Undo last stroke"
-            className="absolute right-3 top-3 z-10 flex h-12 items-center gap-2 rounded-full border border-white/20 bg-black/70 px-4 text-sm font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/85 active:scale-95"
-          >
-            <Undo2 className="h-5 w-5" />
-            <span className="hidden sm:inline">Undo</span>
-          </button>
+          {/* Centered, fixed-aspect canvas — never stretched by sidebar toggle */}
+          <div className="absolute inset-0 flex items-center justify-center p-2">
+            <div
+              className="relative shadow-[0_8px_40px_rgba(0,0,0,0.55)]"
+              style={{
+                aspectRatio: "1 / 1",
+                maxHeight: "100%",
+                maxWidth: "100%",
+                height: "min(100%, 100vw)",
+                width: "min(100%, 100vh)",
+                transform: `scale(${zoom})`,
+                transformOrigin: "center center",
+                transition: "transform 0.15s ease-out",
+                background: bgFill,
+              }}
+            >
+              <canvas
+                ref={canvasRef}
+                onPointerDown={onDown}
+                onPointerMove={onMove}
+                onPointerUp={onUp}
+                onPointerCancel={onUp}
+                onPointerLeave={onUp}
+                className="absolute inset-0 h-full w-full touch-none"
+                style={{ cursor: "crosshair" }}
+              />
+            </div>
+          </div>
+
+          {/* Floating action stack — top-right */}
+          <div className="absolute right-3 top-3 z-10 flex flex-col items-end gap-2">
+            <button
+              onClick={undo}
+              title="Undo last stroke"
+              className="flex h-11 items-center gap-2 rounded-full border border-white/25 bg-black/75 px-4 text-sm font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/90 active:scale-95"
+            >
+              <Undo2 className="h-4 w-4" />
+              <span className="hidden sm:inline">Undo</span>
+            </button>
+            <div className="flex items-center gap-1 rounded-full border border-white/25 bg-black/75 p-1 shadow-lg backdrop-blur-md">
+              <button
+                onClick={zoomOut}
+                title="Zoom out"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-white hover:bg-white/10 active:scale-95"
+              >
+                <span className="text-lg leading-none">−</span>
+              </button>
+              <button
+                onClick={zoomReset}
+                title="Reset zoom"
+                className="flex h-9 min-w-12 items-center justify-center rounded-full px-2 font-mono text-[11px] text-white/85 hover:bg-white/10"
+              >
+                {Math.round(zoom * 100)}%
+              </button>
+              <button
+                onClick={zoomIn}
+                title="Zoom in"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-white hover:bg-white/10 active:scale-95"
+              >
+                <span className="text-lg leading-none">+</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* ───────── Mobile bottom panel ───────── */}
-        <div className="shrink-0 border-t border-white/10 bg-background md:hidden">
+        <div className="shrink-0 border-t border-white/15 bg-wall-light md:hidden">
           {/* Always-visible quick row */}
           <div className="flex items-center gap-2 px-3 py-2">
             {/* Active marker chip */}
@@ -898,10 +1017,10 @@ function Logo({ compact = false }: { compact?: boolean }) {
 
 function PanelLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mb-1.5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/40">
-      <span className="h-px flex-1 bg-white/10" />
+    <div className="mb-1.5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">
+      <span className="h-px flex-1 bg-white/15" />
       {children}
-      <span className="h-px flex-1 bg-white/10" />
+      <span className="h-px flex-1 bg-white/15" />
     </div>
   );
 }
@@ -924,12 +1043,14 @@ function ControlSlider({
   onChange: (n: number) => void;
 }) {
   return (
-    <div>
-      <div className="mb-1 flex items-center justify-between text-[11px]">
-        <span className="font-mono uppercase tracking-wider text-white/60">
+    <div className="rounded-md border border-white/10 bg-black/30 p-2.5">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="font-mono text-[12px] font-semibold uppercase tracking-wider text-white">
           {label}
         </span>
-        <span className="font-mono text-white">{value}</span>
+        <span className="rounded bg-[oklch(0.78_0.19_75)]/20 px-1.5 py-0.5 font-mono text-[12px] font-bold text-[oklch(0.92_0.15_75)]">
+          {value}
+        </span>
       </div>
       <Slider
         value={[v]}
@@ -939,6 +1060,36 @@ function ControlSlider({
         step={step}
       />
     </div>
+  );
+}
+
+function SprayCan({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      viewBox="0 0 64 140"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("animate-spray-bob", className)}
+      style={style}
+      aria-hidden
+    >
+      {/* cap */}
+      <rect x="20" y="2" width="24" height="14" rx="2" fill="#1f1d1b" />
+      <rect x="20" y="2" width="24" height="3" fill="#3a3633" />
+      {/* nozzle */}
+      <rect x="28" y="16" width="8" height="4" fill="#0f0e0d" />
+      {/* body */}
+      <rect x="8" y="20" width="48" height="110" rx="3" fill="#c4c0b6" />
+      <rect x="8" y="20" width="6" height="110" fill="#9a958a" />
+      <rect x="50" y="20" width="6" height="110" fill="#e3dfd4" opacity="0.7" />
+      {/* label */}
+      <rect x="12" y="50" width="40" height="46" fill="#0a0a0a" />
+      <rect x="12" y="50" width="40" height="6" fill="#d4271f" />
+      <text x="32" y="80" textAnchor="middle" fill="#f5f1e6" fontFamily="Permanent Marker, cursive" fontSize="10">
+        PAGAR
+      </text>
+      {/* base shadow */}
+      <rect x="8" y="128" width="48" height="2" fill="#000" opacity="0.4" />
+    </svg>
   );
 }
 
@@ -1078,7 +1229,7 @@ function TutorialContent() {
           />
           <UseCase
             title="Foto peale (Photoshop / Canva / CapCut)"
-            body="Ava oma foto (sein, vagun, peatus) Photoshopis või Canvas → lisa tag PNG kihina peale → sea blend mode "Multiply" (valgel taustal) või lihtsalt "Normal" (läbipaistval). Saad fotorealistliku graffiti."
+            body={`Ava oma foto (sein, vagun, peatus) Photoshopis või Canvas → lisa tag PNG kihina peale → sea blend mode "Multiply" (valgel taustal) või lihtsalt "Normal" (läbipaistval). Saad fotorealistliku graffiti.`}
           />
           <UseCase
             title="Video & montaaž"
