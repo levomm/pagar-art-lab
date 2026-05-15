@@ -359,32 +359,65 @@ function PagarsArtLab() {
     }
   };
 
+  const brushScale = () => {
+    const c = canvasRef.current;
+    if (!c) return 1;
+    const r = c.getBoundingClientRect();
+    return c.width / Math.max(1, r.width);
+  };
+
   const onDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    activePointers.current.add(e.pointerId);
+    // If more than one pointer is down (pinch / accidental second finger),
+    // cancel any in-progress stroke and DO NOT start a new one.
+    if (activePointers.current.size > 1) {
+      if (drawingPointerId.current !== null) {
+        // Roll back the snapshot taken when the first pointer touched down.
+        const prev = history.current.pop();
+        if (prev) {
+          const ctx = canvasRef.current!.getContext("2d")!;
+          ctx.putImageData(prev, 0, 0);
+        }
+      }
+      drawing.current = false;
+      drawingPointerId.current = null;
+      lastPt.current = null;
+      return;
+    }
     e.currentTarget.setPointerCapture(e.pointerId);
     snapshot();
     drawing.current = true;
+    drawingPointerId.current = e.pointerId;
     lastPt.current = getPos(e);
-    // Make a tiny dot on tap
     const ctx = canvasRef.current!.getContext("2d")!;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const p = lastPt.current;
-    strokeSegment(ctx, p, p, brush * dpr);
+    strokeSegment(ctx, p, p, brush * brushScale());
   };
 
   const onMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!drawing.current) return;
+    if (e.pointerId !== drawingPointerId.current) return;
+    if (activePointers.current.size > 1) return;
     const ctx = canvasRef.current!.getContext("2d")!;
     const p = getPos(e);
     const last = lastPt.current!;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    strokeSegment(ctx, last, p, brush * dpr);
+    strokeSegment(ctx, last, p, brush * brushScale());
     lastPt.current = p;
   };
 
-  const onUp = () => {
-    drawing.current = false;
-    lastPt.current = null;
+  const onUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    activePointers.current.delete(e.pointerId);
+    if (e.pointerId === drawingPointerId.current) {
+      drawing.current = false;
+      drawingPointerId.current = null;
+      lastPt.current = null;
+    }
   };
+
+  const zoomIn = () => setZoom((z) => Math.min(4, +(z + 0.25).toFixed(2)));
+  const zoomOut = () => setZoom((z) => Math.max(0.25, +(z - 0.25).toFixed(2)));
+  const zoomReset = () => setZoom(1);
+
 
   const clearCanvas = () => {
     snapshot();
