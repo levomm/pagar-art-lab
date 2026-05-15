@@ -980,9 +980,16 @@ function PagarsArtLab() {
 
         {/* ───────── Mobile bottom panel ───────── */}
         <div className="shrink-0 border-t border-white/15 bg-wall-light md:hidden">
-          {/* Always-visible quick row */}
+          {/* Always-visible quick row with BOMB IT inline so it's reachable */}
           <div className="flex items-center gap-2 px-3 py-2">
-            {/* Active marker chip */}
+            <Button
+              onClick={handleEnhance}
+              disabled={busy}
+              className="h-10 shrink-0 gap-1.5 bg-[oklch(0.78_0.19_75)] px-3 text-black hover:bg-[oklch(0.85_0.19_75)] font-display text-sm font-bold tracking-wide"
+            >
+              <Sparkles className="h-4 w-4" />
+              BOMB IT
+            </Button>
             <button
               onClick={() => setMobilePanelOpen((v) => !v)}
               className="flex shrink-0 items-center gap-1.5 rounded-full border border-white/15 px-2 py-1 text-[10px] uppercase tracking-wider text-white/80"
@@ -993,25 +1000,18 @@ function PagarsArtLab() {
               />
               {MARKERS[markerIdx].name}
             </button>
-            {/* Active style chip */}
-            <button
-              onClick={() => setMobilePanelOpen((v) => !v)}
-              className="shrink-0 rounded-full border border-white/15 px-2 py-1 text-[10px] uppercase tracking-wider text-white/80"
-            >
-              {STYLES.find((s) => s.id === styleId)!.name}
-            </button>
             <div className="flex-1" />
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-8 text-white/70 hover:bg-white/5 hover:text-white"
+              className="h-9 w-9 text-white/80 hover:bg-white/5 hover:text-white"
               onClick={() => setMobilePanelOpen((v) => !v)}
               title="Tools"
             >
               {mobilePanelOpen ? (
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5" />
               ) : (
-                <Settings2 className="h-4 w-4" />
+                <Settings2 className="h-5 w-5" />
               )}
             </Button>
           </div>
@@ -1026,18 +1026,6 @@ function PagarsArtLab() {
               {SlidersBlock}
             </div>
           )}
-
-          {/* Enhance CTA */}
-          <div className="border-t border-white/10 p-3">
-            <Button
-              onClick={handleEnhance}
-              disabled={busy}
-              className="h-12 w-full gap-2 bg-[oklch(0.78_0.19_75)] text-black hover:bg-[oklch(0.85_0.19_75)] font-display text-base font-bold tracking-wide"
-            >
-              <Sparkles className="h-4 w-4" />
-              BOMB IT
-            </Button>
-          </div>
         </div>
       </div>
     </div>
