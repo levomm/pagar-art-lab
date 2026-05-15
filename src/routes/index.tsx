@@ -860,28 +860,71 @@ function PagarsArtLab() {
 
         <div
           ref={wrapRef}
-          className="relative flex-1"
-          style={{ background: bgFill }}
+          className="relative flex-1 overflow-hidden"
         >
-          <canvas
-            ref={canvasRef}
-            onPointerDown={onDown}
-            onPointerMove={onMove}
-            onPointerUp={onUp}
-            onPointerCancel={onUp}
-            onPointerLeave={onUp}
-            className="absolute inset-0 h-full w-full touch-none"
-            style={{ cursor: "crosshair" }}
-          />
-          {/* Floating Undo FAB — top-right of canvas */}
-          <button
-            onClick={undo}
-            title="Undo last stroke"
-            className="absolute right-3 top-3 z-10 flex h-12 items-center gap-2 rounded-full border border-white/20 bg-black/70 px-4 text-sm font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/85 active:scale-95"
-          >
-            <Undo2 className="h-5 w-5" />
-            <span className="hidden sm:inline">Undo</span>
-          </button>
+          {/* Centered, fixed-aspect canvas — never stretched by sidebar toggle */}
+          <div className="absolute inset-0 flex items-center justify-center p-2">
+            <div
+              className="relative shadow-[0_8px_40px_rgba(0,0,0,0.55)]"
+              style={{
+                aspectRatio: "1 / 1",
+                maxHeight: "100%",
+                maxWidth: "100%",
+                height: "min(100%, 100vw)",
+                width: "min(100%, 100vh)",
+                transform: `scale(${zoom})`,
+                transformOrigin: "center center",
+                transition: "transform 0.15s ease-out",
+                background: bgFill,
+              }}
+            >
+              <canvas
+                ref={canvasRef}
+                onPointerDown={onDown}
+                onPointerMove={onMove}
+                onPointerUp={onUp}
+                onPointerCancel={onUp}
+                onPointerLeave={onUp}
+                className="absolute inset-0 h-full w-full touch-none"
+                style={{ cursor: "crosshair" }}
+              />
+            </div>
+          </div>
+
+          {/* Floating action stack — top-right */}
+          <div className="absolute right-3 top-3 z-10 flex flex-col items-end gap-2">
+            <button
+              onClick={undo}
+              title="Undo last stroke"
+              className="flex h-11 items-center gap-2 rounded-full border border-white/25 bg-black/75 px-4 text-sm font-mono uppercase tracking-wider text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-black/90 active:scale-95"
+            >
+              <Undo2 className="h-4 w-4" />
+              <span className="hidden sm:inline">Undo</span>
+            </button>
+            <div className="flex items-center gap-1 rounded-full border border-white/25 bg-black/75 p-1 shadow-lg backdrop-blur-md">
+              <button
+                onClick={zoomOut}
+                title="Zoom out"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-white hover:bg-white/10 active:scale-95"
+              >
+                <span className="text-lg leading-none">−</span>
+              </button>
+              <button
+                onClick={zoomReset}
+                title="Reset zoom"
+                className="flex h-9 min-w-12 items-center justify-center rounded-full px-2 font-mono text-[11px] text-white/85 hover:bg-white/10"
+              >
+                {Math.round(zoom * 100)}%
+              </button>
+              <button
+                onClick={zoomIn}
+                title="Zoom in"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-white hover:bg-white/10 active:scale-95"
+              >
+                <span className="text-lg leading-none">+</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* ───────── Mobile bottom panel ───────── */}
