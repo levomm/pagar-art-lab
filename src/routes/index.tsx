@@ -219,43 +219,22 @@ function PagarsArtLab() {
     img.src = b.src;
   }, []);
 
-  // Init / resize canvas
+  // Init canvas ONCE at fixed working resolution (square) — CSS handles fit.
+  // No internal resize on layout changes → drawings never get stretched.
   useEffect(() => {
     const c = canvasRef.current;
-    const wrap = wrapRef.current;
-    if (!c || !wrap) return;
-
-    const initOrResize = () => {
-      const ctx = c.getContext("2d");
-      if (!ctx) return;
-      const prev =
-        c.width && c.height ? ctx.getImageData(0, 0, c.width, c.height) : null;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.floor(wrap.clientWidth * dpr);
-      const h = Math.floor(wrap.clientHeight * dpr);
-      if (w === c.width && h === c.height) return;
-      c.width = w;
-      c.height = h;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+    if (c.width === 0) {
+      c.width = 1280;
+      c.height = 1280;
       ctx.fillStyle = bgFill;
-      ctx.fillRect(0, 0, w, h);
+      ctx.fillRect(0, 0, c.width, c.height);
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-      if (prev) {
-        const tmp = document.createElement("canvas");
-        tmp.width = prev.width;
-        tmp.height = prev.height;
-        tmp.getContext("2d")!.putImageData(prev, 0, 0);
-        ctx.drawImage(tmp, 0, 0, w, h);
-      } else {
-        // First mount — paint initial background scene if any
-        paintBackground(BACKGROUNDS[bgIdx]);
-      }
-    };
-
-    initOrResize();
-    const ro = new ResizeObserver(initOrResize);
-    ro.observe(wrap);
-    return () => ro.disconnect();
+      paintBackground(BACKGROUNDS[bgIdx]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
