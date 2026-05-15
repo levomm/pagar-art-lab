@@ -771,7 +771,7 @@ function PagarsArtLab() {
       )}
 
       {/* ───────── Mobile header ───────── */}
-      <header className="flex shrink-0 items-center justify-between border-b border-white/10 px-3 py-2.5 md:hidden">
+      <header className="relative z-10 flex shrink-0 items-center justify-between border-b border-white/15 bg-wall-light px-3 py-2.5 md:hidden">
         <Logo compact />
         <div className="flex items-center gap-1">
           <Button
