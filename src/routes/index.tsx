@@ -928,7 +928,7 @@ function PagarsArtLab() {
         </div>
 
         {/* ───────── Mobile bottom panel ───────── */}
-        <div className="shrink-0 border-t border-white/10 bg-background md:hidden">
+        <div className="shrink-0 border-t border-white/15 bg-wall-light md:hidden">
           {/* Always-visible quick row */}
           <div className="flex items-center gap-2 px-3 py-2">
             {/* Active marker chip */}
