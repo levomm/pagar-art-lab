@@ -125,7 +125,7 @@ const STYLES: { id: StyleId; name: string; tag: string; desc: string; sample: st
 ];
 
 function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
-  const base = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md overflow-hidden text-[13px] leading-none";
+  const base = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md overflow-hidden text-[13px] leading-none font-bold";
   switch (id) {
     case "bomber":
       return <div className={cn(base, "bg-white text-black font-tag -skew-x-6")}>{sample}</div>;
@@ -138,9 +138,9 @@ function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
     case "handstyle":
       return <div className={cn(base, "bg-stone-100 text-black font-tag italic")}>{sample}</div>;
     case "brush":
-      return <div className={cn(base, "bg-stone-50 text-black")} style={{ fontFamily: "serif", fontWeight: 900 }}>{sample}</div>;
+      return <div className={cn(base, "bg-stone-50 text-black")} style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 900, fontStyle: "italic" }}>{sample}</div>;
     case "chrome":
-      return <div className={cn(base, "font-display font-black tracking-tight bg-zinc-800")} style={{ background: "linear-gradient(180deg,#e5e7eb,#6b7280 50%,#1f2937)", color: "transparent", WebkitBackgroundClip: "text" }}>{sample}</div>;
+      return <div className={cn(base, "font-display font-black tracking-tight bg-zinc-800")} style={{ background: "linear-gradient(180deg,#e5e7eb,#6b7280 50%,#1f2937)", color: "transparent", WebkitBackgroundClip: "text", backgroundClip: "text" }}>{sample}</div>;
     case "sticker":
       return <div className={cn(base, "bg-white text-black font-tag border-2 border-dashed border-black/40")}>{sample}</div>;
     case "neon":
@@ -154,15 +154,73 @@ function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
     case "anime":
       return <div className={cn(base, "bg-rose-100 text-rose-700 font-display font-black text-[11px]")} style={{ WebkitTextStroke: "0.8px black" }}>{sample}</div>;
     case "calligraphy":
-      return <div className={cn(base, "bg-stone-900 text-amber-100")} style={{ fontFamily: "serif", fontWeight: 900, fontStyle: "italic" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-stone-900")}
+          style={{
+            color: "#fde68a",
+            fontFamily: "Georgia, 'Times New Roman', serif",
+            fontWeight: 900,
+            fontStyle: "italic",
+            textShadow: "0 1px 0 rgba(0,0,0,0.6)",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "bubble":
-      return <div className={cn(base, "bg-pink-100 text-pink-600 font-tag")} style={{ WebkitTextStroke: "1px #be185d" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-pink-100 font-display font-black text-[15px]")}
+          style={{
+            color: "#ec4899",
+            WebkitTextStroke: "1.5px #831843",
+            textShadow: "1px 2px 0 rgba(255,255,255,0.9)",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "tribal":
-      return <div className={cn(base, "bg-black text-white font-shout text-[9px]")}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-black text-white font-display font-black italic text-[11px]")}
+          style={{
+            background: "linear-gradient(135deg,#000 0%,#000 45%,#dc2626 45%,#dc2626 55%,#000 55%)",
+            letterSpacing: "-0.05em",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "halftone":
-      return <div className={cn(base, "text-black font-display font-black")} style={{ backgroundImage: "radial-gradient(#000 1px, transparent 1.4px)", backgroundSize: "4px 4px", backgroundColor: "#fef08a" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "font-display font-black")}
+          style={{
+            color: "#dc2626",
+            backgroundColor: "#fef08a",
+            backgroundImage: "radial-gradient(#000 1px, transparent 1.4px)",
+            backgroundSize: "4px 4px",
+            WebkitTextStroke: "0.8px #000",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "script":
-      return <div className={cn(base, "bg-zinc-100 text-black italic")} style={{ fontFamily: "cursive", fontWeight: 700 }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-zinc-100 text-black text-[16px]")}
+          style={{
+            fontFamily: "'Brush Script MT', 'Lucida Handwriting', cursive",
+            fontWeight: 700,
+            fontStyle: "italic",
+          }}
+        >
+          {sample}
+        </div>
+      );
   }
 }
 
