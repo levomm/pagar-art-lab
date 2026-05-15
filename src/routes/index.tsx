@@ -1078,7 +1078,7 @@ function TutorialContent() {
           />
           <UseCase
             title="Foto peale (Photoshop / Canva / CapCut)"
-            body="Ava oma foto (sein, vagun, peatus) Photoshopis või Canvas → lisa tag PNG kihina peale → sea blend mode "Multiply" (valgel taustal) või lihtsalt "Normal" (läbipaistval). Saad fotorealistliku graffiti."
+            body={`Ava oma foto (sein, vagun, peatus) Photoshopis või Canvas → lisa tag PNG kihina peale → sea blend mode "Multiply" (valgel taustal) või lihtsalt "Normal" (läbipaistval). Saad fotorealistliku graffiti.`}
           />
           <UseCase
             title="Video & montaaž"
