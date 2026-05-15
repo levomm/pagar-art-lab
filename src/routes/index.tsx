@@ -1017,10 +1017,10 @@ function Logo({ compact = false }: { compact?: boolean }) {
 
 function PanelLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mb-1.5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/40">
-      <span className="h-px flex-1 bg-white/10" />
+    <div className="mb-1.5 flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-white/60">
+      <span className="h-px flex-1 bg-white/15" />
       {children}
-      <span className="h-px flex-1 bg-white/10" />
+      <span className="h-px flex-1 bg-white/15" />
     </div>
   );
 }
@@ -1043,12 +1043,14 @@ function ControlSlider({
   onChange: (n: number) => void;
 }) {
   return (
-    <div>
-      <div className="mb-1 flex items-center justify-between text-[11px]">
-        <span className="font-mono uppercase tracking-wider text-white/60">
+    <div className="rounded-md border border-white/10 bg-black/30 p-2.5">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="font-mono text-[12px] font-semibold uppercase tracking-wider text-white">
           {label}
         </span>
-        <span className="font-mono text-white">{value}</span>
+        <span className="rounded bg-[oklch(0.78_0.19_75)]/20 px-1.5 py-0.5 font-mono text-[12px] font-bold text-[oklch(0.92_0.15_75)]">
+          {value}
+        </span>
       </div>
       <Slider
         value={[v]}
@@ -1058,6 +1060,36 @@ function ControlSlider({
         step={step}
       />
     </div>
+  );
+}
+
+function SprayCan({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      viewBox="0 0 64 140"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("animate-spray-bob", className)}
+      style={style}
+      aria-hidden
+    >
+      {/* cap */}
+      <rect x="20" y="2" width="24" height="14" rx="2" fill="#1f1d1b" />
+      <rect x="20" y="2" width="24" height="3" fill="#3a3633" />
+      {/* nozzle */}
+      <rect x="28" y="16" width="8" height="4" fill="#0f0e0d" />
+      {/* body */}
+      <rect x="8" y="20" width="48" height="110" rx="3" fill="#c4c0b6" />
+      <rect x="8" y="20" width="6" height="110" fill="#9a958a" />
+      <rect x="50" y="20" width="6" height="110" fill="#e3dfd4" opacity="0.7" />
+      {/* label */}
+      <rect x="12" y="50" width="40" height="46" fill="#0a0a0a" />
+      <rect x="12" y="50" width="40" height="6" fill="#d4271f" />
+      <text x="32" y="80" textAnchor="middle" fill="#f5f1e6" fontFamily="Permanent Marker, cursive" fontSize="10">
+        PAGAR
+      </text>
+      {/* base shadow */}
+      <rect x="8" y="128" width="48" height="2" fill="#000" opacity="0.4" />
+    </svg>
   );
 }
 
