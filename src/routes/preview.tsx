@@ -40,6 +40,7 @@ function PreviewPage() {
     const fidelity = Number(sessionStorage.getItem("mb:fidelity") ?? "0.4");
     const influence = Number(sessionStorage.getItem("mb:influence") ?? "8");
     const style = (sessionStorage.getItem("mb:style") ?? "bomber") as any;
+    const apiKey = (typeof localStorage !== "undefined" && localStorage.getItem("mb:geminiKey")) || undefined;
 
     (async () => {
       setBusy(true);
