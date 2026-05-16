@@ -813,7 +813,10 @@ function PagarsArtLab() {
         {/* (decorative tape strips removed) */}
         <div className="flex items-center justify-between px-4 py-4">
           <Logo />
-          {TutorialButton}
+          <div className="flex items-center gap-1">
+            {ApiKeyButton}
+            {TutorialButton}
+          </div>
         </div>
 
         <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-4">
