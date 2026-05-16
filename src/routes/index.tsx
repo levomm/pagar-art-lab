@@ -738,6 +738,39 @@ function PagarsArtLab() {
     </div>
   );
 
+  const ApiKeyButton = (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-8 gap-1.5 px-2 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+          title="Gemini API key"
+        >
+          <KeyRound className="h-3.5 w-3.5" />
+          API key
+        </Button>
+      </SheetTrigger>
+      <ApiKeyContent />
+    </Sheet>
+  );
+
+  const ApiKeyIconButton = (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          size="icon"
+          variant="ghost"
+          className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
+          title="Gemini API key"
+        >
+          <KeyRound className="h-4 w-4" />
+        </Button>
+      </SheetTrigger>
+      <ApiKeyContent />
+    </Sheet>
+  );
+
   const TutorialButton = (
     <Sheet>
       <SheetTrigger asChild>
