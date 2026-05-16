@@ -46,7 +46,7 @@ function PreviewPage() {
       setBusy(true);
       setError(null);
       try {
-        const res = await enhance({ data: { imageDataUrl: dataUrl, fidelity, influence, style } });
+        const res = await enhance({ data: { imageDataUrl: dataUrl, fidelity, influence, style, apiKey } });
         if (res.error || !res.image) {
           setError(res.error ?? "Something went wrong");
           toast.error(res.error ?? "Something went wrong");
