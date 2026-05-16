@@ -880,6 +880,7 @@ function PagarsArtLab() {
           >
             <Eraser className="h-4 w-4" />
           </Button>
+          {ApiKeyIconButton}
           <Sheet>
             <SheetTrigger asChild>
               <Button
