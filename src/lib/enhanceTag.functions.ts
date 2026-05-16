@@ -28,6 +28,7 @@ const inputSchema = z.object({
   fidelity: z.number().min(0.2).max(1.0),
   influence: z.number().min(5).max(10),
   style: z.enum(STYLES).default("bomber"),
+  apiKey: z.string().min(10).max(200).optional(),
 });
 
 const NEGATIVE =
@@ -109,9 +110,9 @@ NEVER do: ${NEGATIVE}`;
 export const enhanceTag = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }) => {
-    const apiKey = process.env.GEMINI_API_KEY;
+    const apiKey = data.apiKey ?? process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return { image: null as string | null, error: "GEMINI_API_KEY is not configured." };
+      return { image: null as string | null, error: "Missing Gemini API key. Add yours in Settings." };
     }
 
     const prompt = buildPrompt(data.style, data.fidelity, data.influence);

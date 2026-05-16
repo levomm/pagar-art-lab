@@ -40,12 +40,13 @@ function PreviewPage() {
     const fidelity = Number(sessionStorage.getItem("mb:fidelity") ?? "0.4");
     const influence = Number(sessionStorage.getItem("mb:influence") ?? "8");
     const style = (sessionStorage.getItem("mb:style") ?? "bomber") as any;
+    const apiKey = (typeof localStorage !== "undefined" && localStorage.getItem("mb:geminiKey")) || undefined;
 
     (async () => {
       setBusy(true);
       setError(null);
       try {
-        const res = await enhance({ data: { imageDataUrl: dataUrl, fidelity, influence, style } });
+        const res = await enhance({ data: { imageDataUrl: dataUrl, fidelity, influence, style, apiKey } });
         if (res.error || !res.image) {
           setError(res.error ?? "Something went wrong");
           toast.error(res.error ?? "Something went wrong");
@@ -71,8 +72,9 @@ function PreviewPage() {
     const fidelity = Number(sessionStorage.getItem("mb:fidelity") ?? "0.4");
     const influence = Number(sessionStorage.getItem("mb:influence") ?? "8");
     const style = (sessionStorage.getItem("mb:style") ?? "bomber") as any;
+    const apiKey = (typeof localStorage !== "undefined" && localStorage.getItem("mb:geminiKey")) || undefined;
     try {
-      const res = await enhance({ data: { imageDataUrl: input, fidelity, influence, style } });
+      const res = await enhance({ data: { imageDataUrl: input, fidelity, influence, style, apiKey } });
       if (res.error || !res.image) {
         setError(res.error ?? "Something went wrong");
         toast.error(res.error ?? "Something went wrong");

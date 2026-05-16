@@ -23,6 +23,7 @@ import {
   Download,
   PanelLeftClose,
   PanelLeftOpen,
+  KeyRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import sceneBusstop from "@/assets/scene-busstop.jpg";
@@ -737,6 +738,39 @@ function PagarsArtLab() {
     </div>
   );
 
+  const ApiKeyButton = (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-8 gap-1.5 px-2 text-xs text-white/70 hover:bg-white/5 hover:text-white"
+          title="Gemini API key"
+        >
+          <KeyRound className="h-3.5 w-3.5" />
+          API key
+        </Button>
+      </SheetTrigger>
+      <ApiKeyContent />
+    </Sheet>
+  );
+
+  const ApiKeyIconButton = (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button
+          size="icon"
+          variant="ghost"
+          className="h-8 w-8 text-white/80 hover:bg-white/5 hover:text-white"
+          title="Gemini API key"
+        >
+          <KeyRound className="h-4 w-4" />
+        </Button>
+      </SheetTrigger>
+      <ApiKeyContent />
+    </Sheet>
+  );
+
   const TutorialButton = (
     <Sheet>
       <SheetTrigger asChild>
@@ -779,7 +813,10 @@ function PagarsArtLab() {
         {/* (decorative tape strips removed) */}
         <div className="flex items-center justify-between px-4 py-4">
           <Logo />
-          {TutorialButton}
+          <div className="flex items-center gap-1">
+            {ApiKeyButton}
+            {TutorialButton}
+          </div>
         </div>
 
         <div className="flex-1 space-y-5 overflow-y-auto px-4 pb-4">
@@ -843,6 +880,7 @@ function PagarsArtLab() {
           >
             <Eraser className="h-4 w-4" />
           </Button>
+          {ApiKeyIconButton}
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -1326,3 +1364,86 @@ function Step({ n, title, body }: { n: number; title: string; body: string }) {
   );
 }
 
+function ApiKeyContent() {
+  const [key, setKey] = useState("");
+  const [saved, setSaved] = useState(false);
+  useEffect(() => {
+    if (typeof localStorage !== "undefined") {
+      setKey(localStorage.getItem("mb:geminiKey") ?? "");
+    }
+  }, []);
+  const save = () => {
+    const trimmed = key.trim();
+    if (trimmed) {
+      localStorage.setItem("mb:geminiKey", trimmed);
+      toast.success("API key saved locally");
+    } else {
+      localStorage.removeItem("mb:geminiKey");
+      toast.success("API key cleared — using server default if available");
+    }
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1500);
+  };
+  return (
+    <SheetContent
+      side="right"
+      className="w-full max-w-md border-l border-white/10 bg-background text-foreground sm:max-w-md"
+    >
+      <SheetHeader className="space-y-2">
+        <SheetTitle className="font-display text-2xl font-bold tracking-tight">
+          Your Gemini API key
+        </SheetTitle>
+        <SheetDescription className="text-white/60">
+          Paste your own Google Gemini API key. It's stored only in your
+          browser (localStorage) and sent with each enhance request.
+        </SheetDescription>
+      </SheetHeader>
+      <div className="mt-6 space-y-4 px-4 pb-8">
+        <div className="space-y-2">
+          <label className="text-[11px] uppercase tracking-wider text-white/50">
+            API key
+          </label>
+          <input
+            type="password"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
+            placeholder="AIza…"
+            className="w-full rounded-md border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-[oklch(0.85_0.19_75)] focus:outline-none"
+          />
+        </div>
+        <div className="flex gap-2">
+          <Button
+            onClick={save}
+            className="flex-1 bg-[oklch(0.78_0.19_75)] text-white hover:bg-[oklch(0.85_0.19_75)]"
+          >
+            {saved ? "Saved ✓" : "Save key"}
+          </Button>
+          <Button
+            variant="ghost"
+            className="border border-white/15 text-white/80 hover:bg-white/5 hover:text-white"
+            onClick={() => {
+              setKey("");
+              localStorage.removeItem("mb:geminiKey");
+              toast.success("API key cleared");
+            }}
+          >
+            Clear
+          </Button>
+        </div>
+        <p className="text-[11px] leading-relaxed text-white/50">
+          Get a free key at{" "}
+          <a
+            href="https://aistudio.google.com/apikey"
+            target="_blank"
+            rel="noreferrer"
+            className="underline text-[oklch(0.85_0.19_75)]"
+          >
+            aistudio.google.com/apikey
+          </a>
+          . The key never touches our database — it lives only in your browser
+          and is forwarded to Google's Gemini API on each request.
+        </p>
+      </div>
+    </SheetContent>
+  );
+}
