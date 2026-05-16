@@ -28,6 +28,7 @@ const inputSchema = z.object({
   fidelity: z.number().min(0.2).max(1.0),
   influence: z.number().min(5).max(10),
   style: z.enum(STYLES).default("bomber"),
+  apiKey: z.string().min(10).max(200).optional(),
 });
 
 const NEGATIVE =
