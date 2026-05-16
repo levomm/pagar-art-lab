@@ -23,6 +23,7 @@ import {
   Download,
   PanelLeftClose,
   PanelLeftOpen,
+  KeyRound,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import sceneBusstop from "@/assets/scene-busstop.jpg";
