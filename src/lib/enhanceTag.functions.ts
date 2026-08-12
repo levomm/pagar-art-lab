@@ -1,10 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
 
+interface GeminiPart {
+  inline_data?: { data?: string; mime_type?: string };
+  inlineData?: { data?: string; mimeType?: string };
+}
+
 interface GeminiResponse {
   error?: { message?: string };
   candidates?: Array<{
     content?: {
-      parts?: Array<{ inlineData?: { data?: string } }>;
+      parts?: GeminiPart[];
     };
   }>;
 }
@@ -30,7 +35,7 @@ const STYLES = [
   "halftone",
   "script",
 ] as const;
-type Style = (typeof STYLES)[number];
+export type Style = (typeof STYLES)[number];
 
 const inputSchema = z.object({
   imageDataUrl: z.string().min(20),
@@ -166,9 +171,9 @@ export const enhanceTag = createServerFn({ method: "POST" })
         return { image: null, error: `Gemini API error (${response.status}).` };
       }
 
-      const json = await response.json();
+      const json = (await response.json()) as GeminiResponse;
       const parts = json?.candidates?.[0]?.content?.parts ?? [];
-      const imgPart = parts.find((p: any) => p?.inline_data?.data || p?.inlineData?.data);
+      const imgPart = parts.find((p) => p.inline_data?.data || p.inlineData?.data);
       const inline = imgPart?.inline_data ?? imgPart?.inlineData;
 
       if (!inline?.data) {
