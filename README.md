@@ -14,9 +14,7 @@ Draw with your finger or stylus, choose from 18 street-art styles, and transform
 
 [Overview](#overview) · [Features](#features) · [Showcase](#showcase) · [Tech stack](#tech-stack) · [Installation](#installation) · [Security](#security-and-privacy)
 
-| RAW TAG studio | Original hand-drawn tag |
-| --- | --- |
-| ![RAW TAG drawing studio interface](docs/showcase/raw-tag-studio-ui.jpg) | ![Hand-drawn black graffiti tag reading one two exam](docs/showcase/one-two-exam-hand-drawn-tag.jpg) |
+![Original hand-drawn RAW TAG artwork](docs/showcase/one-two-exam-hand-drawn-tag.jpg)
 
 ## Overview
 
