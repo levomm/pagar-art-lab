@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { enhanceTag } from "@/lib/enhanceTag.functions";
+import type { Style } from "@/lib/enhanceTag.functions";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
@@ -39,7 +40,7 @@ function PreviewPage() {
 
     const fidelity = Number(sessionStorage.getItem("mb:fidelity") ?? "0.4");
     const influence = Number(sessionStorage.getItem("mb:influence") ?? "8");
-    const style = (sessionStorage.getItem("mb:style") ?? "bomber") as any;
+    const style = (sessionStorage.getItem("mb:style") ?? "bomber") as Style;
     const apiKey = (typeof localStorage !== "undefined" && localStorage.getItem("mb:geminiKey")) || undefined;
 
     (async () => {
@@ -71,7 +72,7 @@ function PreviewPage() {
     setResult(null);
     const fidelity = Number(sessionStorage.getItem("mb:fidelity") ?? "0.4");
     const influence = Number(sessionStorage.getItem("mb:influence") ?? "8");
-    const style = (sessionStorage.getItem("mb:style") ?? "bomber") as any;
+    const style = (sessionStorage.getItem("mb:style") ?? "bomber") as Style;
     const apiKey = (typeof localStorage !== "undefined" && localStorage.getItem("mb:geminiKey")) || undefined;
     try {
       const res = await enhance({ data: { imageDataUrl: input, fidelity, influence, style, apiKey } });
