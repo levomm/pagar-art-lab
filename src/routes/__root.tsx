@@ -73,16 +73,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Pagar's Art Lab" },
-      { name: "description", content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio." },
+      {
+        name: "description",
+        content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio.",
+      },
       { name: "author", content: "levomm" },
       { property: "og:title", content: "Pagar's Art Lab" },
-      { property: "og:description", content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio." },
+      {
+        property: "og:description",
+        content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-            { name: "twitter:title", content: "Pagar's Art Lab" },
-      { name: "twitter:description", content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio." },
+      { name: "twitter:title", content: "Pagar's Art Lab" },
+      {
+        name: "twitter:description",
+        content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio.",
+      },
       { property: "og:image", content: "/social-preview.jpg" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/GdNZoTVAtNZWSqI4ggzNjku2bs82/social-images/social-1778801034885-1000061633.webp" },
+      {
+        name: "twitter:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/GdNZoTVAtNZWSqI4ggzNjku2bs82/social-images/social-1778801034885-1000061633.webp",
+      },
     ],
     links: [
       {

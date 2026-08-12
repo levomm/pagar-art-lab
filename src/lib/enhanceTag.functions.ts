@@ -65,8 +65,7 @@ const STYLE_BRIEFS: Record<Style, string> = {
     "CHROME / SILVER piece. Polished metallic silver fill with sharp black outline and bold black drop-shadow. Crisp highlights and reflections that read as brushed steel. Classic NYC subway chrome panel energy.",
   sticker:
     "STICKER / SLAP style tag. Bold marker drawing on a white slap label with a die-cut border. Loose handstyle with a small character or arrow. Skater / writer slap-tag culture, photo-real label texture.",
-  neon:
-    "NEON SIGN tag. Letters rendered as glowing glass neon tubes — saturated electric color, soft outer halo bloom, dark background, visible tube terminations. Cinematic late-night street feel.",
+  neon: "NEON SIGN tag. Letters rendered as glowing glass neon tubes — saturated electric color, soft outer halo bloom, dark background, visible tube terminations. Cinematic late-night street feel.",
   threed:
     "3D POP / dimensional piece. Heavy block letters extruded into deep 3D with strong perspective, dramatic side-shadow, hard inline highlight, bold outline. Looks carved out of the wall.",
   oldschool:
@@ -92,8 +91,8 @@ function buildPrompt(style: Style, fidelity: number, influence: number) {
     fidelity < 0.4
       ? "Keep letter identity and reading order, but RESTYLE every stroke as professional graffiti. Replace shaky pixels with smooth confident lines."
       : fidelity < 0.7
-      ? "AGGRESSIVELY restyle. Keep letter recognition only — redraw every line with master-level confidence and flow."
-      : "MAXIMUM transformation. Use the input ONLY as a letter-recognition reference — re-imagine the tag as a finished masterpiece by a world-famous writer.";
+        ? "AGGRESSIVELY restyle. Keep letter recognition only — redraw every line with master-level confidence and flow."
+        : "MAXIMUM transformation. Use the input ONLY as a letter-recognition reference — re-imagine the tag as a finished masterpiece by a world-famous writer.";
 
   const influenceHint =
     influence >= 8.5
@@ -126,7 +125,10 @@ export const enhanceTag = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const apiKey = data.apiKey?.trim();
     if (!apiKey) {
-      return { image: null as string | null, error: "Missing Gemini API key. Add yours in Settings." };
+      return {
+        image: null as string | null,
+        error: "Missing Gemini API key. Add yours in Settings.",
+      };
     }
 
     const prompt = buildPrompt(data.style, data.fidelity, data.influence);
@@ -149,14 +151,11 @@ export const enhanceTag = createServerFn({ method: "POST" })
             contents: [
               {
                 role: "user",
-                parts: [
-                  { text: prompt },
-                  { inline_data: { mime_type: mimeType, data: b64 } },
-                ],
+                parts: [{ text: prompt }, { inline_data: { mime_type: mimeType, data: b64 } }],
               },
             ],
           }),
-        }
+        },
       );
 
       if (!response.ok) {

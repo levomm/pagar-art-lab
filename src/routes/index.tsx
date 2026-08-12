@@ -108,7 +108,13 @@ const STYLES: { id: StyleId; name: string; tag: string; desc: string; sample: st
   { id: "bomber", name: "Bomber", tag: "NYC", desc: "Fat-marker, drips, whips.", sample: "TAG" },
   { id: "throwup", name: "Throw-Up", tag: "2T", desc: "Quick bubble piece.", sample: "TUP" },
   { id: "wildstyle", name: "Wildstyle", tag: "PRO", desc: "Interlocking arrows.", sample: "WLD" },
-  { id: "blockbuster", name: "Blockbuster", tag: "BIG", desc: "Massive block letters.", sample: "BIG" },
+  {
+    id: "blockbuster",
+    name: "Blockbuster",
+    tag: "BIG",
+    desc: "Massive block letters.",
+    sample: "BIG",
+  },
   { id: "handstyle", name: "Handstyle", tag: "TAG", desc: "One-shot signature.", sample: "Sig" },
   { id: "brush", name: "Brush", tag: "INK", desc: "Heavy ink calligraphy.", sample: "墨" },
   { id: "chrome", name: "Chrome", tag: "SLV", desc: "Polished silver fill.", sample: "CHR" },
@@ -118,7 +124,13 @@ const STYLES: { id: StyleId; name: string; tag: string; desc: string; sample: st
   { id: "oldschool", name: "Old School", tag: "80s", desc: "Soft-serve, fade.", sample: "80s" },
   { id: "stencil", name: "Stencil", tag: "BNK", desc: "Sharp cut edges.", sample: "STN" },
   { id: "anime", name: "Anime", tag: "JPN", desc: "Cel-shaded manga.", sample: "アニ" },
-  { id: "calligraphy", name: "Calligraphy", tag: "CAL", desc: "Sharp gothic strokes.", sample: "Cal" },
+  {
+    id: "calligraphy",
+    name: "Calligraphy",
+    tag: "CAL",
+    desc: "Sharp gothic strokes.",
+    sample: "Cal",
+  },
   { id: "bubble", name: "Bubble", tag: "BBL", desc: "Soft round, candy fill.", sample: "Bub" },
   { id: "tribal", name: "Tribal", tag: "TRB", desc: "Sharp angular flow.", sample: "TRB" },
   { id: "halftone", name: "Halftone", tag: "DOT", desc: "Comic dots, pop print.", sample: "DOT" },
@@ -126,34 +138,110 @@ const STYLES: { id: StyleId; name: string; tag: string; desc: string; sample: st
 ];
 
 function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
-  const base = "flex h-10 w-10 shrink-0 items-center justify-center rounded-md overflow-hidden text-[13px] leading-none font-bold";
+  const base =
+    "flex h-10 w-10 shrink-0 items-center justify-center rounded-md overflow-hidden text-[13px] leading-none font-bold";
   switch (id) {
     case "bomber":
       return <div className={cn(base, "bg-white text-black font-tag -skew-x-6")}>{sample}</div>;
     case "throwup":
-      return <div className={cn(base, "bg-zinc-200 text-zinc-900 font-tag")} style={{ WebkitTextStroke: "1.2px black" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-zinc-200 text-zinc-900 font-tag")}
+          style={{ WebkitTextStroke: "1.2px black" }}
+        >
+          {sample}
+        </div>
+      );
     case "wildstyle":
       return <div className={cn(base, "bg-black text-white font-shout text-[10px]")}>{sample}</div>;
     case "blockbuster":
-      return <div className={cn(base, "bg-zinc-900 text-yellow-300 font-display font-black tracking-tighter")}>{sample}</div>;
+      return (
+        <div
+          className={cn(
+            base,
+            "bg-zinc-900 text-yellow-300 font-display font-black tracking-tighter",
+          )}
+        >
+          {sample}
+        </div>
+      );
     case "handstyle":
       return <div className={cn(base, "bg-stone-100 text-black font-tag italic")}>{sample}</div>;
     case "brush":
-      return <div className={cn(base, "bg-stone-50 text-black")} style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontWeight: 900, fontStyle: "italic" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-stone-50 text-black")}
+          style={{
+            fontFamily: "Georgia, 'Times New Roman', serif",
+            fontWeight: 900,
+            fontStyle: "italic",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "chrome":
-      return <div className={cn(base, "font-display font-black tracking-tight bg-zinc-800")} style={{ background: "linear-gradient(180deg,#e5e7eb,#6b7280 50%,#1f2937)", color: "transparent", WebkitBackgroundClip: "text", backgroundClip: "text" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "font-display font-black tracking-tight bg-zinc-800")}
+          style={{
+            background: "linear-gradient(180deg,#e5e7eb,#6b7280 50%,#1f2937)",
+            color: "transparent",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+          }}
+        >
+          {sample}
+        </div>
+      );
     case "sticker":
-      return <div className={cn(base, "bg-white text-black font-tag border-2 border-dashed border-black/40")}>{sample}</div>;
+      return (
+        <div
+          className={cn(
+            base,
+            "bg-white text-black font-tag border-2 border-dashed border-black/40",
+          )}
+        >
+          {sample}
+        </div>
+      );
     case "neon":
-      return <div className={cn(base, "bg-black font-tag")} style={{ color: "#ff5cf0", textShadow: "0 0 6px #ff5cf0, 0 0 12px #ff5cf0" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-black font-tag")}
+          style={{ color: "#ff5cf0", textShadow: "0 0 6px #ff5cf0, 0 0 12px #ff5cf0" }}
+        >
+          {sample}
+        </div>
+      );
     case "threed":
-      return <div className={cn(base, "bg-zinc-900 text-white font-display font-black")} style={{ textShadow: "2px 2px 0 #d4271f, 3px 3px 0 #000" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-zinc-900 text-white font-display font-black")}
+          style={{ textShadow: "2px 2px 0 #d4271f, 3px 3px 0 #000" }}
+        >
+          {sample}
+        </div>
+      );
     case "oldschool":
       return <div className={cn(base, "bg-amber-50 text-fuchsia-700 font-tag")}>{sample}</div>;
     case "stencil":
-      return <div className={cn(base, "bg-stone-300 text-black font-display font-black tracking-tighter")}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-stone-300 text-black font-display font-black tracking-tighter")}
+        >
+          {sample}
+        </div>
+      );
     case "anime":
-      return <div className={cn(base, "bg-rose-100 text-rose-700 font-display font-black text-[11px]")} style={{ WebkitTextStroke: "0.8px black" }}>{sample}</div>;
+      return (
+        <div
+          className={cn(base, "bg-rose-100 text-rose-700 font-display font-black text-[11px]")}
+          style={{ WebkitTextStroke: "0.8px black" }}
+        >
+          {sample}
+        </div>
+      );
     case "calligraphy":
       return (
         <div
@@ -389,7 +477,13 @@ function PagarsArtLab() {
           const ang = Math.random() * Math.PI * 2;
           const rad = Math.random() * sizePx * 0.6;
           ctx.beginPath();
-          ctx.arc(cx + Math.cos(ang) * r, cy + Math.sin(ang) * r, Math.random() * 1.2 + 0.3, 0, Math.PI * 2);
+          ctx.arc(
+            cx + Math.cos(ang) * r,
+            cy + Math.sin(ang) * r,
+            Math.random() * 1.2 + 0.3,
+            0,
+            Math.PI * 2,
+          );
           ctx.fill();
         }
       }
@@ -476,7 +570,6 @@ function PagarsArtLab() {
   const zoomIn = () => setZoom((z) => Math.min(4, +(z + 0.25).toFixed(2)));
   const zoomOut = () => setZoom((z) => Math.max(0.25, +(z - 0.25).toFixed(2)));
   const zoomReset = () => setZoom(1);
-
 
   const clearCanvas = () => {
     snapshot();
@@ -612,10 +705,7 @@ function PagarsArtLab() {
             <span
               className="h-4 w-4 rounded-sm border border-black/30 bg-cover bg-center"
               style={{
-                background:
-                  b.type === "color"
-                    ? b.color
-                    : `url(${b.src}) center/cover`,
+                background: b.type === "color" ? b.color : `url(${b.src}) center/cover`,
               }}
             />
             {b.label}
@@ -912,10 +1002,7 @@ function PagarsArtLab() {
                 <PanelLeftOpen className="h-3.5 w-3.5" /> Show tools
               </Button>
             )}
-            <span
-              className="h-2 w-2 rounded-full"
-              style={{ background: markerColor }}
-            />
+            <span className="h-2 w-2 rounded-full" style={{ background: markerColor }} />
             {MARKERS[markerIdx].name}
             <span className="text-white/20">·</span>
             {STYLES.find((s) => s.id === styleId)!.name}
@@ -1046,11 +1133,7 @@ function PagarsArtLab() {
               onClick={() => setMobilePanelOpen((v) => !v)}
               title="Tools"
             >
-              {mobilePanelOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Settings2 className="h-5 w-5" />
-              )}
+              {mobilePanelOpen ? <X className="h-5 w-5" /> : <Settings2 className="h-5 w-5" />}
             </Button>
           </div>
 
@@ -1165,10 +1248,9 @@ function TutorialContent() {
             Pagar's Art Lab — AI graffiti tag generaator
           </h3>
           <p className="mt-2 text-[12px] leading-relaxed text-white/70">
-            Joonista oma tag käsitsi (või laadi üles foto seinast / paberist),
-            vali stiil ja taust ning AI muudab su visandi puhtaks
-            professionaalse writeri tag'iks. Lae tulemus alla PNG-na ja kasuta
-            edasi kus iganes.
+            Joonista oma tag käsitsi (või laadi üles foto seinast / paberist), vali stiil ja taust
+            ning AI muudab su visandi puhtaks professionaalse writeri tag'iks. Lae tulemus alla
+            PNG-na ja kasuta edasi kus iganes.
           </p>
         </div>
 
@@ -1203,8 +1285,8 @@ function TutorialContent() {
             Pro tip
           </div>
           <p className="text-xs leading-relaxed text-white/70">
-            For first attempts, leave Fidelity around 0.6–0.7. Push it lower to
-            let the AI fully reinterpret your sketch as a master writer would.
+            For first attempts, leave Fidelity around 0.6–0.7. Push it lower to let the AI fully
+            reinterpret your sketch as a master writer would.
           </p>
         </div>
 
@@ -1218,7 +1300,8 @@ function TutorialContent() {
               Lisa avalehele nagu päris äpp
             </h3>
             <p className="mt-1 text-xs leading-relaxed text-white/60">
-              Lovable veebileht töötab ka offline-ikoonina sinu telefonis — täisekraan, ilma brauseri ribata.
+              Lovable veebileht töötab ka offline-ikoonina sinu telefonis — täisekraan, ilma
+              brauseri ribata.
             </p>
           </div>
 
@@ -1245,8 +1328,8 @@ function TutorialContent() {
           />
 
           <p className="text-[11px] leading-relaxed text-white/40">
-            Märkus: AI-tagi tegemiseks on alati vaja internetti — see pole päris offline-äpp,
-            küll aga kiirem ja puhtam kui brauseri vahekaart.
+            Märkus: AI-tagi tegemiseks on alati vaja internetti — see pole päris offline-äpp, küll
+            aga kiirem ja puhtam kui brauseri vahekaart.
           </p>
         </div>
 
@@ -1260,9 +1343,8 @@ function TutorialContent() {
               Mida valmis tag'iga peale hakata
             </h3>
             <p className="mt-1 text-xs leading-relaxed text-white/60">
-              Iga "Bomb it" tulemuse saab alla laadida PNG-failina (läbipaistva
-              või valge taustaga, sõltuvalt valitud taustast) ja kasutada
-              kõikjal kus pilte vaja.
+              Iga "Bomb it" tulemuse saab alla laadida PNG-failina (läbipaistva või valge taustaga,
+              sõltuvalt valitud taustast) ja kasutada kõikjal kus pilte vaja.
             </p>
           </div>
 
@@ -1292,10 +1374,9 @@ function TutorialContent() {
               Pro tip
             </div>
             <p className="text-xs leading-relaxed text-white/70">
-              Kui tahad tag'i foto peale panna ilma valge ristkülikuta:
-              vali joonistades must taust („Subway") — siis on AI tulemus juba
-              valmis kontrastse pildina, mille saab Photoshopis "Screen" blend
-              mode'iga otse seina peale lisada.
+              Kui tahad tag'i foto peale panna ilma valge ristkülikuta: vali joonistades must taust
+              („Subway") — siis on AI tulemus juba valmis kontrastse pildina, mille saab Photoshopis
+              "Screen" blend mode'iga otse seina peale lisada.
             </p>
           </div>
         </div>
@@ -1307,9 +1388,7 @@ function TutorialContent() {
 function UseCase({ title, body }: { title: string; body: string }) {
   return (
     <div className="rounded-lg border border-white/10 bg-white/[0.02] p-3">
-      <h4 className="font-display text-sm font-bold tracking-tight text-white/90">
-        {title}
-      </h4>
+      <h4 className="font-display text-sm font-bold tracking-tight text-white/90">{title}</h4>
       <p className="mt-1 text-[12px] leading-relaxed text-white/65">{body}</p>
     </div>
   );
@@ -1319,15 +1398,7 @@ function _CloseTutorialContent() {
   return null;
 }
 
-function InstallStep({
-  badge,
-  title,
-  steps,
-}: {
-  badge: string;
-  title: string;
-  steps: string[];
-}) {
+function InstallStep({ badge, title, steps }: { badge: string; title: string; steps: string[] }) {
   return (
     <div className="rounded-lg border border-white/10 bg-white/[0.02] p-4">
       <div className="mb-3 flex items-center gap-2">
@@ -1355,9 +1426,7 @@ function Step({ n, title, body }: { n: number; title: string; body: string }) {
         {n}
       </div>
       <div className="flex-1">
-        <div className="font-display text-base font-bold leading-tight tracking-tight">
-          {title}
-        </div>
+        <div className="font-display text-base font-bold leading-tight tracking-tight">{title}</div>
         <p className="mt-1 text-[13px] leading-relaxed text-white/65">{body}</p>
       </div>
     </div>
@@ -1394,15 +1463,13 @@ function ApiKeyContent() {
           Your Gemini API key
         </SheetTitle>
         <SheetDescription className="text-white/60">
-          Paste your own Google Gemini API key. It's stored only in your
-          browser (localStorage) and sent with each enhance request.
+          Paste your own Google Gemini API key. It's stored only in your browser (localStorage) and
+          sent with each enhance request.
         </SheetDescription>
       </SheetHeader>
       <div className="mt-6 space-y-4 px-4 pb-8">
         <div className="space-y-2">
-          <label className="text-[11px] uppercase tracking-wider text-white/50">
-            API key
-          </label>
+          <label className="text-[11px] uppercase tracking-wider text-white/50">API key</label>
           <input
             type="password"
             value={key}
@@ -1440,8 +1507,8 @@ function ApiKeyContent() {
           >
             aistudio.google.com/apikey
           </a>
-          . The key never touches our database — it lives only in your browser
-          and is forwarded to Google's Gemini API on each request.
+          . The key never touches our database — it lives only in your browser and is forwarded to
+          Google's Gemini API on each request.
         </p>
       </div>
     </SheetContent>

@@ -5,6 +5,7 @@ Veebiäpp, kus joonistad oma graffiti tag'i lõuendile (canvas) ja AI muudab sel
 ## Mida ehitan
 
 **Üks leht, must taust (Linear-laadne dark UI):**
+
 - Vasakul: joonistuslõuend (canvas, valge taust, must marker)
   - Pintsli paksuse slider (2–20px)
   - "Clear" ja "Undo" nupud
@@ -45,6 +46,7 @@ src/styles.css                    # dark bomber-teema tokens
 ```
 
 ## Mida ei tee
+
 - Pole login'i, andmebaasi ega salvestamist (ainult download)
 - Pole galleriid varasematest tag'idest (saame lisada hiljem soovi korral)
 - Pole värvivalikut — must marker valgel taustal (autentne bomber)
