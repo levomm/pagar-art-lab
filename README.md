@@ -14,7 +14,9 @@ Draw with your finger or stylus, choose from 18 street-art styles, and transform
 
 [Overview](#overview) · [Features](#features) · [Showcase](#showcase) · [Tech stack](#tech-stack) · [Installation](#installation) · [Security](#security-and-privacy)
 
-![RAW TAG drawing studio interface](docs/showcase/raw-tag-studio-ui.jpg)
+| RAW TAG studio | Original hand-drawn tag |
+| --- | --- |
+| ![RAW TAG drawing studio interface](docs/showcase/raw-tag-studio-ui.jpg) | ![Hand-drawn black graffiti tag reading one two exam](docs/showcase/one-two-exam-hand-drawn-tag.jpg) |
 
 ## Overview
 
@@ -41,13 +43,11 @@ Draw a tag with your finger or stylus, choose a visual style, and turn your roug
 
 These visuals demonstrate RAW TAG’s project-specific style direction rather than generic placeholder artwork.
 
-| Hand-drawn tag | Wordmark study |
+| Wordmark study | Subway scene |
 | --- | --- |
-| ![Hand-drawn black graffiti tag reading one two exam](docs/showcase/one-two-exam-hand-drawn-tag.jpg) | ![RAW TAG graffiti wordmark study](docs/showcase/raw-tag-graffiti-wordmark.jpg) |
+| ![RAW TAG graffiti wordmark study](docs/showcase/raw-tag-graffiti-wordmark.jpg) | ![Metallic graffiti in a subway scene](docs/showcase/subway-metallic-mop-graffiti-scene.jpg) |
 
-| Subway scene | Street composition |
-| --- | --- |
-| ![Metallic graffiti in a subway scene](docs/showcase/subway-metallic-mop-graffiti-scene.jpg) | ![Repeated white hip-hop lettering in a subway](docs/showcase/subway-repeated-hip-hop-white-lettering.jpg) |
+![Repeated white hip-hop lettering in a subway](docs/showcase/subway-repeated-hip-hop-white-lettering.jpg)
 
 ## How it works
 
