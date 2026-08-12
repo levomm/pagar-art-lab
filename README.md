@@ -21,7 +21,7 @@ These are project-specific style outputs and visual-direction examples used for 
 
 | Wordmark study                                                                        | Subway scene                                                                                     |
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| ![RAW TAG graffiti style study](docs/showcase/pagar-art-lab-graffiti-wordmark.jpg) | ![Metallic mop graffiti in a subway scene](docs/showcase/subway-metallic-mop-graffiti-scene.jpg) |
+| ![RAW TAG graffiti style study](docs/showcase/raw-tag-graffiti-wordmark.jpg) | ![Metallic mop graffiti in a subway scene](docs/showcase/subway-metallic-mop-graffiti-scene.jpg) |
 
 ![Repeated white hip-hop graffiti lettering in a subway](docs/showcase/subway-repeated-hip-hop-white-lettering.jpg)
 
