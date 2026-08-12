@@ -29,22 +29,26 @@ import { cn } from "@/lib/utils";
 import sceneBusstop from "@/assets/scene-busstop.jpg";
 import sceneMetro from "@/assets/scene-metro.jpg";
 import sceneBrickwall from "@/assets/scene-brickwall.jpg";
+import rawBusstop from "@/assets/raw-tag/bus-shelter-metallic-piz-graffiti-ad.jpg";
+import rawSubwayMop from "@/assets/raw-tag/subway-metallic-mop-graffiti-scene.jpg";
+import rawHipHop from "@/assets/raw-tag/subway-repeated-hip-hop-white-lettering.jpg";
+import rawBlackTag from "@/assets/raw-tag/black-graffiti-tag-one-two.jpg";
 
 export const Route = createFileRoute("/")({
   component: PagarsArtLab,
   head: () => ({
     meta: [
-      { title: "Pagar's Art Lab — Sketch & Bomb your tag" },
+      { title: "RAW TAG — Draw raw. Finish street." },
       {
         name: "description",
         content:
-          "Pagar's Art Lab — sketch your graffiti tag, pick a style, and let AI bomb it into a finished piece.",
+          "RAW TAG — draw your tag, refine your handstyle, and preview it in authentic street settings.",
       },
     ],
   }),
 });
 
-// ─── Marker palette ───────────────────────────────────────────────────────────
+// ─── Marker palette ─────────────────────��─────────────────────────────────────
 const MARKERS = [
   { name: "Ink Black", color: "#0a0a0a" },
   { name: "Bone White", color: "#f5f1e6" },
@@ -70,6 +74,10 @@ const BACKGROUNDS: Bg[] = [
   { name: "Bus Stop", label: "BUS", type: "image", src: sceneBusstop, fallback: "#2a2e36" },
   { name: "Metro Cab", label: "MET", type: "image", src: sceneMetro, fallback: "#cfc7b6" },
   { name: "Brick Wall", label: "BRK", type: "image", src: sceneBrickwall, fallback: "#7a3a2a" },
+  { name: "RAW Bus", label: "RBS", type: "image", src: rawBusstop, fallback: "#262326" },
+  { name: "RAW Mop", label: "RMP", type: "image", src: rawSubwayMop, fallback: "#1c2020" },
+  { name: "RAW Hip-Hop", label: "HIP", type: "image", src: rawHipHop, fallback: "#181818" },
+  { name: "RAW Black", label: "BLK", type: "image", src: rawBlackTag, fallback: "#090909" },
 ];
 
 // ─── Brush variants ───────────────────────────────────────────────────────────
@@ -1152,19 +1160,18 @@ function PagarsArtLab() {
   );
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+// ─── Sub-components ────��──────────────────────────────────────────────────────
 function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2 select-none">
-      <img
-        src={logoPagars}
-        alt="Pagar's Art Lab"
-        draggable={false}
+      <div
         className={cn(
-          "object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]",
-          compact ? "h-12 w-auto" : "h-16 w-auto",
+          "font-shout leading-[0.78] tracking-[-0.05em] text-white drop-shadow-[0_3px_0_rgba(0,0,0,0.9)]",
+          compact ? "text-3xl" : "text-5xl",
         )}
-      />
+      >
+        RAW TAG
+      </div>
       <div className="hidden text-[9px] font-mono uppercase tracking-[0.25em] text-white/40 sm:block">
         EST · 2026
         <br />
@@ -1244,7 +1251,7 @@ function TutorialContent() {
             Mis see on
           </div>
           <h3 className="font-display text-lg font-bold tracking-tight">
-            Pagar's Art Lab — AI graffiti tag generaator
+            RAW TAG — AI graffiti tag generaator
           </h3>
           <p className="mt-2 text-[12px] leading-relaxed text-white/70">
             Joonista oma tag käsitsi (või laadi üles foto seinast / paberist), vali stiil ja taust
