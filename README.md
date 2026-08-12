@@ -1,4 +1,4 @@
-# Pagar's Art Lab
+# RAW TAG
 
 **A browser-based graffiti sketching and AI-assisted tag enhancement studio.**
 
@@ -17,11 +17,11 @@ Draw a tag from scratch or upload an existing sketch, choose a visual direction,
 
 ## Visual showcase
 
-These are project-specific style outputs and visual-direction examples used for Pagar's Art Lab — not generic dashboard placeholders.
+These are project-specific style outputs and visual-direction examples used for RAW TAG — not generic dashboard placeholders.
 
 | Wordmark study                                                                        | Subway scene                                                                                     |
 | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| ![Pagar Art Lab graffiti wordmark](docs/showcase/pagar-art-lab-graffiti-wordmark.jpg) | ![Metallic mop graffiti in a subway scene](docs/showcase/subway-metallic-mop-graffiti-scene.jpg) |
+| ![RAW TAG graffiti style study](docs/showcase/pagar-art-lab-graffiti-wordmark.jpg) | ![Metallic mop graffiti in a subway scene](docs/showcase/subway-metallic-mop-graffiti-scene.jpg) |
 
 ![Repeated white hip-hop graffiti lettering in a subway](docs/showcase/subway-repeated-hip-hop-white-lettering.jpg)
 

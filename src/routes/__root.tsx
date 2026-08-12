@@ -72,20 +72,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Pagar's Art Lab" },
+      { title: "RAW TAG" },
       {
         name: "description",
         content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio.",
       },
       { name: "author", content: "levomm" },
-      { property: "og:title", content: "Pagar's Art Lab" },
+      { property: "og:title", content: "RAW TAG" },
       {
         property: "og:description",
         content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "Pagar's Art Lab" },
+      { name: "twitter:title", content: "RAW TAG" },
       {
         name: "twitter:description",
         content: "Browser-based graffiti sketching and AI-assisted tag enhancement studio.",

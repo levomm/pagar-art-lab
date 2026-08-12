@@ -12,7 +12,7 @@ export const Route = createFileRoute("/preview")({
   component: PreviewPage,
   head: () => ({
     meta: [
-      { title: "Pagar's Art Lab — Preview" },
+      { title: "RAW TAG — Preview" },
       { name: "description", content: "Your AI-bombed tag preview." },
     ],
   }),
@@ -100,7 +100,7 @@ function PreviewPage() {
     if (!result) return;
     const a = document.createElement("a");
     a.href = result;
-    a.download = `metro-bomber-${Date.now()}.png`;
+    a.download = `raw-tag-${Date.now()}.png`;
     a.click();
   };
 
