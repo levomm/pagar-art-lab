@@ -19,8 +19,8 @@ Draw a tag from scratch or upload an existing sketch, choose a visual direction,
 
 These are project-specific style outputs and visual-direction examples used for RAW TAG — not generic dashboard placeholders.
 
-| Wordmark study                                                                        | Subway scene                                                                                     |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Wordmark study                                                               | Subway scene                                                                                     |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | ![RAW TAG graffiti style study](docs/showcase/raw-tag-graffiti-wordmark.jpg) | ![Metallic mop graffiti in a subway scene](docs/showcase/subway-metallic-mop-graffiti-scene.jpg) |
 
 ![Repeated white hip-hop graffiti lettering in a subway](docs/showcase/subway-repeated-hip-hop-white-lettering.jpg)
