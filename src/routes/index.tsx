@@ -1379,7 +1379,7 @@ function ApiKeyContent() {
       toast.success("API key saved locally");
     } else {
       localStorage.removeItem("mb:geminiKey");
-      toast.success("API key cleared — using server default if available");
+      toast.success("API key cleared — add your own key to enhance tags");
     }
     setSaved(true);
     setTimeout(() => setSaved(false), 1500);

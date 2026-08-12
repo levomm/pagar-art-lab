@@ -110,7 +110,7 @@ NEVER do: ${NEGATIVE}`;
 export const enhanceTag = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => inputSchema.parse(data))
   .handler(async ({ data }) => {
-    const apiKey = data.apiKey ?? process.env.GEMINI_API_KEY;
+    const apiKey = data.apiKey?.trim();
     if (!apiKey) {
       return { image: null as string | null, error: "Missing Gemini API key. Add yours in Settings." };
     }
