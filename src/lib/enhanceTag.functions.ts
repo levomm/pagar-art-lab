@@ -1,4 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
+
+interface GeminiResponse {
+  error?: { message?: string };
+  candidates?: Array<{
+    content?: {
+      parts?: Array<{ inlineData?: { data?: string } }>;
+    };
+  }>;
+}
 import { z } from "zod";
 
 const STYLES = [
