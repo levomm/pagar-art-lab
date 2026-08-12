@@ -35,7 +35,7 @@ import rawHipHop from "@/assets/raw-tag/subway-repeated-hip-hop-white-lettering.
 import rawBlackTag from "@/assets/raw-tag/black-graffiti-tag-one-two.jpg";
 
 export const Route = createFileRoute("/")({
-  component: PagarsArtLab,
+  component: RawTagStudio,
   head: () => ({
     meta: [
       { title: "RAW TAG — Draw raw. Finish street." },
@@ -320,7 +320,7 @@ function StylePreview({ id, sample }: { id: StyleId; sample: string }) {
   }
 }
 
-function PagarsArtLab() {
+function RawTagStudio() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -607,7 +607,7 @@ function PagarsArtLab() {
       const url = c.toDataURL("image/png");
       const a = document.createElement("a");
       a.href = url;
-      a.download = `pagars-art-lab-${Date.now()}.png`;
+      a.download = `raw-tag-${Date.now()}.png`;
       document.body.appendChild(a);
       a.click();
       a.remove();
