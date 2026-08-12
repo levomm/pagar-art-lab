@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
       - name: Type-aware lint
-        run: bunx eslint . --quiet --rule 'prettier/prettier: off'
+        run: bunx eslint . --quiet --rule prettier/prettier=off
       - name: Check formatting
         run: bunx prettier --check .
       - name: Build
